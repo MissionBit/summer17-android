@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
  * Created by missionbit on 6/26/17.
  */
 
-public class State {
+public abstract class State {
     protected OrthographicCamera cam;
     protected Vector3 mouse;
     protected GameStateManager gsm;
