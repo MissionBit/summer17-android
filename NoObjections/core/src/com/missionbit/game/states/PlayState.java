@@ -1,4 +1,4 @@
-package com.missionbit.game;
+package com.missionbit.game.states;
 
 /**
  * Created by missionbit on 6/26/17.
