@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 
 /**
@@ -12,12 +13,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MenuState extends State {
     private Texture menu;
-    private Texture playBtn;
+    private Button  playBtn;
     private Texture instructBtn;
 
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
+        playBtn = new Button();
         menu = new Texture("coolbg1.png");
     }
 
@@ -25,6 +27,7 @@ public class MenuState extends State {
     public void handleInput() {
         if(Gdx.input.justTouched()){
             gsm.set(new PlayState(gsm));
+
         }
 
     }
