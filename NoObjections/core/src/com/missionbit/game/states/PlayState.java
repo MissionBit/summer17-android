@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 
 public class PlayState extends State{
-    protected PlayState(GameStateManager gsm) {
+    public PlayState(GameStateManager gsm) {
         super(gsm);
     }
 
     @Override
-    protected void handleInput() {
+    public void handleInput() {
 
     }
 
