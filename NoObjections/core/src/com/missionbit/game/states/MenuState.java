@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.NoObjectionGame;
 
 
+
 /**
  * Created by missionbit on 6/26/17.
  */
@@ -21,12 +22,18 @@ public class MenuState extends State {
         super(gsm);
         cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
         menu = new Texture("coolbg1.png");
+        playBtn = new Texture("playbutton.png");
     }
 
     @Override
     public void handleInput() {
-        if(Gdx.input.justTouched()){
-            gsm.set(new PlayState(gsm));
+        if (Gdx.input.justTouched()) {
+            if (Gdx.input.getX() > 483 && Gdx.input.getX() < 600) {
+                if (Gdx.input.getY() > 300 && Gdx.input.getY() < 500) {
+                    gsm.set(new PlayState(gsm));
+                }
+            }
+
         }
 
     }
@@ -44,8 +51,6 @@ public class MenuState extends State {
         sb.end();
 
     }
-
-
 
 
     public void dispose() {
