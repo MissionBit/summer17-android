@@ -37,7 +37,7 @@ public class Sheep extends Animals{
         velocity.scl(dt);
         position.add(MOVEMENT * dt,velocity.y,0);
         velocity.scl(1/dt);
-        if(position.y < 59){
+        if(position.y < 60){
             position.y = 60;
         }
         if(position.y>300){

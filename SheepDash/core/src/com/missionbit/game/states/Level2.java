@@ -24,7 +24,7 @@ public class Level2 extends State {
     private Vector2 buildingsPos;
     private Vector2 skyPos2;
     private Vector2 buildingsPos2;
-    private static final int GROUND_Y_OFFSET = -90;
+    private static final int GROUND_Y_OFFSET = -80;
 
     public Level2(GameStateManager gsm) {
         super(gsm);
