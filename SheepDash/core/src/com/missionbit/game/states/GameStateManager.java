@@ -1,14 +1,10 @@
 package com.missionbit.game.states;
 
-/**
- * Created by missionbit on 6/26/17.
- */
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Stack;
 
-/**
+/*
  * Created by missionbit on 6/20/17.
  */
 
