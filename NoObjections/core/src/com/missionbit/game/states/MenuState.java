@@ -33,13 +33,14 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
-
+        handleInput();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(menu, 0, 0);
+        sb.draw(menu, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();
 
     }
