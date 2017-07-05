@@ -1,6 +1,8 @@
 package com.missionbit.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -8,30 +10,72 @@ import com.badlogic.gdx.math.Vector3;
  * Created by MissionBit on 6/27/17.
  */
 
-public class Sheep {
-    public Vector3 position;
-    private Vector3 velocity;
+public class Sheep extends Animals{
     private Texture sheep;
-    public Rectangle bounds;
+    private Rectangle bounds1;
+    private Animation sheepAnimation;
+    private Texture sheepDead;
+    private Animation sheep2Animation;
 
-    public Sheep(int x, int y){
-        position = new Vector3(x, y, 0);
-        velocity = new Vector3(0,0,0);
-        sheep = new Texture("Sheep(1)");
+    public Sheep(int x, int y) {
+        super(x, y);
+        sheep = new Texture("Sheep clone.png");
+        sheepDead = new Texture("Squish Sheep.png");
+        sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
+        sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
+        bounds1 = new Rectangle(x,y,70,45);
+
     }
 
-    public void update(float dt){
+    @Override
+    public void update(float dt) {
+        sheepAnimation.update(dt);
+        sheep2Animation.update(dt);
+        if (position.y >0){
+            velocity.add(0,GRAVITY,0);
+        }
+        velocity.scl(dt);
+        position.add(MOVEMENT * dt,velocity.y,0);
+        velocity.scl(1/dt);
+        if(position.y < 59){
+            position.y = 60;
+        }
+        if(position.y>300){
+            position.y=60;
+        }
+        bounds1.setPosition(position.x,position.y);
     }
 
-    public Vector3 getPosition() { return position; }
+    public void jump() {
+        velocity.y = 500;
 
-    public Texture getSheep() { return sheep;}
-
-    public void jump (){
-        velocity.y = 250;
     }
 
-    public void dispose(){
+    public void reduceSpd(){
+        if (Gdx.graphics.getDeltaTime() < 1){
+            MOVEMENT = 50;
+        }
+    }
+
+    public Vector3 getPosition() {
+        return position;
+    }
+
+    public Rectangle getBounds1() {
+        return bounds1;
+    }
+
+    public TextureRegion getSheep() {
+        return sheepAnimation.getFrame();
+    }
+
+    public TextureRegion getSheepDead(){
+        return sheep2Animation.getFrame();
+    }
+
+    @Override
+    public void dispose() {
         sheep.dispose();
     }
+
 }
