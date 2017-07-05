@@ -10,7 +10,7 @@ Mission Bit - Summer 2017
 * Udacity exercises: https://github.com/juemura/ud405
 
 
-## Resources
+## Tutorials
 * [libGDX Wiki](https://github.com/libgdx/libgdx/wiki)
 * [3rd Party Tutorials](https://github.com/libgdx/libgdx/wiki/External-tutorials)
 * [GameFromScratch Tutorials](http://www.gamefromscratch.com/page/LibGDX-Tutorial-series.aspx)
