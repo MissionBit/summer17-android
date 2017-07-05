@@ -1,5 +1,6 @@
 package com.missionbit.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.GameTutorial;
@@ -27,14 +28,18 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
-
+        handleInput();
+        //Uncomment to get to character selection screen
+//        if (Gdx.input.justTouched()) {
+//            gsm.set(new CharacterState(gsm));
+//        }
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        sb.draw(playBtn,(GameTutorial.WIDTH - playBtn.getWidth())/2, (GameTutorial.HEIGHT - playBtn.getHeight())/2);
+        sb.draw(playBtn, (GameTutorial.WIDTH - playBtn.getWidth()) / 2, (GameTutorial.HEIGHT - playBtn.getHeight()) / 2);
         sb.end();
     }
 
