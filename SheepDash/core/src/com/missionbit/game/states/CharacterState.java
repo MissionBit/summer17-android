@@ -18,7 +18,7 @@ public class CharacterState extends State {
 
     public CharacterState(GameStateManager gsm) {
         super(gsm);
-        bg = new Texture("CharScreen.jpg");
+        bg = new Texture("CharScreen.png");
         sheep = new Texture("SheepButton.png");
         cow = new Texture("CowButton.png");
         pig = new Texture("PigButton.png");
@@ -40,11 +40,11 @@ public class CharacterState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        sb.draw(sheep, 100, 245, 100, 100);
-        sb.draw(cow, 250, 245, 100, 100);
-        sb.draw(pig, 400, 245, 100, 100);
-        sb.draw(chick, 175, 95, 100, 100);
-        sb.draw(bunny, 325, 95, 100, 100);
+        sb.draw(sheep, 100, 230, 100, 100);
+        sb.draw(cow, 250, 230, 100, 100);
+        sb.draw(pig, 400, 230, 100, 100);
+        sb.draw(chick, 175, 80, 100, 100);
+        sb.draw(bunny, 325, 80, 100, 100);
         sb.end();
     }
 
