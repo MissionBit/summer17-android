@@ -18,6 +18,7 @@ public class NoObjectionGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+
 		batch = new SpriteBatch();
 
 		gsm = new GameStateManager();
