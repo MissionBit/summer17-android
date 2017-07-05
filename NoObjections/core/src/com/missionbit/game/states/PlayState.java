@@ -10,14 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PlayState extends State{
     private Texture bg;
-
-    protected PlayState(GameStateManager gsm) {
+  
+    public PlayState(GameStateManager gsm) {
         super(gsm);
         bg = new Texture("suckybg_copy.png");
     }
 
     @Override
-    protected void handleInput() {
+    public void handleInput() {
 
     }
 
