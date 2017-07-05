@@ -7,7 +7,5 @@ import com.badlogic.gdx.graphics.Texture;
  */
 
 public class MenuState {
-    private Texture background;
-    private Texture playBtn;
-    private Texture instructBtn;
 }
+
