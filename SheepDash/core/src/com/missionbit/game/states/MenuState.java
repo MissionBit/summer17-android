@@ -30,7 +30,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (Gdx.input.justTouched()) {
-            gsm.set(new Level2(gsm));
+            gsm.set(new Level4(gsm));
 
         }
 
