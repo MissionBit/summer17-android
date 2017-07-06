@@ -1,5 +1,6 @@
 package com.missionbit.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.GameTutorial;
@@ -19,16 +20,17 @@ public class MenuState extends State {
         background = new Texture("MenuScreen.png");
         playBtn = new Texture("PlayBtn.png");
     }
-
-    @Override
     public void handleInput() {
-
+        if (Gdx.input.justTouched()) {
+            gsm.set(new MapState(gsm));
+        }
     }
 
     @Override
     public void update(float dt) {
-
+        handleInput();
     }
+
 
     @Override
     public void render(SpriteBatch sb) {

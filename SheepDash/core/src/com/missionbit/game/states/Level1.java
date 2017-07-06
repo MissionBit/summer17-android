@@ -1,20 +1,21 @@
 package com.missionbit.game.states;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
+import com.missionbit.game.GameTutorial;
 
 /**
- * Created by missionbit on 6/28/17.
+ * Created by missionbit on 7/6/17.
  */
 
-public class Level2 extends State {
+public class Level1 extends State  {
 
+     private Texture bg;
 
-    public Level2(GameStateManager gsm) {
+    public Level1(GameStateManager gsm) {
         super(gsm);
+        bg = new Texture("FarmBG1.png");
+
     }
 
     @Override
@@ -29,7 +30,9 @@ public class Level2 extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-
+        sb.begin();
+        sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
+        sb.end();
     }
 
     @Override
