@@ -9,7 +9,7 @@ import com.missionbit.game.states.GameStateManager;
 import com.missionbit.game.states.MenuState;
 
 public class GameTutorial extends ApplicationAdapter {
-	public static final int  WIDTH = 800;
+	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
 	public static final String TITLE = "Sheep Run";
 	private GameStateManager gsm;
