@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.states.GameStateManager;
 import com.missionbit.game.states.MenuState;
+import com.missionbit.game.states.PlayState;
 
 public class GameTutorial extends ApplicationAdapter {
 	public static final int  WIDTH = 800;
@@ -18,7 +19,7 @@ public class GameTutorial extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
-		gsm.push(new MenuState(gsm));
+		gsm.push(new PlayState(gsm));
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
