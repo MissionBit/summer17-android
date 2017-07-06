@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.states.EndState;
 import com.missionbit.game.states.GameStateManager;
 import com.missionbit.game.states.MenuState;
+import com.missionbit.game.states.PlayState;
 
 public class NoObjectionGame extends ApplicationAdapter {
-
-
-
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
@@ -20,8 +18,6 @@ public class NoObjectionGame extends ApplicationAdapter {
 	private GameStateManager gsm;
 	private SpriteBatch batch;
 
-
-	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
