@@ -20,7 +20,7 @@ public class Farmer {
     private static final int MOVEMENT = 83;
 
     public Farmer(int x, int y){
-        farmer = new Texture("Farmer on a Tractor.png");
+        farmer = new Texture("farmerOnATractor.png");
         farmerAnimation = new Animation(new TextureRegion(farmer),8,0.5f);
         posFarmer = new Vector2(0,45);
         velocity = new Vector3(0,0,0);
