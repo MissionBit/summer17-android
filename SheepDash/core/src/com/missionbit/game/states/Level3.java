@@ -23,19 +23,19 @@ public class Level3 extends State {
 
     public Level3(GameStateManager gsm) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
         sheep = new Sheep(50, 60);
-        sky = new Texture("plains_sky.png");
+        sky = new Texture("pixil-layer-Background.png");
         //farmer = new Farmer(-50,60);
-        hills = new Texture("plains_hills.png");
-        ground = new Texture("plains_ground.png");
-
+        hills = new Texture("pixil-layer-Hills.png");
+        ground = new Texture("pixil-layer-Ground.png");
         groundPos1 = new Vector2(cam.position.x - (cam.viewportWidth / 2), GROUND_Y_OFFSET);
         groundPos2 = new Vector2(ground.getWidth() + groundPos1.x, GROUND_Y_OFFSET);
         skyPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         skyPos2 = new Vector2(sky.getWidth() + skyPos.x, 0);
         hillsPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         //hillsPos2 = new Vector2(hills.getWidth() + hillsPos.x, 0);
-        cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
+
     }
 
     @Override
@@ -103,13 +103,12 @@ public class Level3 extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-
-        sb.draw(sky, skyPos.x, 0, 800, 400);
-        sb.draw(sky, skyPos2.x, 0, 800, 400);
-        sb.draw(hills, hillsPos.x, 0, 350, 200);
+        sb.draw(sky, skyPos.x, 0);
+        sb.draw(sky, skyPos2.x, 0);
+        sb.draw(hills, hillsPos.x, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         //sb.draw(hills, hillsPos2.x, 0, 400, 200);
-        sb.draw(ground, groundPos1.x, 0, 790, 350);
-        sb.draw(ground, groundPos2.x, 0, 790, 350);
+        sb.draw(ground, groundPos1.x, 0);
+        sb.draw(ground, groundPos2.x, 0);
         //if (farmer.collides(sheep.getBounds1())) {
         //    sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
         //}
