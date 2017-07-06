@@ -19,8 +19,8 @@ public class Sheep extends Animals{
 
     public Sheep(int x, int y) {
         super(x, y);
-        sheep = new Texture("sheepClone1.png");
-        sheepDead = new Texture("squishSheep1.png");
+        sheep = new Texture("Sheep clone.png");
+        sheepDead = new Texture("Squish Sheep.png");
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
         sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
         bounds1 = new Rectangle(x,y,70,45);
@@ -54,12 +54,6 @@ public class Sheep extends Animals{
     public void reduceSpd(){
         if (Gdx.graphics.getDeltaTime() < 1){
             MOVEMENT = 50;
-        }
-    }
-
-    public void increaseSpd(){
-        if (Gdx.graphics.getDeltaTime() > 0.02){
-            MOVEMENT = 90;
         }
     }
 
