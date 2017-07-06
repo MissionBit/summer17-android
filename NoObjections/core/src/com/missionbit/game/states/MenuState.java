@@ -13,6 +13,7 @@ import com.missionbit.game.NoObjectionGame;
  * Created by missionbit on 6/26/17.
  */
 
+
 public class MenuState extends State {
     private Texture menu;
 
@@ -54,4 +55,6 @@ public class MenuState extends State {
         menu.dispose();
     }
 
+
 }
+
