@@ -38,10 +38,15 @@ public class Hero {
 //            heroClimbingAni.update(dt);
 //        }
 
-        //velocity.add(0, GRAVITY);
+        if(position.y > 0) {
+            velocity.add(0, GRAVITY);
+        }
         velocity.scl(dt);
         position.add(MOVEMENT * dt, velocity.y);
-        velocity.scl(1 / dt);
+        if(position.y < 0)
+            position.y = 0;
+
+        velocity.scl(1/dt);
     }
 
     public Vector2 getPosition() {
