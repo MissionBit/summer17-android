@@ -13,7 +13,7 @@ public class PlayState extends State{
   
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        bg = new Texture("suckybg_copy.png");
+        bg = new Texture("background.png");
     }
 
     @Override
