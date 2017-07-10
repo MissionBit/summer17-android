@@ -13,7 +13,7 @@ public class Hero {
     private Vector2 position;
     private Vector2 velocity;
     private Texture hero;
-    private static final int GRAVITY = -15;
+    private static final int GRAVITY = -12;
     private static final int MOVEMENT = 100;
     private Animation heroAnimation;
     private Animation heroClimbingAni;
@@ -61,7 +61,7 @@ public class Hero {
     }
 
     public void jump() {
-        velocity.y = 100;
+        velocity.y = 800;
     }
 
     public void fall() {
