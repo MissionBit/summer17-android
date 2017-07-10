@@ -23,7 +23,7 @@ public class NoObjectionGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		gsm = new GameStateManager();
-		gsm.push(new MenuState(gsm));
+		gsm.push(new PlayState(gsm));
 	}
 
 	@Override
