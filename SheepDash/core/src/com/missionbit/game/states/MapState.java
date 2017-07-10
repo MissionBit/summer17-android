@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.missionbit.game.GameTutorial;
-import com.missionbit.game.sprites.Level1;
 
 /**
  * Created by missionbit on 6/26/17.
