@@ -18,22 +18,15 @@ import com.missionbit.game.sprites.Hero;
 
 public class PlayState extends State{
     private Hero hero;
-
     //tiled map
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthoCachedTiledMapRenderer renderer;
 
-    //box2d
-
-
-
     public PlayState(GameStateManager gsm) {
         super(gsm);
         hero = new Hero(50, 100);
         cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
-
-
         maploader = new TmxMapLoader();
         map = maploader.load("map.tmx");
         renderer = new OrthoCachedTiledMapRenderer(map);
@@ -70,7 +63,6 @@ public class PlayState extends State{
         sb.begin();
         sb.draw(hero.getTexture(), hero.getPosition().x, hero.getPosition().y);
         //sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
         renderer.render();
         sb.end();
     }
@@ -78,5 +70,6 @@ public class PlayState extends State{
     @Override
     public void dispose() {
         //bg.dispose();
+        hero.dispose();
     }
 }
