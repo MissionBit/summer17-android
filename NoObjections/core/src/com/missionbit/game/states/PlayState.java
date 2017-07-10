@@ -12,14 +12,14 @@ import com.missionbit.game.sprites.Hero;
 
 public class PlayState extends State{
     private Hero hero;
-    //private Texture bg;
+    private Texture bg;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         hero = new Hero(50, 100);
         cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
 
-        // bg = new Texture("suckybg_copy.png");
+         bg = new Texture("main_background.png");
     }
 
     @Override
@@ -41,13 +41,14 @@ public class PlayState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
+        sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.draw(hero.getTexture(), hero.getPosition().x, hero.getPosition().y);
-        //sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();
     }
 
     @Override
     public void dispose() {
-        //bg.dispose();
+        bg.dispose();
+        hero.dispose();
     }
 }
