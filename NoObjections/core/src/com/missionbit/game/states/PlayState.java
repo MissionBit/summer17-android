@@ -17,9 +17,10 @@ public class PlayState extends State{
     public PlayState(GameStateManager gsm) {
         super(gsm);
         hero = new Hero(50, 100);
-        cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
+        bg = new Texture("main_background.png");
+        cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
 
-         bg = new Texture("main_background.png");
+
     }
 
     @Override
@@ -35,13 +36,15 @@ public class PlayState extends State{
         handleInput();
         hero.update(dt);
         cam.position.x = hero.getPosition().x + 80;
+        cam.position.y = hero.getPosition().y + 150;
         cam.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(bg, 0, 0, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
         sb.draw(hero.getTexture(), hero.getPosition().x, hero.getPosition().y);
         sb.end();
     }
