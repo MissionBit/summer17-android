@@ -9,5 +9,5 @@ import com.badlogic.gdx.graphics.Texture;
 public class LevelSelection {
 
     private Texture background;
-    private Texture back
+    private Texture back;
 }

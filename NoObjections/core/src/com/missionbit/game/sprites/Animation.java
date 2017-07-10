@@ -4,15 +4,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by missionbit on 7/5/17.
+ * Created by missionbit on 6/26/17.
  */
 
 public class Animation {
-    private Array<TextureRegion> frames; //where we store all of our frames
-    private float maxFrameTime; //this determines how long a frame needs to stay in view before switching to the next one
-    private float currentFrameTime; //how long the animation has been in the current frame
-    private int frameCount; //number of frames in our animation
-    private int frame; //the current frame we're in
+    private Array<TextureRegion> frames;
+    private float maxFrameTime;
+    private float currentFrameTime;
+    private int frameCount;
+    private int frame;
 
     public Animation(TextureRegion region, int frameCount, float cycleTime){
         frames = new Array<TextureRegion>();
