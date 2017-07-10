@@ -1,6 +1,4 @@
 
-/.gitignore
-
 SheepDash
 
 Sheep Dash is a pixel running game in which a farm animal runs away from a farmer and must jump

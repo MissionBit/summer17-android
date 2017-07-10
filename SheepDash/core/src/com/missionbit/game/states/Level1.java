@@ -14,7 +14,7 @@ public class Level1 extends State  {
 
     public Level1(GameStateManager gsm) {
         super(gsm);
-        bg = new Texture("FarmBG1.png");
+        bg = new Texture("FarmBg1.png");
 
     }
 
