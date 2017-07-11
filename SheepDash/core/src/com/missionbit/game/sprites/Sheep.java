@@ -13,11 +13,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Sheep extends Animals{
     private Texture sheep;
-    private Sound jump;
     private Rectangle bounds1;
     private Animation sheepAnimation;
     private Texture sheepDead;
     private Animation sheep2Animation;
+    private Sound jump;
 
     public Sheep(int x, int y) {
         super(x, y);
