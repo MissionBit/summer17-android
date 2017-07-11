@@ -29,15 +29,15 @@ public class Level5 extends State {
     private Vector2 buildingsPos4;
     private Vector2 buildingsPos5;
     private static final int GROUND_Y_OFFSET = -80;
-    private static final int buildings_width = 193;
+    private static final int buildings_width = 260;
     private static final int ground_width = 550;
 
     public Level5(GameStateManager gsm) {
         super(gsm);
-        sheep = new Sheep(40,60);
+        sheep = new Sheep(50,60);
         sky = new Texture("CitySky.png");
         farmer = new Farmer(-50,60);
-        buildings = new Texture("UpdatedCityBuildings.png");
+        buildings = new Texture("CityBuildings.png");
         ground = new Texture("CityGround.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
         groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,GROUND_Y_OFFSET);
