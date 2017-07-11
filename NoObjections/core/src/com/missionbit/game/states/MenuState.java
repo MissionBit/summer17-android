@@ -60,6 +60,7 @@ public class MenuState extends State {
                 gsm.push(new PlayState(gsm));
             }
         });
+
     }
 
     @Override

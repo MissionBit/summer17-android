@@ -23,12 +23,17 @@ public class NoObjectionGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		gsm = new GameStateManager();
+<<<<<<< HEAD
 		gsm.push(new EndState(gsm));
+=======
+		gsm.push(new MenuState(gsm));
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+>>>>>>> 1f03807ef60010bd9557520f61fbec0551c99873
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gsm.update(Gdx.graphics.getDeltaTime());
