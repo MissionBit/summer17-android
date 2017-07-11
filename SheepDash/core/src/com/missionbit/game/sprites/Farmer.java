@@ -17,10 +17,10 @@ public class Farmer {
     private Vector3 velocity;
     private Rectangle boundsFarmer;
     private Vector2 posFarmer;
-    private static final int MOVEMENT = 83;
+    public int MOVEMENT = 83;
 
     public Farmer(int x, int y){
-        farmer = new Texture("farmerOnATractor.png");
+        farmer = new Texture("farmeronATractor.png");
         farmerAnimation = new Animation(new TextureRegion(farmer),8,0.5f);
         posFarmer = new Vector2(0,45);
         velocity = new Vector3(0,0,0);

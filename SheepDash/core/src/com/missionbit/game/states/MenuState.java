@@ -40,22 +40,22 @@ public class MenuState extends State {
 
     public MenuState(final GameStateManager gsm) {
         super(gsm);
-        background = new Texture("MenuScreen.png");
-        playBtn = new Texture(Gdx.files.internal("playBtn.png"));
+        background = new Texture("TITLE.png");
+        playBtn = new Texture(Gdx.files.internal("PlayBtn.png"));
         playTextureRegion = new TextureRegion(playBtn);
         playTextureRegionDrawable = new TextureRegionDrawable(playTextureRegion);
         buttonPlay = new ImageButton((playTextureRegionDrawable));
         stage = new Stage(new ScreenViewport());
-        instBtn = new Texture("InstBtn.png");
+        instBtn = new Texture("instBtn.png");
         sheep = new Sheep(100,60);
         farmer = new Farmer(20,60);
         stage = new Stage();
         buttonPlay.setSize(playBtn.getWidth(), playBtn.getHeight());
-        buttonPlay.setPosition((float)(GameTutorial.WIDTH - playBtn.getWidth()) / 2, (GameTutorial.HEIGHT - (playBtn.getHeight()))*4/7);
+        buttonPlay.setPosition((float)(GameTutorial.WIDTH - playBtn.getWidth())*1/5, (GameTutorial.HEIGHT - (playBtn.getHeight()))*1/5);
         buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                gsm.push(new CharacterState(gsm));
+                gsm.push(new Level5(gsm));
             }
         });
         instBtn = new Texture(Gdx.files.internal("InstBtn.png"));
@@ -63,7 +63,7 @@ public class MenuState extends State {
         instTextureRegionDrawable = new TextureRegionDrawable(instTextureRegion);
         buttonInst = new ImageButton((instTextureRegionDrawable));
         buttonInst.setSize(instBtn.getWidth(), instBtn.getHeight());
-        buttonInst.setPosition((float)(GameTutorial.WIDTH - instBtn.getWidth()) / 2, (GameTutorial.HEIGHT - (instBtn.getHeight()))*2/7);
+        buttonInst.setPosition((float)(GameTutorial.WIDTH - instBtn.getWidth())*4/5, (GameTutorial.HEIGHT - (instBtn.getHeight()))*1/5);
         buttonInst.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
@@ -81,15 +81,14 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
-        handleInput();
-        sheep.update(dt);
-        farmer.update(dt);
-        if (sheep.getPosition().x > 750){
-            sheep = new Sheep(20,60);
-        }
-        if (farmer.getPosition().x > 750){
-            farmer = new Farmer(20,60);
-        }
+    //    sheep.update(dt);
+    //    farmer.update(dt);
+    //    if (sheep.getPosition().x > 750){
+    //        sheep = new Sheep(20,60);
+    //    }
+    //    if (farmer.getPosition().x > 750){
+    //        farmer = new Farmer(20,60);
+    //    }
 
     }
 
@@ -97,8 +96,8 @@ public class MenuState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,60);
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
+        //sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,60);
+        //sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
         sb.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -108,8 +107,8 @@ public class MenuState extends State {
     public void dispose() {
         background.dispose();
         playBtn.dispose();
-        sheep.dispose();
-        farmer.dispose();
+     //   sheep.dispose();
+     //   farmer.dispose();
         stage.dispose();
     }
 }
