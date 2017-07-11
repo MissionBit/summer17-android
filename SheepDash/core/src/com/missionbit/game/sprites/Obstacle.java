@@ -13,6 +13,8 @@ import java.util.Random;
 public class Obstacle {
     private Texture obstacle;
     private Vector2 posObs;
+    private static final int OBS_GAP = 100;
+    private static final int FLUCTUATION = 300;
     private Random rand;
     private Rectangle boundsObs;
 
@@ -21,16 +23,20 @@ public class Obstacle {
         this.obstacle = obstacle;
         rand = new Random();
         posObs = new Vector2(x, y);
-        boundsObs = new Rectangle(x, y, obstacle.getWidth(), obstacle.getHeight());
+        boundsObs = new Rectangle(posObs.x, posObs.y, obstacle.getWidth(), obstacle.getHeight());
     }
 
     public Texture getObstacle() {return obstacle; }
+
+    public int getWidth() { return obstacle.getWidth(); }
 
     public Vector2 getPosObs() { return posObs; }
 
     //reposition the obstacle
     public void reposition (float x) {
-        posObs.set(x, posObs.y);
+        //posObs.set(rand.nextInt(FLUCTUATION) + OBS_GAP, 1000);
+        posObs.set(x, 50);
+        System.out.println(posObs.x);
         boundsObs.setPosition(posObs.x, posObs.y);
     }
 
@@ -42,5 +48,9 @@ public class Obstacle {
     //dispose
     public void dispose() {
         obstacle.dispose();
+    }
+
+    public Rectangle getBoundsObs() {
+        return boundsObs;
     }
 }
