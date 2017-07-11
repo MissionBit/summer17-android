@@ -65,12 +65,12 @@ public class Hero {
     }
 
     public void jump() {
-        velocity.y = 800;
+        velocity.y = 250;
     }
 
 
     public void fall() {
-        velocity.y = -100;
+        velocity.y = -300;
     }
 
     public void dispose() {
