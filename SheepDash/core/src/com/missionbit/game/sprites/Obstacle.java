@@ -17,7 +17,7 @@ public class Obstacle {
     private Rectangle boundsObs;
 
     //can change the obstacles and their position with each level
-    public Obstacle(Texture obstacle, float x, float y) {
+    protected Obstacle(Texture obstacle, float x, float y) {
         this.obstacle = obstacle;
         rand = new Random();
         posObs = new Vector2(x, y);

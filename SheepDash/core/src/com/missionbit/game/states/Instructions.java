@@ -42,7 +42,7 @@ public class Instructions extends State {
         cherry = new Texture("cherry.png");
         carrot = new Texture("carrot.png");
         //MAKE 'EM MOVE
-       // appleAni = new Animation(new TextureRegion(apple),2,0.5f);
+        //appleAni = new Animation(new TextureRegion(apple),2,0.5f);
         ///cherryAni = new Animation(new TextureRegion(cherry),2,0.5f);
     }
 
@@ -77,5 +77,8 @@ public class Instructions extends State {
     public void dispose() {
         sheep.dispose();
         farmer.dispose();
+        apple.dispose();
+        carrot.dispose();
+        cherry.dispose();
     }
 }
