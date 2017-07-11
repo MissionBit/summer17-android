@@ -55,4 +55,3 @@
 //        hero.dispose();
 //    }
 //}
->>>>>>> hero moves with circle
