@@ -4,5 +4,6 @@ package com.missionbit.game.sprites;
  * Created by missionbit on 6/29/17.
  */
 
-public class Ground {
+//TODO: constructor for floor and B2WORLD creator
+public class Floor {
 }
