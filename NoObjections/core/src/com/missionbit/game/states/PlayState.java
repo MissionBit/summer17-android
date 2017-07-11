@@ -28,7 +28,8 @@ public class PlayState extends State{
         hero = new Hero(50, 100);
         cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
         maploader = new TmxMapLoader();
-        map = maploader.load("map.tmx");
+
+        map = maploader.load("map1.tmx");
         renderer = new OrthoCachedTiledMapRenderer(map);
 
 

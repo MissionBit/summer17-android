@@ -53,7 +53,7 @@ public class PlayScreen implements Screen {
         hud = new Hud(game.batch);
 
         maploader = new TmxMapLoader();
-        map = maploader.load("map.tmx");
+        map = maploader.load("map1.tmx");
         renderer = new OrthoCachedTiledMapRenderer(map);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
@@ -66,7 +66,7 @@ public class PlayScreen implements Screen {
         Body body;
 
         //this is for the ladders
-        for(MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(0).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
