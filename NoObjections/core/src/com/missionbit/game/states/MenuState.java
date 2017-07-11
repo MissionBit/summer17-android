@@ -1,18 +1,18 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.missionbit.game.NoObjectionGame;
 
 
@@ -26,57 +26,50 @@ import com.missionbit.game.NoObjectionGame;
 public class MenuState extends State {
     private Texture menu;
 
-    //Logger log;
-//    private Texture playBtn;
-//    private Texture instructBtn;
-    Stage stage;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas buttonAtlas;
-    Button button;
+
+    //private Stage stage;
+    private BitmapFont font;
+    private Skin skin;
+    private TextureAtlas buttonAtlas;
+    //private Button button;
+    private Stage stage;
+    private Texture myTexture1;
+    private TextureRegion myTextureRegion1;
+    private TextureRegionDrawable myTexRegionDrawable1;
+    private ImageButton playButton;
 
 
 
-    public MenuState(GameStateManager gsm) {
+    public MenuState(final GameStateManager gsm) {
         super(gsm);
-        // cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
-        cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
         menu = new Texture("coolbg3.png");
-        //log = new Logger();
-        create();
 
+        myTexture1 = new Texture(Gdx.files.internal("playbutton.png")); //put the image you want for your button here
+        myTextureRegion1 = new TextureRegion(myTexture1);
+        myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
+        playButton = new ImageButton(myTexRegionDrawable1); //Set the button up
+        stage = new Stage(new StretchViewport(NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT)); //Set up a stage for the ui, the two parameters for the StretchViewport will be your game width and height variables.
+
+        stage.addActor(playButton); //Add the button to the stage to perform rendering and take input.
+        Gdx.input.setInputProcessor(stage); //Start taking input from the ui
+
+        playButton.setBounds(100, 250 , 250, 100); //x, y, width (of button), height (of button)
+        playButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gsm.push(new PlayState(gsm));
+            }
+        });
     }
 
     @Override
     public void handleInput() {
 
-
-
-//        if (Gdx.input.justTouched()) {
-//            gsm.set(new PlayState(gsm));
-//        }
     }
 
 
     public void create() {
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        //font = new BitmapFont();
-        //skin = new Skin();
-        //buttonAtlas = new TextureAtlas(Gdx.files.internal());
-        //skin.addRegions(buttonAtlas);
 
-        button = new Button();
-        button.setStyle(new Button.ButtonStyle());
-
-        button.addCaptureListener(new EventListener() {
-            @Override
-            public boolean handle(Event event) {
-                Gdx.app.log("LOG", "event " + event);
-                return false;
-            }
-        });
-        stage.addActor(button);
     }
 
 
@@ -87,43 +80,18 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        //sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(menu, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.draw();
         sb.end();
-//        if (Gdx.input.isTouched()) {
-//
-//
-//            Gdx.app.log("LOG", "Coords: " + Gdx.input.getX()+  " , " +  Gdx.input.getY() );
-//            Gdx.app.debug("MyTag", "my debug message");
-//            System.out.println("logging coords: " + Gdx.input.getX()+  " , " +  Gdx.input.getY());
-//
-//            if (Gdx.input.getX() > 114 && Gdx.input.getX() < 205 && // This is the top-left corner of the button
-//                    Gdx.input.getY() < 147 && Gdx.input.getY() > 187) { // This is the bottom-right corner of the button
-//
-//                // DO STUFF HERE WHEN BUTTON 1 PRESSED!!
-//                handleInput();
-//                Gdx.app.log("LOG", "play pressed");
-//
-//
-//            } else if (Gdx.input.getX() > 193  && Gdx.input.getX() < 510 && // This is the top-left corner of the button
-//                    Gdx.input.getY() < 441 && Gdx.input.getY() > 498) { // This is the bottom-right corner of the button
-//
-//                // DO STUFF HERE WHEN BUTTON 2 PRESSED!!
-//                System.out.println("Options pressed");
-//
-//            }
 
-
-
+        stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
+        stage.draw(); //Draw the ui
     }
 
 
     public void dispose() {
         menu.dispose();
+        stage.dispose();
     }
-
-
 }
 
