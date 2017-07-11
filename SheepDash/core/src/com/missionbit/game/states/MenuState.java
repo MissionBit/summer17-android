@@ -23,14 +23,14 @@ public class MenuState extends State {
         super(gsm);
         background = new Texture("MenuScreen.png");
         playBtn = new Texture("PlayBtn.png");
-        sheep = new Sheep(100,60);
-        farmer = new Farmer(20,60);
+        sheep = new Sheep(60,60);
+        farmer = new Farmer(10,60);
     }
 
     @Override
     public void handleInput() {
         if (Gdx.input.justTouched()) {
-            gsm.set(new Level4(gsm));
+            gsm.set(new CharacterState(gsm));
 
         }
 
@@ -41,11 +41,11 @@ public class MenuState extends State {
         handleInput();
         sheep.update(dt);
         farmer.update(dt);
-        if (sheep.getPosition().x > 750){
-            sheep = new Sheep(20,60);
+        if (sheep.getPosition().x > 930){
+            sheep.getPosition().x = -30;
         }
-        if (farmer.getPosition().x > 750){
-            farmer = new Farmer(20,60);
+        if (farmer.getPosition().x > 900){
+            farmer.getPosition().x = -50;
         }
 
     }
@@ -55,7 +55,7 @@ public class MenuState extends State {
         sb.begin();
         sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.draw(playBtn,(GameTutorial.WIDTH - playBtn.getWidth())/2, (GameTutorial.HEIGHT - playBtn.getHeight())/2);
-        sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,60);
+        sb.draw(sheep.getSheep(),sheep.getPosition().x,45,70,60);
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
         sb.end();
     }
