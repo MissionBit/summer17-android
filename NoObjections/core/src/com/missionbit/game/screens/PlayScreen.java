@@ -26,8 +26,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
-
 import com.missionbit.game.sprites.Hero;
+import com.missionbit.game.tools.B2WorldCreator;
+import com.sun.org.apache.bcel.internal.generic.NOP;
 
 /**
  * Created by missionbit on 7/10/17.
@@ -42,11 +43,12 @@ public class PlayScreen implements Screen {
     private Hud hud;
 
     private TmxMapLoader maploader;
-    private TiledMap map;
+    public TiledMap map;
     private OrthoCachedTiledMapRenderer renderer;
 
     private Hero hero;
 
+    //box2d
     private World world;
     private Box2DDebugRenderer b2dr;
 
@@ -54,97 +56,18 @@ public class PlayScreen implements Screen {
         this.game = game;
         bg = new Texture("main_background.png");
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, gameCam);
+        gamePort = new FitViewport(NoObjectionGame.V_WIDTH/ NoObjectionGame.PPM, NoObjectionGame.V_HEIGHT/ NoObjectionGame.PPM, gameCam);
         hud = new Hud(game.batch);
 
         maploader = new TmxMapLoader();
         map = maploader.load("map1.tmx");
-        renderer = new OrthoCachedTiledMapRenderer(map);
+        renderer = new OrthoCachedTiledMapRenderer(map, 1/ NoObjectionGame.PPM);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        world = new World(new Vector2(0, 0), true);
+        world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-
-        //this is for the door
-        for(MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        //ladder
-        for(MapObject object : map.getLayers().get(13).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        //floors
-        for(MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        //plank
-        for(MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        //portal
-        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        //pitfall
-        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
+        new B2WorldCreator(world,map);
         hero = new Hero(world);
     }
 
@@ -162,11 +85,8 @@ public class PlayScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && hero.b2body.getLinearVelocity().x <= 2){
             hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && hero.b2body.getLinearVelocity().x >= -2) {
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && hero.b2body.getLinearVelocity().x >= -2){
             hero.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), hero.b2body.getWorldCenter(), true);
-        }
-        if(Gdx.input.isTouched()) {
-            gameCam.position.y += 100 * dt;
         }
     }
 
@@ -175,8 +95,10 @@ public class PlayScreen implements Screen {
         world.step(1/60f, 6, 2);
 
         gameCam.position.x = hero.b2body.getPosition().x;
+        gameCam.position.y = hero.b2body.getPosition().y;
         gameCam.update();
         renderer.setView(gameCam);
+
     }
 
     @Override
@@ -188,6 +110,7 @@ public class PlayScreen implements Screen {
 
         renderer.render();
 
+        //renderer our box2ddebuglines
         b2dr.render(world, gameCam.combined);
 
 //        game.batch.setProjectionMatrix(gameCam.combined);
@@ -220,6 +143,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        //hud.dispose();
     }
 }
