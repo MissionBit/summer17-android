@@ -28,13 +28,13 @@ public class Instruction extends State {
 
 
 
-    public Instructions(GameStateManager gsm) {
+    public Instruction(GameStateManager gsm) {
         super(gsm);
         background = new Texture("INST.png");
         sheep = new Sheep (150,280);
-        sheep.MOVEMENT = 0;
+      //  sheep.MOVEMENT = 0;
         farmer = new Farmer (400, 280);
-        farmer.MOVEMENT = 0;
+       // farmer.MOVEMENT = 0;
         cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         //animaitons guysss kill me now im so sleep deprived
         //BUT FIRST THE TEXTURES

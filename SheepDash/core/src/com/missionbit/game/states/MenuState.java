@@ -36,7 +36,7 @@ public class MenuState extends State {
     private Farmer farmer;
     private Stage stage;
 
-    public MenuState(GameStateManager gsm) {
+    public MenuState(final GameStateManager gsm) {
         super(gsm);
         background = new Texture("TITLE.png");
         playBtn = new Texture(Gdx.files.internal("PlayBtn.png"));
@@ -65,7 +65,7 @@ public class MenuState extends State {
         buttonInst.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                gsm.push(new Instructions(gsm));
+                gsm.push(new Instruction(gsm));
             }
         });
         stage.addActor(buttonPlay);
@@ -79,14 +79,7 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
-        //    sheep.update(dt);
-        //    farmer.update(dt);
-        //    if (sheep.getPosition().x > 750){
-        //        sheep = new Sheep(20,60);
-        //    }
-        //    if (farmer.getPosition().x > 750){
-        //        farmer = new Farmer(20,60);
-        //    }
+
 
     }
 
