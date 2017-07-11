@@ -26,14 +26,11 @@ public class MenuState extends State {
         sheep = new Sheep(60,60);
         farmer = new Farmer(10,60);
     }
-
-    @Override
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             gsm.set(new CharacterState(gsm));
 
         }
-
     }
 
     @Override
@@ -47,8 +44,8 @@ public class MenuState extends State {
         if (farmer.getPosition().x > 900){
             farmer.getPosition().x = -50;
         }
-
     }
+
 
     @Override
     public void render(SpriteBatch sb) {
