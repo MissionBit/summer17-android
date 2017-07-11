@@ -47,10 +47,18 @@ public class MapState extends State {
     private TextureRegionDrawable myTexRegionDrawable4;
     private ImageButton button4;
 
+    //button 5
     private Texture myTexture5;
     private TextureRegion myTextureRegion5;
     private TextureRegionDrawable myTexRegionDrawable5;
     private ImageButton button5;
+
+    //back button
+
+    private Texture myTextureBack;
+    private TextureRegion myTextureRegionBack;
+    private TextureRegionDrawable myTexRegionDrawableBack;
+    private ImageButton backButton;
 
 
 //    private Texture l1;
@@ -156,6 +164,22 @@ public class MapState extends State {
             }
         });
 
+        myTextureBack = new Texture(Gdx.files.internal("back.png"));
+        myTextureRegionBack = new TextureRegion(myTextureBack);
+        myTexRegionDrawableBack = new TextureRegionDrawable(myTextureRegionBack);
+        backButton = new ImageButton(myTexRegionDrawableBack);
+        stage.addActor(backButton);
+        Gdx.input.setInputProcessor(stage);
+        backButton.setBounds(-7,0,64,47);
+        backButton.getImageCell().expand().fill();
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Go back");
+                gsm.push(new CharacterState(gsm));
+            }
+        });
     }
 
     @Override
