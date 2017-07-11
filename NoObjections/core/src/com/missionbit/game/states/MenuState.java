@@ -13,13 +13,14 @@ import com.missionbit.game.NoObjectionGame;
  * Created by missionbit on 6/26/17.
  */
 
+
 public class MenuState extends State {
     private Texture menu;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
         menu = new Texture("menuBackground.png");
-        cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
+        //cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(cam.combined);
+        //sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(menu, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();
@@ -54,4 +55,6 @@ public class MenuState extends State {
         menu.dispose();
     }
 
+
 }
+
