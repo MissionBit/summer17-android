@@ -52,14 +52,14 @@ public class PlayState extends State{
     public void update(float dt) {
         handleInput();
         hero.update(dt);
-        cam.position.y = hero.getPosition().y;
-
-        renderer.setView(cam);
+        cam.position.x = hero.getPosition().x + 80;
+        cam.position.y = hero.getPosition().y + 150;
         cam.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(hero.getTexture(), hero.getPosition().x, hero.getPosition().y);
         //sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
