@@ -53,7 +53,7 @@ public class MenuState extends State {
         buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                gsm.push(new Level5(gsm));
+                gsm.push(new CharacterState(gsm));
             }
         });
         instBtn = new Texture(Gdx.files.internal("InstBtn.png"));
