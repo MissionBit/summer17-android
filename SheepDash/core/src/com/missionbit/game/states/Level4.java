@@ -55,7 +55,6 @@ public class Level4 extends State {
         if (Gdx.input.justTouched()){
             sheep.jump();
         }
-
     }
 
     @Override
@@ -164,7 +163,6 @@ public class Level4 extends State {
         }
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
         sb.end();
-
     }
 
     @Override
