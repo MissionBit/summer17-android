@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
+import com.missionbit.game.sprites.Obstacle;
 import com.missionbit.game.sprites.Poop;
 import com.missionbit.game.sprites.Sheep;
 
@@ -27,7 +28,7 @@ public class Level4 extends State {
     private Vector2 carsPos2;
     private Vector2 carsPos3;
     private Poop poop;
-    private Obstacle
+    private Obstacle car;
     private static final int GROUND_Y_OFFSET = -80;
     private static final int POOP_SPACING = 300;
     private static final int POOP_WIDTH = 30;
@@ -86,6 +87,19 @@ public class Level4 extends State {
             poop.getBoundsPoop2().setPosition(poop.getPosPoop2().x,poop.getPosPoop2().y);
         }
     }
+
+    public void updateCar(){
+        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+            poop.getPosPoop().add(2*POOP_SPACING,0);
+            poop.getBoundsPoop().setPosition(poop.getPosPoop().x,poop.getPosPoop().y);
+        }
+        if (poop.getPosPoop2().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+            poop.getPosPoop2().add(2*POOP_SPACING,0);
+            poop.getBoundsPoop2().setPosition(poop.getPosPoop2().x,poop.getPosPoop2().y);
+        }
+    }
+
+
 
     public void updateGround(){
         if(groundPos1.x+ground.getWidth() <= cam.position.x-cam.viewportWidth/2){
