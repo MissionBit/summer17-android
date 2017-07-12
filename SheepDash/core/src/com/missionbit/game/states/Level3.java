@@ -29,7 +29,6 @@ public class Level3 extends State {
     private static final int ground_width = 1024;
     private static final int OBS_GAP = 400;
 
-
     public Level3(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
@@ -42,29 +41,30 @@ public class Level3 extends State {
         sky = new Texture("plains-background.png");
         skyPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         skyPos2 = new Vector2(sky.getWidth() + skyPos.x, 0);
-        hills = new Texture("plains-hills2.png");
+        hills = new Texture("plains-hills.png");
         hillsPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         hillsPos2 = new Vector2(hills_width + hillsPos.x, 0);
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
-        spikeTexture = new Texture("SPIKESdeathtotouch.png");
-        spikes = new Obstacle(spikeTexture, 250, 50);
+        spikeTexture = new Texture("SPIKES2.0.18.png");
+        spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()) {
-            sheep.jump();
+        if (sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
-
-
     }
 
     @Override
     public void update(float dt) {
         handleInput();
         sheep.update(dt);
+        spikes.update(dt);
         cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
         updateGround();
@@ -73,7 +73,6 @@ public class Level3 extends State {
         updateSpikes();
         collisionCheck();
         cam.update();
-
     }
 
     public void updateGround() {
@@ -118,27 +117,13 @@ public class Level3 extends State {
 
     public void updateSpikes() {
         if (cam.position.x - cam.viewportWidth / 2 > spikes.getPosObs().x + spikes.getWidth()) {
-            //spikes.reposition(spikes.getPosObs().x + (spikes.getWidth());
-            spikes.reposition(spikes.getPosObs().x + (spikes.getWidth() + (OBS_GAP*2)));
+            spikes.reposition(spikes.getPosObs().x + (spikes.getWidth() + (OBS_GAP * 2)));
         }
-        /*
-        if (spikes.getPosObs().x + OBS_GAP <= cam.position.x-cam.viewportWidth/2){
-            spikes.getPosObs().add(2*OBS_GAP,0);
-            spikes.getBoundsObs().setPosition(spikes.getPosObs().x,spikes.getPosObs().y);
-        }
-
-        if (spikes.getPosObs().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
-            poop.getPosPoop2().add(2*POOP_SPACING,0);
-            poop.getBoundsPoop2().setPosition(poop.getPosPoop2().x,poop.getPosPoop2().y);
-        }
-        */
     }
-
 
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
-            gsm.set(new MenuState(gsm));
         }
         if (spikes.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
@@ -160,7 +145,7 @@ public class Level3 extends State {
         sb.draw(ground, groundPos1.x, 0, ground_width, 1100);
         sb.draw(ground, groundPos2.x, 0, ground_width, 1100);
         sb.draw(ground, groundPos3.x, 0, ground_width, 1100);
-        sb.draw(spikes.getObstacle(), spikes.getPosObs().x, spikes.getPosObs().y);
+        sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         } else {
@@ -178,5 +163,7 @@ public class Level3 extends State {
         ground.dispose();
         sheep.dispose();
         farmer.dispose();
+        spikes.dispose();
     }
 }
+
