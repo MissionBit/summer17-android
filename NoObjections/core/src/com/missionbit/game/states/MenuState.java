@@ -27,11 +27,9 @@ public class MenuState extends State {
     private Texture menu;
 
 
-    //private Stage stage;
     private BitmapFont font;
     private Skin skin;
     private TextureAtlas buttonAtlas;
-    //private Button button;
     private Stage stage;
     private Texture myTexture1;
     private TextureRegion myTextureRegion1;
@@ -93,6 +91,7 @@ public class MenuState extends State {
     public void dispose() {
         menu.dispose();
         stage.dispose();
+        myTexture1.dispose();
     }
 }
 
