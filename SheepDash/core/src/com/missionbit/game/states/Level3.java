@@ -48,7 +48,7 @@ public class Level3 extends State {
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
-        spikeTexture = new Texture("SPIKESdeathtotouch.png");
+        spikeTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
     }
 
