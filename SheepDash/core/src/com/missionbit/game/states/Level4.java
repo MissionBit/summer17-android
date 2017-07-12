@@ -27,6 +27,7 @@ public class Level4 extends State {
     private Vector2 carsPos2;
     private Vector2 carsPos3;
     private Poop poop;
+    private Obstacle
     private static final int GROUND_Y_OFFSET = -80;
     private static final int POOP_SPACING = 300;
     private static final int POOP_WIDTH = 30;
@@ -34,6 +35,7 @@ public class Level4 extends State {
 
     public Level4(GameStateManager gsm) {
         super(gsm);
+
         poop = new Poop(100,60);
         sheep = new Sheep(150,60);
         sky = new Texture("sunCloudsForHighway.png");
