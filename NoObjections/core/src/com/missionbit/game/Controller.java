@@ -33,8 +33,10 @@ public class Controller {
         Table table = new Table();
         table.left().bottom();
 
+        float arrows = 40;
+
         Image upImg = new Image(new Texture("upArrow.png"));
-        upImg.setSize(50, 50);
+        upImg.setSize(arrows, arrows);
 
         upImg.addListener(new InputListener() {
 
@@ -50,7 +52,7 @@ public class Controller {
             }
         });
         Image downImg = new Image(new Texture("downArrow.png"));
-        downImg.setSize(50, 50);
+        downImg.setSize(arrows, arrows);
         downImg.addListener(new InputListener() {
 
             @Override
@@ -65,7 +67,7 @@ public class Controller {
             }
         });
         Image leftImg = new Image(new Texture("leftArrow.png"));
-        leftImg.setSize(50, 50);
+        leftImg.setSize(arrows, arrows);
         leftImg.addListener(new InputListener() {
 
             @Override
@@ -80,7 +82,7 @@ public class Controller {
             }
         });
         Image rightImg = new Image(new Texture("rightArrow.png"));
-        rightImg.setSize(50, 50);
+        rightImg.setSize(arrows, arrows);
         rightImg.addListener(new InputListener() {
 
             @Override
@@ -95,16 +97,19 @@ public class Controller {
             }
         });
 
-        table.add();
-        table.add(upImg).size(upImg.getWidth(), upImg.getHeight());
-        table.add();
-        table.row().pad(5, 5, 5, 5);
-        table.add(upImg).size(upImg.getWidth(), upImg.getHeight());
-        table.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight());
-        table.row().padBottom(5);
-        table.add();
-        table.add(downImg).size(downImg.getWidth(), downImg.getHeight());
-        table.add(); 
+        float padding = 5;
+        table.add().pad(padding);
+        table.add(upImg).size(upImg.getWidth(), upImg.getHeight()).pad(padding);
+        table.add().pad(padding);
+        table.row();
+        table.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).pad(padding);
+        table.add().pad(padding);
+        table.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight()).pad(padding);
+        table.row();
+        table.add().pad(padding);
+        table.add(downImg).size(downImg.getWidth(), downImg.getHeight()).pad(padding);
+        table.add().pad(padding);
+
 
         stage.addActor(table);
 
