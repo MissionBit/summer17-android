@@ -81,13 +81,5 @@ public class NoObjectionGame extends ApplicationAdapter {
 
     }
 
-    public void createPlayer(){
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(viewport.getWorldWidth() / 2, 80 / PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        hero = world.createBody(bdef);
 
-        FixtureDef fdef = new FixtureDef();
-        hero.createFixture(fdef);
-    }
 }

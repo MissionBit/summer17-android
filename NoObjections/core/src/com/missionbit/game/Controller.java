@@ -26,7 +26,7 @@ public class Controller {
 
     public Controller() {
         cam = new OrthographicCamera();
-        viewport = new FitViewport(800, 400, cam);
+        viewport = new FitViewport(NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT, cam);
         stage = new Stage(viewport, NoObjectionGame.batch);
         Gdx.input.setInputProcessor(stage);
 
@@ -104,7 +104,7 @@ public class Controller {
         table.row().padBottom(5);
         table.add();
         table.add(downImg).size(downImg.getWidth(), downImg.getHeight());
-        table.add();
+        table.add(); 
 
         stage.addActor(table);
 
