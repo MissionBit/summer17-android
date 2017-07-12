@@ -39,7 +39,7 @@ public class Instruction extends State {
         //animaitons guysss kill me now im so sleep deprived
         //BUT FIRST THE TEXTURES
         apple = new Texture("apple.png");
-        cherry = new Texture("cherry.png");
+        cherry = new Texture("cherry2_0.35.png");
         carrot = new Texture("carrot.png");
         //MAKE 'EM MOVE
         // appleAni = new Animation(new TextureRegion(apple),2,0.5f);
