@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -36,6 +37,7 @@ import com.sun.org.apache.bcel.internal.generic.NOP;
 
 public class PlayScreen implements Screen {
     private NoObjectionGame game;
+    private TextureAtlas atlas;
     private Texture bg;
 
     private OrthographicCamera gameCam;
@@ -53,6 +55,8 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     public PlayScreen(NoObjectionGame game) {
+        atlas = new TextureAtlas("dudeRun4.pack");
+
         this.game = game;
         bg = new Texture("main_background.png");
         gameCam = new OrthographicCamera();
@@ -68,7 +72,11 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         new B2WorldCreator(world,map);
-        hero = new Hero(world);
+        hero = new Hero(world, this);
+    }
+
+    public TextureAtlas getAtlas(){
+        return atlas;
     }
 
     @Override
@@ -94,6 +102,8 @@ public class PlayScreen implements Screen {
         handleInput(dt);
         world.step(1/60f, 6, 2);
 
+        hero.update(dt);
+
         gameCam.position.x = hero.b2body.getPosition().x;
         gameCam.position.y = hero.b2body.getPosition().y;
         gameCam.update();
@@ -113,10 +123,12 @@ public class PlayScreen implements Screen {
         //renderer our box2ddebuglines
         b2dr.render(world, gameCam.combined);
 
-//        game.batch.setProjectionMatrix(gameCam.combined);
-//        game.batch.begin();
-//        game.batch.draw(bg, 0, 0);
-//        game.batch.end();
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        hero.draw(game.batch);
+        game.batch.end();
+
+        //Set our batch to now draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }

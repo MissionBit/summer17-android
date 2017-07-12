@@ -3,14 +3,19 @@ package com.missionbit.game.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.missionbit.game.NoObjectionGame;
+import com.missionbit.game.screens.PlayScreen;
+
+import java.awt.Rectangle;
 
 
 /**
@@ -96,10 +101,19 @@ public class Hero extends Sprite {
 ////    }
     public World world;
     public Body b2body;
+    private TextureRegion heroStand;
 
-    public Hero(World world){
+    public Hero(World world, PlayScreen screen){
+        super(screen.getAtlas().findRegion("dudeRun2"));
         this.world = world;
         defineHero();
+        heroStand = new TextureRegion(getTexture(), 0, 0, 40, 45);
+        setBounds(0, 0, 40/ NoObjectionGame.PPM, 45/ NoObjectionGame.PPM);
+        setRegion(heroStand);
+    }
+
+    public void update(float dt){
+        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
     }
 
     public void defineHero(){
@@ -108,9 +122,15 @@ public class Hero extends Sprite {
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
+//        FixtureDef fdef = new FixtureDef();
+//        CircleShape shape = new CircleShape();
+//        shape.setRadius(15/ NoObjectionGame.PPM);
+//
+//        fdef.shape = shape;
+
         FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(5/ NoObjectionGame.PPM);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(4 / NoObjectionGame.PPM, 18 / NoObjectionGame.PPM);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

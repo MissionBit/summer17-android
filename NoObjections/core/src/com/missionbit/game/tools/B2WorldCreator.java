@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.sprites.Door;
+import com.missionbit.game.sprites.Floor;
 import com.missionbit.game.sprites.Ladder;
 import com.missionbit.game.sprites.Plank;
 import com.missionbit.game.sprites.Portal;
@@ -39,17 +40,11 @@ public class B2WorldCreator {
 
             new Ladder(world, map, rect);
         }
-        //TODO: floors
+        //floor
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / NoObjectionGame.PPM, (rect.getY() + rect.getHeight() / 2 )/ NoObjectionGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / NoObjectionGame.PPM, rect.getHeight() / 2 / NoObjectionGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
+        new Floor(world, map, rect);
         }
 
         //plank
