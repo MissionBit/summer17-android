@@ -10,7 +10,7 @@ import com.missionbit.game.sprites.Hero;
  * Created by missionbit on 6/26/17.
  */
 
-public class PlayState extends State{
+public class PlayState extends State {
     private Hero hero;
     private Texture bg;
 
@@ -20,13 +20,12 @@ public class PlayState extends State{
         bg = new Texture("main_background.png");
         cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
 
-
     }
 
     @Override
     public void handleInput() {
         //makes hero jump
-        if(Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()) {
             hero.jump();
         }
     }
