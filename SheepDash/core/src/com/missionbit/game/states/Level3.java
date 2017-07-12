@@ -9,6 +9,7 @@ import com.missionbit.game.sprites.Farmer;
 import com.missionbit.game.sprites.Obstacle;
 import com.missionbit.game.sprites.Sheep;
 
+
 /**
  * Created by missionbit on 6/28/17.
  */
@@ -56,6 +57,7 @@ public class Level3 extends State {
         if (Gdx.input.justTouched()) {
             sheep.jump();
         }
+
 
     }
 
