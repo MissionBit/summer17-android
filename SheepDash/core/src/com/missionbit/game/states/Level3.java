@@ -1,19 +1,20 @@
 package com.missionbit.game.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
 import com.missionbit.game.sprites.Obstacle;
 import com.missionbit.game.sprites.Sheep;
 
+import java.util.Random;
+
 
 /**
  * Created by missionbit on 6/28/17.
  */
-
 
 public class Level3 extends State {
     private Sheep sheep;
@@ -24,11 +25,15 @@ public class Level3 extends State {
     private Vector2 skyPos, skyPos2;
     private Texture hills;
     private Vector2 hillsPos, hillsPos2, hillsPos3, hillsPos4, hillsPos5;
-    private Texture spikeTexture;
+    private Texture mudTexture;
+    private Obstacle mud;
+    private Texture carrotTexture;
+    private Obstacle carrot;
+    private boolean carrotIsTouched;
+    private Texture spikesTexture;
     private Obstacle spikes;
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
-    private static final int OBS_GAP = 400;
 
     public Level3(GameStateManager gsm) {
         super(gsm);
@@ -42,14 +47,19 @@ public class Level3 extends State {
         sky = new Texture("plains-background.png");
         skyPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         skyPos2 = new Vector2(sky.getWidth() + skyPos.x, 0);
-        hills = new Texture("plains-hills.png");
+        hills = new Texture("plains-hills2.png");
         hillsPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         hillsPos2 = new Vector2(hills_width + hillsPos.x, 0);
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
-        spikeTexture = new Texture("SPIKES2.0.18.png");
-        spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
+        mudTexture = new Texture("mud.png");
+        mud = new Obstacle(mudTexture, 700, 58, 1, 0.5f);
+        carrotTexture = new Texture("Carrott.png");
+        carrot = new Obstacle(carrotTexture, 1100, 50, 2, 0.3f);
+        spikesTexture = new Texture("SPIKES2.0.18.png");
+        spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
+        carrotIsTouched = false;
     }
 
     @Override
@@ -70,13 +80,17 @@ public class Level3 extends State {
     public void update(float dt) {
         handleInput();
         sheep.update(dt);
+        carrot.update(dt);
         spikes.update(dt);
         cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
         updateGround();
         updateSky();
         updateHills();
+        updateMud();
+        updateCarrot();
         updateSpikes();
+        timerCheck(dt);
         collisionCheck();
         cam.update();
     }
@@ -121,22 +135,60 @@ public class Level3 extends State {
         }
     }
 
-    public void updateSpikes() {
-        if (cam.position.x - cam.viewportWidth / 2 > spikes.getPosObs().x + spikes.getWidth()) {
-            spikes.reposition(spikes.getPosObs().x + (spikes.getWidth() + (OBS_GAP * 2)));
+
+    public void updateMud() {
+        if (cam.position.x - cam.viewportWidth / 2 > mud.getPosObs().x + mud.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 300) + GameTutorial.WIDTH;
+            mud.reposition(mud.getPosObs().x + distance, 58);
         }
     }
 
+    public void updateCarrot() {
+        if (cam.position.x - cam.viewportWidth / 2 > carrot.getPosObs().x + carrot.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 500) + GameTutorial.WIDTH;
+            carrot.reposition(carrot.getPosObs().x + distance, 58);
+            carrotIsTouched = false;
+        }
+    }
+
+    public void updateSpikes() {
+        if (cam.position.x - cam.viewportWidth / 2 > spikes.getPosObs().x + spikes.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 900) + GameTutorial.WIDTH;
+            spikes.reposition(spikes.getPosObs().x + distance, 58);
+        }
+    }
 
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
         }
+        if (mud.collides(sheep.getBounds1())) {
+            sheep.reduceSpd();
+            sheep.startTimer();
+        }
         if (spikes.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
+            sheep.startTimer();
+        }
+        if (carrot.collides(sheep.getBounds1())) {
+            carrotIsTouched = true;
+            sheep.startTimer();
+            sheep.increaseSpd();
         }
     }
 
+    public void timerCheck(float timePassed) {
+        sheep.updateTimer(timePassed);
+        if (sheep.isTimerDone()) {
+            sheep.resetSpd();
+        }
+    }
 
     @Override
     public void render(SpriteBatch sb) {
@@ -152,6 +204,10 @@ public class Level3 extends State {
         sb.draw(ground, groundPos1.x, 0, ground_width, 1100);
         sb.draw(ground, groundPos2.x, 0, ground_width, 1100);
         sb.draw(ground, groundPos3.x, 0, ground_width, 1100);
+        sb.draw(mud.getObstacle(), mud.getPosObs().x, mud.getPosObs().y);
+        if (carrotIsTouched == false) {
+            sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y);
+        }
         sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
@@ -160,16 +216,22 @@ public class Level3 extends State {
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y);
         sb.end();
-
     }
 
     @Override
     public void dispose() {
+        sheep.dispose();
+        farmer.dispose();
         sky.dispose();
         hills.dispose();
         ground.dispose();
         sheep.dispose();
         farmer.dispose();
+        mudTexture.dispose();
+        mud.dispose();
+        carrotTexture.dispose();
+        carrot.dispose();
+        spikesTexture.dispose();
         spikes.dispose();
     }
 }
