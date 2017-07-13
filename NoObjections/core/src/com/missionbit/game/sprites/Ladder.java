@@ -21,8 +21,4 @@ public class Ladder extends InteractiveTileObject{
 
     }
 
-    @Override
-    public void onLadderHit() {
-        Gdx.app.log("Ladder", "Collision");
-    }
 }

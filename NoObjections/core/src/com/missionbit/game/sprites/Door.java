@@ -16,8 +16,4 @@ public class Door extends InteractiveTileObject {
 
     }
 
-    @Override
-    public void onLadderHit() {
-
-    }
 }

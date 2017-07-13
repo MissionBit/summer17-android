@@ -15,7 +15,7 @@ import com.missionbit.game.NoObjectionGame;
  * Created by missionbit on 7/11/17.
  */
 
-public abstract class InteractiveTileObject {
+public class InteractiveTileObject {
     protected World world;
     protected TiledMap map;
     protected TiledMapTile tile;
@@ -41,6 +41,4 @@ public abstract class InteractiveTileObject {
         fixture = body.createFixture(fdef);
     }
 
-
-    public abstract void onLadderHit();
 }

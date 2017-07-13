@@ -1,0 +1,20 @@
+
+dudestuff3.png
+size: 512,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+charClimbing3
+  rotate: false
+  xy: 253, 2
+  size: 215, 53
+  orig: 215, 53
+  offset: 0, 0
+  index: -1
+dudeRun4
+  rotate: false
+  xy: 2, 2
+  size: 249, 53
+  orig: 249, 53
+  offset: 0, 0
+  index: -1
