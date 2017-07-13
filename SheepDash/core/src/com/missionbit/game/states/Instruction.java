@@ -22,8 +22,6 @@ public class Instruction extends State {
     private Sheep theOneThatDies;
     private Farmer farmer;
     private Texture background;
-    //all the animations
-    //but first the textures ya knead
 
     public Instruction(GameStateManager gsm) {
         super(gsm);
@@ -34,16 +32,21 @@ public class Instruction extends State {
         farmer.getPosition().x = 400;
         farmer.setBoundsFarmer(180, 180);
         cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        //animaitons guysss kill me now im so sleep deprived
-        //BUT FIRST THE TEXTURES
-
+        sheep = new Sheep (150,280);
+        farmer = new Farmer (400, 280);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
     }
 
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()){
-            gsm.push(new MenuState(gsm));
+            gsm.set(new MenuState(gsm));
         }
+    }
+
+    @Override
+    public void create() {
+
     }
 
     @Override
@@ -87,6 +90,9 @@ public class Instruction extends State {
             theOneThatDies.noSpd();
         }
         sb.draw(farmer.getFarmer(), farmer. getPosition().x, 220, 180, 180);
+
+        sb.draw(sheep.getSheep(), 100, 220, 140, 90);
+        sb.draw(farmer.getFarmer(), 400, 220, 180, 180);
         sb.end();
     }
 

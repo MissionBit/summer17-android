@@ -19,7 +19,7 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        menu = new Texture("menuBackground.png");
+        menu = new Texture("coolbg3.png");
         //cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
     }
 
@@ -28,7 +28,7 @@ public class MenuState extends State {
         if (Gdx.input.justTouched()) {
             if (Gdx.input.getX() > 0 && Gdx.input.getX() < 600) {
                 if (Gdx.input.getY() > 200 && Gdx.input.getY() < 500) {
-                    gsm.set(new PlayState(gsm));
+                   // gsm.set(new PlayState(gsm));
                 }
             }
 
