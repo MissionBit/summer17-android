@@ -1,14 +1,10 @@
 package com.missionbit.game.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -24,83 +20,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
  */
 
 public class Hero extends Sprite {
-//    private Vector2 position;
-//    private Vector2 velocity;
-//    private Texture hero;
-//    private static final int GRAVITY = -12;
-//    private static final int MOVEMENT = 48;
-//    private Animation heroAnimation;
-//    private Animation heroClimbingAni;
-//
-//    private int screenHeight = Gdx.graphics.getWidth();
-//    private int screenWidth = Gdx.graphics.getWidth();
-////    private Texture heroClimbing;
-//    //Flipping directions
-//
-//
-//    public Hero(int x, int y) {
-//        position = new Vector2(x, y);
-//        velocity = new Vector2(0, 0);
-//        hero = new Texture("dudeRun.png");
-//       // heroClimbing = new Texture("charClimbing2.png");
-//        heroAnimation = new Animation(new TextureRegion(hero), 5, 0.8f);
-//        //heroClimbingAni = new Animation(new TextureRegion(heroClimbing), 4, 0.8f);
-//
-//    }
-//
-//    public void update(float dt) {
-//        heroAnimation.update(dt);
-//        //adds gravity
-//        if(position.y > 0) {
-//            velocity.add(0, GRAVITY);
-//        }
-//        velocity.scl(dt);
-//        if(position.x + 127.5 < NoObjectionGame.WIDTH) {
-//            position.add(MOVEMENT * dt, velocity.y);
-//        }
-//
-//        if(position.y < 0) {
-//            position.y = 0;
-//        }
-//        velocity.scl(1/dt);
-//    }
-//
-//    public Vector2 getPosition() {
-//        return position;
-//    }
-//
-//    public TextureRegion getTexture() {
-////        if (climbing()) {
-////            return heroClimbingAni.getFrame();
-////        }
-//        return heroAnimation.getFrame();
-//    }
-//
-//    public void jump() {
-//        velocity.y = 800;
-//    }
-//
-//
-//    public void fall() {
-//        velocity.y = -100;
-//    }
-//
-//    public void dispose() {
-//        hero.dispose();
-//    }
-//
-//    public void left() {
-//        velocity.x  = MOVEMENT * -1;
-//    }
-//
-//    public void right() {
-//        velocity.x  = MOVEMENT;
-//    }
-//
-////    public boolean climbing() {
-////        return true;
-////    }
-    public enum State { FALLING, JUMPING, STANDING, RUNNING, CLIMBING};
+
+    public enum State { FALLING, CLIMBING, STANDING, RUNNING, DEAD};
     public State currentState;
     public State previousState;
     public World world;
@@ -110,6 +31,7 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
+   private static final float y_deathposition=-100;
 
     public Hero(World world, PlayScreen screen){
         super(screen.getAtlas().findRegion("dudeRun4"));
@@ -146,6 +68,11 @@ public class Hero extends Sprite {
     public void update(float dt){
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         setRegion(getFrame(dt));
+        System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+        if(b2body.getPosition().y < y_deathposition){
+            currentState=State.DEAD;
+            System.out.println("hero is dead");
+        }
     }
 
     public TextureRegion getFrame(float dt){
@@ -189,7 +116,12 @@ public class Hero extends Sprite {
             return State.FALLING;
         } else if(b2body.getLinearVelocity().x != 0){
             return State.RUNNING;
-        }else{
+        }
+        else if(b2body.getPosition().y < y_deathposition){
+            System.out.println("hero is dead");
+            return State.DEAD;
+        }
+        else{
             return State.STANDING;
         }
     }
@@ -200,19 +132,42 @@ public class Hero extends Sprite {
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
-        FixtureDef fdef = new FixtureDef();
+        //fixture1
+        FixtureDef fdef1 = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(5 / NoObjectionGame.PPM, 18 / NoObjectionGame.PPM);
 
-        fdef.shape = shape;
-        b2body.createFixture(fdef);
+        fdef1.filter.categoryBits = NoObjectionGame.HERO_BIT;
+        fdef1.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT;
 
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2/NoObjectionGame.PPM, 7/NoObjectionGame.PPM), new Vector2(2/NoObjectionGame.PPM, 5/NoObjectionGame.PPM));
-        fdef.shape = head;
-        fdef.isSensor = true;
+        fdef1.shape = shape;
+        b2body.createFixture(fdef1);
 
-        b2body.createFixture(fdef).setUserData("head");
+        EdgeShape right = new EdgeShape();
+        right.set(new Vector2(6/NoObjectionGame.PPM, -10/NoObjectionGame.PPM),new Vector2(6/NoObjectionGame.PPM, 10/NoObjectionGame.PPM));
+        fdef1.shape = right;
+        fdef1.isSensor = true;
+
+
+        //fixture2
+
+        FixtureDef fdef2 = new FixtureDef();
+
+        fdef2.filter.categoryBits = NoObjectionGame.HERO_BIT;
+        fdef2.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT;
+
+
+        fdef2.shape = shape;
+        b2body.createFixture(fdef2);
+
+        EdgeShape left = new EdgeShape();
+        left.set(new Vector2(-6/NoObjectionGame.PPM, -10/NoObjectionGame.PPM),new Vector2(-6/NoObjectionGame.PPM, 10/NoObjectionGame.PPM));
+        fdef2.shape = left;
+        fdef2.isSensor = true;
+
+
+        b2body.createFixture(fdef1).setUserData("right");
+        b2body.createFixture(fdef2).setUserData("left");
 
     }
 

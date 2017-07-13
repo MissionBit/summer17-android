@@ -1,5 +1,6 @@
 package com.missionbit.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -14,4 +15,10 @@ public class Floor extends InteractiveTileObject{
         super(world, map, bounds);
 
     }
+
+    @Override
+    public void onCollisionDetected() {
+        Gdx.app.log("Floor", "Floor Hit");
+    }
+
 }

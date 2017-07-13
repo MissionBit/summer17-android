@@ -18,7 +18,19 @@ public class Ladder extends InteractiveTileObject{
     public Ladder(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
         fixture.setUserData(this);
+<<<<<<< HEAD
 
     }
 
+=======
+        setCategoryFilter(NoObjectionGame.LADDER_BIT);
+
+    }
+
+    @Override
+    public void onCollisionDetected() {
+        Gdx.app.log("Ladder", "Ladder Hit");
+    }
+
+>>>>>>> 267b56d174bdb653d74bcdd8b80bfe125c12d685
 }
