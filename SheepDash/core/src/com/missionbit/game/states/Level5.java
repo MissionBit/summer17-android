@@ -9,7 +9,7 @@ import com.missionbit.game.sprites.Farmer;
 import com.missionbit.game.sprites.Sheep;
 
 /**
- * Created by missionbit on 6/28/17.
+ * Created by missionbit on 7/5/17.
  */
 
 public class Level5 extends State {
@@ -57,7 +57,6 @@ public class Level5 extends State {
         if (Gdx.input.justTouched()){
             sheep.jump();
         }
-
     }
 
     @Override
@@ -145,7 +144,6 @@ public class Level5 extends State {
         }
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
         sb.end();
-
     }
 
     @Override
