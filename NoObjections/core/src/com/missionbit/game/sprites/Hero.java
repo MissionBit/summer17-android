@@ -20,7 +20,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
  */
 
 public class Hero extends Sprite {
-    public enum State { FALLING, JUMPING, STANDING, RUNNING};
+    public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD};
     public State currentState;
     public State previousState;
     public World world;
@@ -30,6 +30,7 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
+   private static final float y_deathposition=-100;
 
     public Hero(World world, PlayScreen screen){
         super(screen.getAtlas().findRegion("dudeRun2"));
@@ -60,6 +61,11 @@ public class Hero extends Sprite {
     public void update(float dt){
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         setRegion(getFrame(dt));
+        System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+        if(b2body.getPosition().y < y_deathposition){
+            currentState=State.DEAD;
+            System.out.println("hero is dead");
+        }
     }
 
     public TextureRegion getFrame(float dt){
@@ -97,7 +103,12 @@ public class Hero extends Sprite {
         //TODO: need to code climbing
         if(b2body.getLinearVelocity().x != 0){
             return State.RUNNING;
-        }else{
+        }
+        else if(b2body.getPosition().y < y_deathposition){
+            System.out.println("hero is dead");
+            return State.DEAD;
+        }
+        else{
             return State.STANDING;
         }
     }

@@ -19,7 +19,7 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        menu = new Texture("menuBackground.png");
+        menu = new Texture("coolbg3.png");
         //cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
     }
 
