@@ -19,26 +19,42 @@ import com.missionbit.game.GameTutorial;
 public class CharacterState extends State {
     private Stage stage;
     private Texture bg;
+
+    //Sheep button
     private Texture sheep;
-    private Texture cow;
-    private Texture pig;
-    private Texture chick;
-    private Texture bunny;
     private TextureRegion sheepRegion;
     private TextureRegionDrawable sheepDrawable;
     private ImageButton sheepButton;
+
+    //Cow button
+    private Texture cow;
     private TextureRegion cowRegion;
     private TextureRegionDrawable cowDrawable;
     private ImageButton cowButton;
+
+    //Pig button
+    private Texture pig;
     private TextureRegion pigRegion;
     private TextureRegionDrawable pigDrawable;
     private ImageButton pigButton;
+
+    //Chick button
+    private Texture chick;
     private TextureRegion chickRegion;
     private TextureRegionDrawable chickDrawable;
     private ImageButton chickButton;
+
+    //Bunny button
+    private Texture bunny;
     private TextureRegion bunnyRegion;
     private TextureRegionDrawable bunnyDrawable;
     private ImageButton bunnyButton;
+
+    //Back button
+    private Texture back;
+    private TextureRegion backRegion;
+    private TextureRegionDrawable backDrawable;
+    private ImageButton backButton;
 
     public CharacterState(final GameStateManager gsm) {
         super(gsm);
@@ -56,7 +72,7 @@ public class CharacterState extends State {
         sheepButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -70,7 +86,7 @@ public class CharacterState extends State {
         cowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -85,7 +101,7 @@ public class CharacterState extends State {
         pigButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -99,7 +115,7 @@ public class CharacterState extends State {
         chickButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -113,13 +129,34 @@ public class CharacterState extends State {
         bunnyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
+            }
+        });
+
+        back = new Texture(Gdx.files.internal("back.png"));
+        backRegion = new TextureRegion(back);
+        backDrawable = new TextureRegionDrawable(backRegion);
+        backButton = new ImageButton(backDrawable);
+        stage.addActor(backButton);
+        Gdx.input.setInputProcessor(stage);
+        backButton.setBounds(-7,1,64,47);
+        backButton.getImageCell().expand().fill();
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gsm.set(new MenuState(gsm));
             }
         });
     }
 
     @Override
     protected void handleInput() {
+
+    }
+
+    @Override
+    public void create() {
 
     }
 

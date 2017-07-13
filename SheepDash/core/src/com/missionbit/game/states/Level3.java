@@ -62,6 +62,11 @@ public class Level3 extends State {
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void update(float dt) {
         handleInput();
         sheep.update(dt);

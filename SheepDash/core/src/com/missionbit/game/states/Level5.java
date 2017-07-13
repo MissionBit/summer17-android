@@ -28,21 +28,21 @@ public class Level5 extends State {
     private Vector2 buildingsPos3;
     private Vector2 buildingsPos4;
     private Vector2 buildingsPos5;
-    private static final int GROUND_Y_OFFSET = -80;
-    private static final int buildings_width = 260;
+    private static final int buildings_width = 193;
     private static final int ground_width = 550;
+    long startTime;
 
     public Level5(GameStateManager gsm) {
         super(gsm);
-        sheep = new Sheep(50,60);
+        sheep = new Sheep(120,60);
         sky = new Texture("CitySky.png");
         farmer = new Farmer(-50,60);
-        buildings = new Texture("CityBuildings.png");
+        buildings = new Texture("UpdatedCityBuildings.png");
         ground = new Texture("CityGround.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,GROUND_Y_OFFSET);
-        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,GROUND_Y_OFFSET);
-        groundPos3 = new Vector2(ground.getWidth()+groundPos2.x,GROUND_Y_OFFSET);
+        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,0);
+        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,0);
+        groundPos3 = new Vector2(ground.getWidth()+groundPos2.x,0);
         skyPos = new Vector2(cam.position.x - cam.viewportWidth/2,0);
         skyPos2 = new Vector2(sky.getWidth()+skyPos.x,0);
         buildingsPos = new Vector2(cam.position.x-cam.viewportWidth/2,0);
@@ -50,13 +50,21 @@ public class Level5 extends State {
         buildingsPos3 = new Vector2(2*buildings_width+buildingsPos.x,0);
         buildingsPos4 = new Vector2(3*buildings_width+buildingsPos.x,0);
         buildingsPos5 = new Vector2(4*buildings_width+buildingsPos.x,0);
+        startTime = System.currentTimeMillis();
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()){
-            sheep.jump();
+        if(sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
+    }
+
+    @Override
+    public void create() {
+
     }
 
     @Override
@@ -70,7 +78,9 @@ public class Level5 extends State {
         updateBuildings();
         collisionCheck();
         cam.update();
-
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new MenuState(gsm));
+        }
     }
 
     public void updateGround(){

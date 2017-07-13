@@ -49,20 +49,24 @@ public class Sheep extends Animals{
     }
 
     public void jump() {
-        velocity.y = 500;
+        velocity.y = 440;
 
     }
 
     public void reduceSpd(){
         if (Gdx.graphics.getDeltaTime() < 1){
-            MOVEMENT = 50;
+            MOVEMENT = 100;
         }
     }
 
     public void increaseSpd(){
         if (Gdx.graphics.getDeltaTime() > 0.02){
-            MOVEMENT = 90;
+            MOVEMENT = 210;
         }
+    }
+
+    public void sheepDied() {
+        MOVEMENT = 0;
     }
 
     public Vector3 getPosition() {
