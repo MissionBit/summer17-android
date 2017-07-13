@@ -254,7 +254,7 @@ public class Level4 extends State {
         cars.dispose();
         ground.dispose();
         poop.dispose();
-        car.dispose();
+        //car.dispose();
         redCarTexture.dispose();
         redCar.dispose();
         greenCarTexture.dispose();
