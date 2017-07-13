@@ -13,4 +13,14 @@ public class Portal extends InteractiveTileObject{
         super(world, map, bounds);
 
     }
+
+    @Override
+    public void onLadderHit() {
+
+    }
+
+    @Override
+    public void onDoorHit() {
+
+    }
 }

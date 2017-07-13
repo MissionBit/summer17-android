@@ -16,6 +16,17 @@ import com.missionbit.game.NoObjectionGame;
 public class Ladder extends InteractiveTileObject{
     public Ladder(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
+        fixture.setUserData(this);
+
+    }
+
+    @Override
+    public void onLadderHit() {
+
+    }
+
+    @Override
+    public void onDoorHit() {
 
     }
 }

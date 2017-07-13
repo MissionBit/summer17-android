@@ -13,4 +13,14 @@ public class Plank extends InteractiveTileObject{
     public Plank(World world, TiledMap tiledMap, Rectangle bounds){
         super(world, tiledMap, bounds);
     }
+
+    @Override
+    public void onLadderHit() {
+
+    }
+
+    @Override
+    public void onDoorHit() {
+
+    }
 }
