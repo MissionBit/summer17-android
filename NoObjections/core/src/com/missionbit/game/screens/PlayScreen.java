@@ -20,6 +20,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
+import com.missionbit.game.states.EndState;
+import com.missionbit.game.states.MenuState;
 import com.missionbit.game.tools.B2WorldCreator;
 import com.missionbit.game.tools.WorldContactListener;
 
@@ -104,10 +106,12 @@ public class PlayScreen implements Screen {
         gameCam.update();
         renderer.setView(gameCam);
 
+
     }
 
     @Override
     public void render(float delta) {
+
         update(delta);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -126,6 +130,11 @@ public class PlayScreen implements Screen {
         //Set our batch to now draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
+        if(hero.currentState == Hero.State.DEAD){
+            game.setScreen(new EndScreen(game));
+            dispose();
+        }
     }
 
     @Override
