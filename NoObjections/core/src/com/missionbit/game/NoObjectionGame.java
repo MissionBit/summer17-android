@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 //import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.screens.PlayScreen;
-//import com.missionbit.game.states.EndState;
+import com.missionbit.game.states.EndState;
 //import com.missionbit.game.states.GameStateManager;
+//import com.missionbit.game.states.MenuState;
 //import com.missionbit.game.states.MenuState;
 //import com.missionbit.game.states.PlayState;
 
@@ -21,15 +22,15 @@ public class NoObjectionGame extends Game {
 	public static final int HEIGHT = 480;
 	public static final String TITLE = "Flummox";
 	//private GameStateManager gsm;
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
 
-//		gsm = new GameStateManager();
-//		gsm.push(new MenuState(gsm));
+//	gsm = new GameStateManager();
+		//gsm.push(new MenuState(gsm));
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
