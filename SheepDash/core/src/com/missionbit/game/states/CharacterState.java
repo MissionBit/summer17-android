@@ -50,6 +50,12 @@ public class CharacterState extends State {
     private TextureRegionDrawable bunnyDrawable;
     private ImageButton bunnyButton;
 
+    //Back button
+    private Texture back;
+    private TextureRegion backRegion;
+    private TextureRegionDrawable backDrawable;
+    private ImageButton backButton;
+
     public CharacterState(final GameStateManager gsm) {
         super(gsm);
         bg = new Texture("CharScreen.png");
@@ -124,6 +130,22 @@ public class CharacterState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gsm.set(new MapState(gsm));
+            }
+        });
+
+        back = new Texture(Gdx.files.internal("back.png"));
+        backRegion = new TextureRegion(back);
+        backDrawable = new TextureRegionDrawable(backRegion);
+        backButton = new ImageButton(backDrawable);
+        stage.addActor(backButton);
+        Gdx.input.setInputProcessor(stage);
+        backButton.setBounds(-7,1,64,47);
+        backButton.getImageCell().expand().fill();
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gsm.set(new MenuState(gsm));
             }
         });
     }
