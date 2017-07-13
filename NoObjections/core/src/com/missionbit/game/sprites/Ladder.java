@@ -18,6 +18,7 @@ public class Ladder extends InteractiveTileObject{
     public Ladder(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
         fixture.setUserData(this);
+        setCategoryFilter(NoObjectionGame.LADDER_BIT);
 
     }
 
@@ -26,13 +27,4 @@ public class Ladder extends InteractiveTileObject{
         Gdx.app.log("Ladder", "Ladder Hit");
     }
 
-//    @Override
-//    public void onLadderHit() {
-//        Gdx.app.log("Ladder Ladder", "Ladder Hit");
-//    }
-//
-//    @Override
-//    public void onDoorHit() {
-//        Gdx.app.log("Ladder Door", "Ladder Hit");
-//    }
 }

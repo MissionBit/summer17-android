@@ -21,13 +21,4 @@ public class Floor extends InteractiveTileObject{
         Gdx.app.log("Floor", "Floor Hit");
     }
 
-//    @Override
-//    public void onLadderHit() {
-//        Gdx.app.log("Floor Ladder", "Ladder Hit");
-//    }
-//
-//    @Override
-//    public void onDoorHit() {
-//        Gdx.app.log("Floor Door", "Ladder Hit");
-//    }
 }

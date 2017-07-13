@@ -14,16 +14,6 @@ public class Portal extends InteractiveTileObject{
         super(world, map, bounds);
     }
 
-//    @Override
-//    public void onLadderHit() {
-//        Gdx.app.log("Portal Ladder", "Ladder Hit");
-//    }
-//
-//    @Override
-//    public void onDoorHit() {
-//        Gdx.app.log("Portal Door", "Ladder Hit");
-//    }
-
     @Override
     public void onCollisionDetected() {
         Gdx.app.log("Portal", "Portal Hit");

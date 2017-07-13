@@ -1,14 +1,10 @@
 package com.missionbit.game.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -117,6 +113,9 @@ public class Hero extends Sprite {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(5 / NoObjectionGame.PPM, 18 / NoObjectionGame.PPM);
 
+        fdef1.filter.categoryBits = NoObjectionGame.HERO_BIT;
+        fdef1.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT;
+
         fdef1.shape = shape;
         b2body.createFixture(fdef1);
 
@@ -125,9 +124,14 @@ public class Hero extends Sprite {
         fdef1.shape = right;
         fdef1.isSensor = true;
 
+
         //fixture2
 
         FixtureDef fdef2 = new FixtureDef();
+
+        fdef2.filter.categoryBits = NoObjectionGame.HERO_BIT;
+        fdef2.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT;
+
 
         fdef2.shape = shape;
         b2body.createFixture(fdef2);

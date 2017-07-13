@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.sprites.InteractiveTileObject;
 
 import java.awt.event.ContainerListener;
@@ -15,10 +16,17 @@ import java.awt.event.ContainerListener;
  */
 
 public class WorldContactListener implements ContactListener {
+
+    private Hero hero;
+
+    public WorldContactListener(Hero hero){
+        this.hero = hero;
+    }
+
     @Override
     public void beginContact(Contact contact) {
 
-        Gdx.app.log("world contact listener", "begin contact");
+//        Gdx.app.log("world contact listener", "begin contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
@@ -47,7 +55,7 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("world contact listener", "end contact");
+      //  Gdx.app.log("world contact listener", "end contact");
     }
 
     @Override
