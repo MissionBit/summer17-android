@@ -1,6 +1,5 @@
 package com.missionbit.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -8,18 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 //import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -29,8 +21,10 @@ import com.missionbit.game.Controller;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
+import com.missionbit.game.states.EndState;
+import com.missionbit.game.states.MenuState;
 import com.missionbit.game.tools.B2WorldCreator;
-import com.sun.org.apache.bcel.internal.generic.NOP;
+import com.missionbit.game.tools.WorldContactListener;
 
 /**
  * Created by missionbit on 7/10/17.
@@ -75,6 +69,7 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world,map);
         hero = new Hero(world, this);
         controller = new Controller();
+        world.setContactListener(new WorldContactListener(hero));
     }
 
     public TextureAtlas getAtlas(){
@@ -113,10 +108,12 @@ public class PlayScreen implements Screen {
         gameCam.update();
         renderer.setView(gameCam);
 
+
     }
 
     @Override
     public void render(float delta) {
+
         update(delta);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -136,6 +133,11 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
+
+        if(hero.currentState == Hero.State.DEAD){
+            game.setScreen(new EndScreen(game));
+            dispose();
+        }
     }
 
     @Override
