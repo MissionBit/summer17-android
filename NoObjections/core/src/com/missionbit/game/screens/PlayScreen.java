@@ -29,6 +29,7 @@ import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.tools.B2WorldCreator;
+import com.missionbit.game.tools.WorldContactListener;
 import com.sun.org.apache.bcel.internal.generic.NOP;
 
 /**
@@ -73,6 +74,8 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world,map);
         hero = new Hero(world, this);
+
+        world.setContactListener(new WorldContactListener());
     }
 
     public TextureAtlas getAtlas(){

@@ -15,4 +15,9 @@ public class Door extends InteractiveTileObject {
         super(world, map, bounds);
 
     }
+
+    @Override
+    public void onLadderHit() {
+
+    }
 }
