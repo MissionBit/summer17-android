@@ -21,6 +21,11 @@ public class NoObjectionGame extends Game {
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
 	public static final String TITLE = "Flummox";
+	public static final short HERO_BIT = 2;
+	public static final short LADDER_BIT = 4;
+	public static final short DOOR_BIT = 8;
+	public static final short DESTROYED_BIT = 16;
+	public static final short DEFAULT_BIT = 1;
 	//private GameStateManager gsm;
 	public static SpriteBatch batch;
 
