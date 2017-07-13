@@ -21,6 +21,7 @@ import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.tools.B2WorldCreator;
+import com.missionbit.game.tools.WorldContactListener;
 
 /**
  * Created by missionbit on 7/10/17.
@@ -64,6 +65,8 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world,map);
         hero = new Hero(world, this);
+
+        world.setContactListener(new WorldContactListener());
 
         }
 

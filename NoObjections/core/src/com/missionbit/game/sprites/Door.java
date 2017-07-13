@@ -1,5 +1,6 @@
 package com.missionbit.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -18,12 +19,17 @@ public class Door extends InteractiveTileObject {
     }
 
     @Override
-    public void onLadderHit() {
-
+    public void onCollisionDetected() {
+        Gdx.app.log("Door", "Door Hit");
     }
 
-    @Override
-    public void onDoorHit() {
-
-    }
+//    @Override
+//    public void onLadderHit() {
+//        Gdx.app.log("Door Ladder", "Ladder Hit");
+//    }
+//
+//    @Override
+//    public void onDoorHit() {
+//        Gdx.app.log("Door Door", "Ladder Hit");
+//    }
 }

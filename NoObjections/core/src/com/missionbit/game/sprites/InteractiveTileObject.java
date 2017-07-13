@@ -44,6 +44,5 @@ public abstract class InteractiveTileObject {
         fixture = body.createFixture(fdef);
     }
 
-    public abstract void onLadderHit();
-    public abstract void onDoorHit();
+    public abstract void onCollisionDetected();
 }
