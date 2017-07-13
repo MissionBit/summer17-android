@@ -36,6 +36,11 @@ public class Level1 extends State {
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void update(float dt) {
         apple.update(dt);
         updateHaybale();
