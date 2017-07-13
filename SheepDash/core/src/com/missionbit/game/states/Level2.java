@@ -18,6 +18,11 @@ public class Level2 extends State {
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void update(float dt) {
 
     }

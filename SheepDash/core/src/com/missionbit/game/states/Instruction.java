@@ -49,8 +49,13 @@ public class Instruction extends State {
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()){
-            gsm.push(new MenuState(gsm));
+            gsm.set(new MenuState(gsm));
         }
+    }
+
+    @Override
+    public void create() {
+
     }
 
     @Override

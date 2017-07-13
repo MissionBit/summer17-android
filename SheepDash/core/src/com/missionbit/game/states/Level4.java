@@ -29,10 +29,11 @@ public class Level4 extends State {
     private Vector2 carsPos3;
     private Poop poop;
     private Obstacle car;
-    private static final int GROUND_Y_OFFSET = -80;
-    private static final int POOP_SPACING = 300;
+    private static final int POOP_SPACING = 1000;
     private static final int POOP_WIDTH = 30;
     private int car_Width=270;
+    long startTime;
+    
 
     public Level4(GameStateManager gsm) {
         super(gsm);
@@ -44,20 +45,28 @@ public class Level4 extends State {
         cars = new Texture("carsForHighway.png");
         ground = new Texture("highwayBackground.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,GROUND_Y_OFFSET);
-        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,GROUND_Y_OFFSET);
+        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,0);
+        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,0);
         skyPos = new Vector2(cam.position.x - cam.viewportWidth/2,0);
         skyPos2 = new Vector2(sky.getWidth()+skyPos.x,0);
         carsPos = new Vector2(cam.position.x-cam.viewportWidth/2,0);
         carsPos2 = new Vector2(cars.getWidth()+carsPos.x,0);
         carsPos3 = new Vector2(cars.getWidth()+carsPos2.x,0);
+        startTime = System.currentTimeMillis();
+
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()){
-            sheep.jump();
+        if(sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
+    }
+
+    @Override
+    public void create() {
     }
 
     @Override
@@ -72,9 +81,10 @@ public class Level4 extends State {
         updateCars();
         collisionCheck();
         collisionCheck2();
-        changeLevels();
         cam.update();
-
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new Level5(gsm));
+        }
     }
 
     public void updatePoops(){
@@ -137,22 +147,16 @@ public class Level4 extends State {
 
 
     public void collisionCheck() {
-        if (farmer.collides(sheep.getBounds1())){
+        if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
-        }
-    }
-
-
-    public void changeLevels(){
-        if (sheep.getPosition().x > 3000){
-            gsm.set(new Level5(gsm));
+            sheep.sheepDied();
+            farmer.killedSheep();
         }
     }
 
     public void collisionCheck2(){
         if (poop.collides(sheep.getBounds1())){
             sheep.reduceSpd();
-            sheep.increaseSpd();
         }
     }
 
@@ -162,22 +166,21 @@ public class Level4 extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(sky,skyPos.x,0,800,400);
-        sb.draw(sky,skyPos2.x,0,800,400);
-        sb.draw(ground,groundPos1.x,0,790,350);
-        sb.draw(ground,groundPos2.x,0,790,350);
-        sb.draw(cars,carsPos.x,20,car_Width,300);
-        sb.draw(cars,carsPos2.x,20,car_Width,300);
-        sb.draw(cars,carsPos3.x,20,car_Width,300);
-        sb.draw(poop.getPoop(),poop.getPosPoop().x,poop.getPosPoop().y,30,30);
-        sb.draw(poop.getPoop(),poop.getPosPoop2().x,poop.getPosPoop2().y,30,30);
+        sb.draw(sky, skyPos.x, 0, 800, 400);
+        sb.draw(sky, skyPos2.x, 0, 800, 400);
+        sb.draw(ground, groundPos1.x, 0, 790, 350);
+        sb.draw(ground, groundPos2.x, 0, 790, 350);
+        sb.draw(cars, carsPos.x, 20, car_Width, 300);
+        sb.draw(cars, carsPos2.x, 20, car_Width, 300);
+        sb.draw(cars, carsPos3.x, 20, car_Width, 300);
+        sb.draw(poop.getPoop(), poop.getPosPoop().x, poop.getPosPoop().y, 30, 30);
+        sb.draw(poop.getPoop(), poop.getPosPoop2().x, poop.getPosPoop2().y, 30, 30);
         if (farmer.collides(sheep.getBounds1())) {
-            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
+            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+        } else {
+            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }
-        else {
-            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
-        }
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y);
         sb.end();
     }
 

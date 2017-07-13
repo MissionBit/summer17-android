@@ -19,23 +19,33 @@ import com.missionbit.game.GameTutorial;
 public class CharacterState extends State {
     private Stage stage;
     private Texture bg;
+
+    //Sheep button
     private Texture sheep;
-    private Texture cow;
-    private Texture pig;
-    private Texture chick;
-    private Texture bunny;
     private TextureRegion sheepRegion;
     private TextureRegionDrawable sheepDrawable;
     private ImageButton sheepButton;
+
+    //Cow button
+    private Texture cow;
     private TextureRegion cowRegion;
     private TextureRegionDrawable cowDrawable;
     private ImageButton cowButton;
+
+    //Pig button
+    private Texture pig;
     private TextureRegion pigRegion;
     private TextureRegionDrawable pigDrawable;
     private ImageButton pigButton;
+
+    //Chick button
+    private Texture chick;
     private TextureRegion chickRegion;
     private TextureRegionDrawable chickDrawable;
     private ImageButton chickButton;
+
+    //Bunny button
+    private Texture bunny;
     private TextureRegion bunnyRegion;
     private TextureRegionDrawable bunnyDrawable;
     private ImageButton bunnyButton;
@@ -56,7 +66,7 @@ public class CharacterState extends State {
         sheepButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -70,7 +80,7 @@ public class CharacterState extends State {
         cowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -85,7 +95,7 @@ public class CharacterState extends State {
         pigButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -99,7 +109,7 @@ public class CharacterState extends State {
         chickButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
 
@@ -113,13 +123,18 @@ public class CharacterState extends State {
         bunnyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.push(new MapState(gsm));
+                gsm.set(new MapState(gsm));
             }
         });
     }
 
     @Override
     protected void handleInput() {
+
+    }
+
+    @Override
+    public void create() {
 
     }
 

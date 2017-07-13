@@ -91,7 +91,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 1");
-                gsm.push(new Level1(gsm));
+                gsm.set(new Level1(gsm));
             }
         });
 
@@ -108,7 +108,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 2");
-                gsm.push(new Level2(gsm));
+                gsm.set(new Level2(gsm));
             }
         });
 
@@ -125,7 +125,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 3");
-                gsm.push(new Level3(gsm));
+                gsm.set(new Level3(gsm));
             }
         });
 
@@ -142,7 +142,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 4");
-                gsm.push(new Level4(gsm));
+                gsm.set(new Level4(gsm));
             }
         });
 
@@ -160,7 +160,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 5");
-                gsm.push(new Level5(gsm));
+                gsm.set(new Level5(gsm));
             }
         });
 
@@ -177,13 +177,18 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Go back");
-                gsm.push(new CharacterState(gsm));
+                gsm.set(new CharacterState(gsm));
             }
         });
     }
 
     @Override
     protected void handleInput() {
+
+    }
+
+    @Override
+    public void create() {
 
     }
 
