@@ -28,8 +28,7 @@ public class Level4 extends State {
     private Vector2 carsPos, carsPos2, carsPos3;
     private Poop poop;
     private Obstacle car;
-    private static final int GROUND_Y_OFFSET = -80;
-    private static final int POOP_SPACING = 300;
+    private static final int POOP_SPACING = 1000;
     private static final int POOP_WIDTH = 30;
     private int car_Width=270;
     //obstacles
@@ -40,6 +39,8 @@ public class Level4 extends State {
     private Texture appleTexture;
     private Obstacle apple;
     private boolean appleIsTouched;
+    long startTime;
+    
 
     public Level4(GameStateManager gsm) {
         super(gsm);
@@ -51,8 +52,8 @@ public class Level4 extends State {
         cars = new Texture("carsForHighway.png");
         ground = new Texture("highwayBackground.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,GROUND_Y_OFFSET);
-        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,GROUND_Y_OFFSET);
+        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,0);
+        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,0);
         skyPos = new Vector2(cam.position.x - cam.viewportWidth/2,0);
         skyPos2 = new Vector2(sky.getWidth()+skyPos.x,0);
         carsPos = new Vector2(cam.position.x-cam.viewportWidth/2,0);
@@ -65,13 +66,21 @@ public class Level4 extends State {
         appleTexture = new Texture("Apple.png");
         apple = new Obstacle(appleTexture, 750, 50, 2, 0.5f);
         appleIsTouched = false;
+        startTime = System.currentTimeMillis();
+
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()){
-            sheep.jump();
+        if(sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
+    }
+
+    @Override
+    public void create() {
     }
 
     @Override
@@ -93,8 +102,13 @@ public class Level4 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
+        collisionCheck2();
+        cam.update();
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new Level5(gsm));
+        }
     }
-
+ 
     public void updateRed() {
         if (cam.position.x - cam.viewportWidth / 2 > redCar.getPosObs().x + redCar.getWidth()) {
             Random rand = new Random();
@@ -186,8 +200,10 @@ public class Level4 extends State {
 
 
     public void collisionCheck() {
-        if (farmer.collides(sheep.getBounds1())){
+        if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
         }
         if (poop.collides(sheep.getBounds1())){
             sheep.reduceSpd();
@@ -218,6 +234,12 @@ public class Level4 extends State {
         }
     }
 
+    public void collisionCheck2(){
+        if (poop.collides(sheep.getBounds1())){
+            sheep.reduceSpd();
+        }
+    }
+
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
@@ -237,12 +259,11 @@ public class Level4 extends State {
             sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
         }
         if (farmer.collides(sheep.getBounds1())) {
-            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
+            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+        } else {
+            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }
-        else {
-            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
-        }
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y);
         sb.end();
     }
 

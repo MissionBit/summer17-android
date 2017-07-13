@@ -73,23 +73,26 @@ public class Sheep extends Animals{
         }
         return false;
     }
-
+  
     public void reduceSpd(){
-        //MOVEMENT = MOVEMENT - 20;
-        MOVEMENT = 150;
+        MOVEMENT = 300;
     }
 
     public void resetSpd() {
-        MOVEMENT = 200;
+        MOVEMENT = 440;
     }
 
     public void increaseSpd(){
         //MOVEMENT = MOVEMENT + 20;
-        MOVEMENT = 250;
+        MOVEMENT = 500;
     }
 
     public void goBackwards() {
         MOVEMENT = -200;
+    }
+
+    public void sheepDied() {
+        MOVEMENT = 0;
     }
 
     public Vector3 getPosition() {
