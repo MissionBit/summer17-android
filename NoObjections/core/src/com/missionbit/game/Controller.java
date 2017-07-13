@@ -48,7 +48,7 @@ public class Controller {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = true;
+                leftPressed = false;
             }
         });
         Image downImg = new Image(new Texture("downArrow.png"));

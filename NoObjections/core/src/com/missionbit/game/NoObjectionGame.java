@@ -34,7 +34,6 @@ public class NoObjectionGame extends Game {
     public static SpriteBatch batch;
     World world;
     public Viewport viewport;
-    public Controller controller;
     public Hero hero;
 
 
@@ -42,7 +41,6 @@ public class NoObjectionGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         setScreen(new PlayScreen(this));
-        controller = new Controller();
         viewport = new FitViewport(V_WIDTH, V_HEIGHT);
         world = new World(new Vector2(0, -10), true);
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -54,28 +52,14 @@ public class NoObjectionGame extends Game {
     public void resize(int width, int height) {
         super.resize(width, height);
         viewport.update(width, height);
-        controller.resize(width, height);
     }
 
-    public void handleInput() {
-        if (controller.isRightPressed())
-            hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
-                    true);
-        else if (controller.isLeftPressed() && hero.b2body.getLinearVelocity().x <= 2)
-            hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
-//        else
-//            hero.setLinearVelocity(new Vector2(0, hero.getLinearVelocity().y));
-        if (controller.isUpPressed())
-            hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
-                    true);
 
-    }
 
 
     @Override
     public void render() {
         super.render();
-        controller.draw();
 
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
