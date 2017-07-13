@@ -1,4 +1,4 @@
-package com.missionbit.game.sprites;
+package com.missionbit.game.sprites.animals;
 
 
 import com.badlogic.gdx.math.Vector3;
@@ -11,7 +11,7 @@ public abstract class Animals {
     protected Vector3 position;
     protected Vector3 velocity;
     protected static final int GRAVITY = -23;
-    protected int MOVEMENT = 90;
+    protected int MOVEMENT = 200;
 
     protected Animals(int x, int y){
         position = new Vector3(x,y,0);

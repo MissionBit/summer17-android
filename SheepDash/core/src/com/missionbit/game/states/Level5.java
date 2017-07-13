@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
+import com.missionbit.game.sprites.obstacles.Cherry;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.animals.Sheep;
 
 /**
  * Created by missionbit on 6/28/17.
@@ -31,10 +32,11 @@ public class Level5 extends State {
     private static final int GROUND_Y_OFFSET = -80;
     private static final int buildings_width = 260;
     private static final int ground_width = 550;
+    private static final int sky_width = 800;
 
     public Level5(GameStateManager gsm) {
         super(gsm);
-        sheep = new Sheep(50,60);
+        sheep = new Sheep(150,60);
         sky = new Texture("CitySky.png");
         farmer = new Farmer(-50,60);
         buildings = new Texture("CityBuildings.png");
@@ -70,9 +72,21 @@ public class Level5 extends State {
         updateSky();
         updateBuildings();
         collisionCheck();
+        timerCheck(dt);
         cam.update();
 
     }
+
+    public void collisionCheck(){
+    }
+
+    public void timerCheck(float timePassed){
+        sheep.updateTimer(timePassed);
+        if (sheep.isTimerDone()){
+            sheep.resetSpd();
+        }
+    }
+
 
     public void updateGround(){
         if(groundPos1.x+ground.getWidth() <= cam.position.x-cam.viewportWidth/2){
@@ -116,19 +130,13 @@ public class Level5 extends State {
     }
 
 
-    public void collisionCheck() {
-        if (farmer.collides(sheep.getBounds1())){
-            sheep.getSheepDead();
-        }
-    }
-
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(sky,skyPos.x,0,800,400);
-        sb.draw(sky,skyPos2.x,0,800,400);
+        sb.draw(sky,skyPos.x,0,sky_width,400);
+        sb.draw(sky,skyPos2.x,0,sky_width,400);
         sb.draw(buildings,buildingsPos.x,0,buildings_width,200);
         sb.draw(buildings,buildingsPos2.x,0,buildings_width,200);
         sb.draw(buildings,buildingsPos3.x,0,buildings_width,200);
@@ -143,7 +151,7 @@ public class Level5 extends State {
         else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
         }
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,120,110);
         sb.end();
 
     }
@@ -155,6 +163,5 @@ public class Level5 extends State {
         ground.dispose();
         sheep.dispose();
         farmer.dispose();
-
     }
 }

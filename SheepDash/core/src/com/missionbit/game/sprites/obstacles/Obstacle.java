@@ -1,4 +1,4 @@
-package com.missionbit.game.sprites;
+package com.missionbit.game.sprites.obstacles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;

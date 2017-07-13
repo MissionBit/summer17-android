@@ -36,7 +36,7 @@ public class MapState extends State {
         /*@Override
         public void handleInput() {
             if (Gdx.input.justTouched()) {
-                gsm.set(new PlayState(gsm));
+                gsm.set(new Level1(gsm));
             }
         }
         */

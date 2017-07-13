@@ -17,7 +17,7 @@ public class Farmer {
     private Vector3 velocity;
     private Rectangle boundsFarmer;
     private Vector2 posFarmer;
-    private static final int MOVEMENT = 83;
+    private static final int MOVEMENT = 150;
 
     public Farmer(int x, int y){
         farmer = new Texture("farmerOnATractor.png");

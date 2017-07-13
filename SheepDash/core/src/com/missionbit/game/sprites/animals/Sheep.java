@@ -1,21 +1,28 @@
-package com.missionbit.game.sprites;
+package com.missionbit.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.sprites.Animation;
+
+import java.util.Random;
 
 /**
  * Created by MissionBit on 6/27/17.
  */
 
-public class Sheep extends Animals{
+public class Sheep extends Animals {
     private Texture sheep;
     private Rectangle bounds1;
     private Animation sheepAnimation;
     private Texture sheepDead;
     private Animation sheep2Animation;
+    private Random rand;
+    private float timer;
+    private boolean isTimerStarted = false;
+    private static final float PENALTY_TIMER=1;
 
     public Sheep(int x, int y) {
         super(x, y);
@@ -24,6 +31,7 @@ public class Sheep extends Animals{
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
         sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
         bounds1 = new Rectangle(x,y,70,45);
+        rand = new Random();
 
     }
 
@@ -40,28 +48,51 @@ public class Sheep extends Animals{
         if(position.y < 60){
             position.y = 60;
         }
-        if(position.y>300){
-            position.y=60;
-        }
         bounds1.setPosition(position.x,position.y);
     }
 
     public void jump() {
-        velocity.y = 500;
+        if (position.y <= 150){
+            velocity.y = 500;
+        }
 
+    }
+
+    public void updateTimer(float elaspedTime){
+        if (isTimerStarted){
+            timer = timer + elaspedTime;
+        }
+    }
+
+    public void startTimer(){
+        timer = 0;
+        isTimerStarted = true;
+    }
+
+    public boolean isTimerDone(){
+        if (timer > PENALTY_TIMER ){
+            return true;
+        }
+        return false;
     }
 
     public void reduceSpd(){
-        if (Gdx.graphics.getDeltaTime() < 1){
-            MOVEMENT = 50;
-        }
+        MOVEMENT = 110;
+    }
+
+    public void resetSpd(){
+        MOVEMENT = 200;
+
+    }
+
+    public void stopSpd(){
+        MOVEMENT = 0;
     }
 
     public void increaseSpd(){
-        if (Gdx.graphics.getDeltaTime() > 0.02){
-            MOVEMENT = 90;
-        }
+        MOVEMENT = 250;
     }
+
 
     public Vector3 getPosition() {
         return position;
