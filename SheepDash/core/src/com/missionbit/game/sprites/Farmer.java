@@ -54,6 +54,11 @@ public class Farmer {
         return boundsFarmer;
     }
 
+    public void setBoundsFarmer(int x, int y){
+        boundsFarmer.width = x;
+        boundsFarmer.height = y;
+    }
+
     public void dispose(){
         farmer.dispose();
     }

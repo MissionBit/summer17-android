@@ -60,23 +60,9 @@ public class MapState extends State {
     private TextureRegionDrawable myTexRegionDrawableBack;
     private ImageButton backButton;
 
-
-//    private Texture l1;
-//    private Texture l2;
-//    private Texture l3;
-//    private Texture l4;
-//    private Texture l5;
-
-
     public MapState(final GameStateManager gsm) {
         super(gsm);
         bg = new Texture("LevelBg.png");
-//        l1 = new Texture("Lvl1.png");
-//        l2 = new Texture("Lvl2.png");
-//        l3 = new Texture("Lvl3.png");
-//        l4 = new Texture("Lvl4.png");
-//        l5 = new Texture("Lvl5.png");
-
         myTexture1 = new Texture(Gdx.files.internal("Lvl1.png"));
         myTextureRegion1 = new TextureRegion(myTexture1);
         myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
@@ -199,11 +185,6 @@ public class MapState extends State {
 
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-//        sb.draw(l1,117,322,64,47);
-//        sb.draw(l2,200,138,64,47);
-//        sb.draw(l3,369,251,64,47);
-//        sb.draw(l4,526,354,64,47);
-//        sb.draw(l5,522,107,64,47);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic

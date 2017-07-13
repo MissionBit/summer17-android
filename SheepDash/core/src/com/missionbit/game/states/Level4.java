@@ -135,13 +135,11 @@ public class Level4 extends State {
 
     }
 
-
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())){
             sheep.getSheepDead();
         }
     }
-
 
     public void changeLevels(){
         if (sheep.getPosition().x > 3000){
@@ -152,7 +150,7 @@ public class Level4 extends State {
     public void collisionCheck2(){
         if (poop.collides(sheep.getBounds1())){
             sheep.reduceSpd();
-            sheep.increaseSpd();
+            //sheep.increaseSpd();
         }
     }
 
