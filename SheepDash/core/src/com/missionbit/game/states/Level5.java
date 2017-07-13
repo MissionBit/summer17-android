@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
+import com.missionbit.game.sprites.Obstacle;
 import com.missionbit.game.sprites.Sheep;
+
+import java.util.Random;
 
 /**
  * Created by missionbit on 7/5/17.
@@ -18,23 +21,23 @@ public class Level5 extends State {
     private Farmer farmer;
     private Texture buildings;
     private Texture ground;
-    private Vector2 groundPos1;
-    private Vector2 groundPos2;
-    private Vector2 groundPos3;
-    private Vector2 skyPos;
-    private Vector2 buildingsPos;
-    private Vector2 skyPos2;
-    private Vector2 buildingsPos2;
-    private Vector2 buildingsPos3;
-    private Vector2 buildingsPos4;
-    private Vector2 buildingsPos5;
+    private Vector2 groundPos1, groundPos2, groundPos3;
+    private Vector2 skyPos, skyPos2;
+    private Vector2 buildingsPos, buildingsPos2, buildingsPos3, buildingsPos4, buildingsPos5;
+    //obstacles
+    private Texture greyTexture;
+    private Obstacle greyCar;
+    private Texture mushroomTexture;
+    private Obstacle mushroom;
+    private Texture cherryTexture;
+    private Obstacle cherry;
     private static final int GROUND_Y_OFFSET = -80;
     private static final int buildings_width = 260;
     private static final int ground_width = 550;
 
     public Level5(GameStateManager gsm) {
         super(gsm);
-        sheep = new Sheep(50,60);
+        sheep = new Sheep(150,60);
         sky = new Texture("CitySky.png");
         farmer = new Farmer(-50,60);
         buildings = new Texture("CityBuildings.png");
@@ -50,6 +53,12 @@ public class Level5 extends State {
         buildingsPos3 = new Vector2(2*buildings_width+buildingsPos.x,0);
         buildingsPos4 = new Vector2(3*buildings_width+buildingsPos.x,0);
         buildingsPos5 = new Vector2(4*buildings_width+buildingsPos.x,0);
+        greyTexture = new Texture("CarGrey.png");
+        greyCar = new Obstacle(greyTexture, 700, 50, 1, 0.5f);
+        mushroomTexture = new Texture("Mushroom.png");
+        mushroom = new Obstacle(mushroomTexture, 2000, 60, 2, 0.2f);
+        cherryTexture = new Texture("Cherry2_0.35.png");
+        cherry = new Obstacle(cherryTexture, 1000, 50, 2, 0.35f);
     }
 
     @Override
@@ -65,9 +74,15 @@ public class Level5 extends State {
         sheep.update(dt);
         cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
+        mushroom.update(dt);
+        cherry.update(dt);
         updateGround();
         updateSky();
         updateBuildings();
+        updateGrey();
+        updateMushroom();
+        updateCherry();
+        timerCheck(dt);
         collisionCheck();
         cam.update();
 
@@ -114,10 +129,55 @@ public class Level5 extends State {
         }
     }
 
+    public void updateGrey() {
+        if (cam.position.x - cam.viewportWidth / 2 > greyCar.getPosObs().x + greyCar.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 600) + GameTutorial.WIDTH;
+            greyCar.reposition(greyCar.getPosObs().x + distance, 58);
+        }
+    }
+
+    public void updateMushroom() {
+        if (cam.position.x - cam.viewportWidth / 2 > mushroom.getPosObs().x + mushroom.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 1300) + GameTutorial.WIDTH;
+            mushroom.reposition(mushroom.getPosObs().x + distance, 58);
+        }
+    }
+
+    public void updateCherry() {
+        if (cam.position.x - cam.viewportWidth / 2 > cherry.getPosObs().x + cherry.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 850) + GameTutorial.WIDTH;
+            cherry.reposition(cherry.getPosObs().x + distance, 58);
+        }
+    }
+
+    public void timerCheck(float timePassed) {
+        sheep.updateTimer(timePassed);
+        if (sheep.isTimerDone()) {
+            sheep.resetSpd();
+        }
+    }
 
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())){
             sheep.getSheepDead();
+        }
+        if (greyCar.collides(sheep.getBounds1())) {
+            sheep.reduceSpd();
+            sheep.startTimer();
+        }
+        if (cherry.collides(sheep.getBounds1())) {
+            sheep.increaseSpd();
+            sheep.startTimer();
+        }
+        if (mushroom.collides(sheep.getBounds1())) {
+            sheep.goBackwards();
+            sheep.startTimer();
         }
     }
 
@@ -136,6 +196,9 @@ public class Level5 extends State {
         sb.draw(ground,groundPos1.x,0,ground_width,350);
         sb.draw(ground,groundPos2.x,0,ground_width,350);
         sb.draw(ground,groundPos3.x,0,ground_width,350);
+        sb.draw(greyCar.getObstacle(), greyCar.getPosObs().x, greyCar.getPosObs().y);
+        sb.draw(mushroom.getObsAnimation(), mushroom.getPosObs().x, mushroom.getPosObs().y);
+        sb.draw(cherry.getObsAnimation(), cherry.getPosObs().x, cherry.getPosObs().y);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
         }
@@ -153,6 +216,11 @@ public class Level5 extends State {
         ground.dispose();
         sheep.dispose();
         farmer.dispose();
-
+        greyTexture.dispose();
+        greyCar.dispose();
+        mushroomTexture.dispose();
+        mushroom.dispose();
+        cherryTexture.dispose();
+        cherry.dispose();
     }
 }

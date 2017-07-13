@@ -15,18 +15,16 @@ public class Obstacle {
     private Texture obstacle;
     private Animation obstacleAnimation;
     private Vector2 posObs;
-    private static final int OBS_GAP = 100;
-    private static final int FLUCTUATION = 300;
-    private Random rand;
     private Rectangle boundsObs;
+    public boolean hasCollided;
 
     //can change the obstacles and their position with each level
     public Obstacle(Texture obstacle, float x, float y, int frames, float time) {
         this.obstacle = obstacle;
         obstacleAnimation = new Animation(new TextureRegion(obstacle), frames, time);
-        rand = new Random();
         posObs = new Vector2(x, y);
         boundsObs = new Rectangle(posObs.x, posObs.y, obstacle.getWidth(), obstacle.getHeight());
+        hasCollided = false;
     }
 
     public Texture getObstacle() {return obstacle; }
@@ -44,16 +42,21 @@ public class Obstacle {
     public Vector2 getPosObs() { return posObs; }
 
     //reposition the obstacle
-    public void reposition (float x) {
-        //posObs.set(rand.nextInt(FLUCTUATION) + OBS_GAP, 1000);
-        posObs.set(x, 50);
-        System.out.println(posObs.x);
+    public void reposition (float x, int y) {
+        hasCollided = false;
+        posObs.set(x, y);
         boundsObs.setPosition(posObs.x, posObs.y);
     }
 
     //collision check
     public boolean collides(Rectangle player) {
-        return player.overlaps(boundsObs);
+        if (player.overlaps(boundsObs) && !hasCollided) {
+            hasCollided = true;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     //dispose

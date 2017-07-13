@@ -17,6 +17,9 @@ public class Sheep extends Animals{
     private Animation sheepAnimation;
     private Texture sheepDead;
     private Animation sheep2Animation;
+    private float timer;
+    private boolean isTimerStarted = false;
+    private static final float PENALTY_TIMER =2;
     private Sound jump;
 
     public Sheep(int x, int y) {
@@ -46,23 +49,47 @@ public class Sheep extends Animals{
             position.y=60;
         }
         bounds1.setPosition(position.x,position.y);
+        //System.out.println("Sheep's speed:" + MOVEMENT);
     }
 
     public void jump() {
         velocity.y = 500;
+    }
 
+    public void updateTimer(float elaspedTime) {
+        if (isTimerStarted) {
+            timer = timer + elaspedTime;
+        }
+    }
+
+    public void startTimer() {
+        timer = 0;
+        isTimerStarted = true;
+    }
+
+    public boolean isTimerDone() {
+        if (timer > PENALTY_TIMER) {
+            return true;
+        }
+        return false;
     }
 
     public void reduceSpd(){
-        if (Gdx.graphics.getDeltaTime() < 1){
-            MOVEMENT = 50;
-        }
+        //MOVEMENT = MOVEMENT - 20;
+        MOVEMENT = 20;
+    }
+
+    public void resetSpd() {
+        MOVEMENT = 90;
     }
 
     public void increaseSpd(){
-        if (Gdx.graphics.getDeltaTime() > 0.02){
-            MOVEMENT = 90;
-        }
+        //MOVEMENT = MOVEMENT + 20;
+        MOVEMENT = 110;
+    }
+
+    public void goBackwards() {
+        MOVEMENT = -200;
     }
 
     public Vector3 getPosition() {
