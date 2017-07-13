@@ -29,6 +29,7 @@ public class Level3 extends State {
     private Obstacle mud;
     private Texture carrotTexture;
     private Obstacle carrot;
+    private boolean carrotIsTouched;
     private Texture spikesTexture;
     private Obstacle spikes;
     private static final int hills_width = 1024;
@@ -57,7 +58,8 @@ public class Level3 extends State {
         carrotTexture = new Texture("Carrott.png");
         carrot = new Obstacle(carrotTexture, 1100, 50, 2, 0.3f);
         spikesTexture = new Texture("SPIKES2.0.18.png");
-        spikes = new Obstacle(spikesTexture, 100, 50, 2, 0.5f);
+        spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
+        carrotIsTouched = false;
     }
 
     @Override
@@ -142,8 +144,9 @@ public class Level3 extends State {
         if (cam.position.x - cam.viewportWidth / 2 > carrot.getPosObs().x + carrot.getWidth()) {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
-            float distance = (fluctuation * 700) + GameTutorial.WIDTH;
+            float distance = (fluctuation * 500) + GameTutorial.WIDTH;
             carrot.reposition(carrot.getPosObs().x + distance, 58);
+            carrotIsTouched = false;
         }
     }
 
@@ -151,7 +154,7 @@ public class Level3 extends State {
         if (cam.position.x - cam.viewportWidth / 2 > spikes.getPosObs().x + spikes.getWidth()) {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
-            float distance = (fluctuation * 700) + GameTutorial.WIDTH;
+            float distance = (fluctuation * 900) + GameTutorial.WIDTH;
             spikes.reposition(spikes.getPosObs().x + distance, 58);
         }
     }
@@ -160,11 +163,16 @@ public class Level3 extends State {
         if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
         }
-        if (mud.collides(sheep.getBounds1()) || spikes.collides(sheep.getBounds1())) {
+        if (mud.collides(sheep.getBounds1())) {
+            sheep.reduceSpd();
+            sheep.startTimer();
+        }
+        if (spikes.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
             sheep.startTimer();
         }
         if (carrot.collides(sheep.getBounds1())) {
+            carrotIsTouched = true;
             sheep.startTimer();
             sheep.increaseSpd();
         }
@@ -192,7 +200,9 @@ public class Level3 extends State {
         sb.draw(ground, groundPos2.x, 0, ground_width, 1100);
         sb.draw(ground, groundPos3.x, 0, ground_width, 1100);
         sb.draw(mud.getObstacle(), mud.getPosObs().x, mud.getPosObs().y);
-        sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y);
+        if (carrotIsTouched == false) {
+            sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y);
+        }
         sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);

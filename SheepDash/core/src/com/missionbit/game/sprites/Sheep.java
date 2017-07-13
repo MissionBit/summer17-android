@@ -76,16 +76,16 @@ public class Sheep extends Animals{
 
     public void reduceSpd(){
         //MOVEMENT = MOVEMENT - 20;
-        MOVEMENT = 20;
+        MOVEMENT = 150;
     }
 
     public void resetSpd() {
-        MOVEMENT = 90;
+        MOVEMENT = 200;
     }
 
     public void increaseSpd(){
         //MOVEMENT = MOVEMENT + 20;
-        MOVEMENT = 110;
+        MOVEMENT = 250;
     }
 
     public void goBackwards() {

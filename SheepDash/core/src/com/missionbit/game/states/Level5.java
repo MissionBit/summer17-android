@@ -29,8 +29,10 @@ public class Level5 extends State {
     private Obstacle greyCar;
     private Texture mushroomTexture;
     private Obstacle mushroom;
+    private boolean mushroomIsTouched;
     private Texture cherryTexture;
     private Obstacle cherry;
+    private boolean cherryIsTouched;
     private static final int GROUND_Y_OFFSET = -80;
     private static final int buildings_width = 260;
     private static final int ground_width = 550;
@@ -54,11 +56,13 @@ public class Level5 extends State {
         buildingsPos4 = new Vector2(3*buildings_width+buildingsPos.x,0);
         buildingsPos5 = new Vector2(4*buildings_width+buildingsPos.x,0);
         greyTexture = new Texture("CarGrey.png");
-        greyCar = new Obstacle(greyTexture, 700, 50, 1, 0.5f);
+        greyCar = new Obstacle(greyTexture, 700, 48, 1, 0.5f);
         mushroomTexture = new Texture("Mushroom.png");
         mushroom = new Obstacle(mushroomTexture, 2000, 60, 2, 0.2f);
+        mushroomIsTouched = false;
         cherryTexture = new Texture("Cherry2_0.35.png");
         cherry = new Obstacle(cherryTexture, 1000, 50, 2, 0.35f);
+        cherryIsTouched = false;
     }
 
     @Override
@@ -134,7 +138,7 @@ public class Level5 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 600) + GameTutorial.WIDTH;
-            greyCar.reposition(greyCar.getPosObs().x + distance, 58);
+            greyCar.reposition(greyCar.getPosObs().x + distance, 48);
         }
     }
 
@@ -144,6 +148,7 @@ public class Level5 extends State {
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 1300) + GameTutorial.WIDTH;
             mushroom.reposition(mushroom.getPosObs().x + distance, 58);
+            mushroomIsTouched = false;
         }
     }
 
@@ -153,6 +158,7 @@ public class Level5 extends State {
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 850) + GameTutorial.WIDTH;
             cherry.reposition(cherry.getPosObs().x + distance, 58);
+            cherryIsTouched = false;
         }
     }
 
@@ -172,10 +178,12 @@ public class Level5 extends State {
             sheep.startTimer();
         }
         if (cherry.collides(sheep.getBounds1())) {
+            cherryIsTouched = true;
             sheep.increaseSpd();
             sheep.startTimer();
         }
         if (mushroom.collides(sheep.getBounds1())) {
+            mushroomIsTouched = true;
             sheep.goBackwards();
             sheep.startTimer();
         }
@@ -197,8 +205,12 @@ public class Level5 extends State {
         sb.draw(ground,groundPos2.x,0,ground_width,350);
         sb.draw(ground,groundPos3.x,0,ground_width,350);
         sb.draw(greyCar.getObstacle(), greyCar.getPosObs().x, greyCar.getPosObs().y);
-        sb.draw(mushroom.getObsAnimation(), mushroom.getPosObs().x, mushroom.getPosObs().y);
-        sb.draw(cherry.getObsAnimation(), cherry.getPosObs().x, cherry.getPosObs().y);
+        if (mushroomIsTouched == false) {
+            sb.draw(mushroom.getObsAnimation(), mushroom.getPosObs().x, mushroom.getPosObs().y);
+        }
+        if (cherryIsTouched == false) {
+            sb.draw(cherry.getObsAnimation(), cherry.getPosObs().x, cherry.getPosObs().y);
+        }
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
         }

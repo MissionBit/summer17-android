@@ -18,6 +18,7 @@ public class Level1 extends State {
     private Obstacle haybale;
     private Texture appleTexture;
     private Obstacle apple;
+    private boolean appleIsTouched;
 
     public Level1(GameStateManager gsm) {
         super(gsm);
@@ -26,6 +27,7 @@ public class Level1 extends State {
         haybale = new Obstacle(haybaleTexture, 600, 50, 1, 0.5f);
         appleTexture = new Texture("Apple.png");
         apple = new Obstacle(appleTexture, 1000, 50, 2, 0.5f);
+        appleIsTouched = false;
     }
 
     @Override
@@ -46,7 +48,8 @@ public class Level1 extends State {
 //            sheep.reduceSpd();
 //        }
 //        if (apple.collides(sheep.getBounds1())) {
-//            sheep.increaseSpd();
+//          sheep.increaseSpd();
+//          appleIsTouched = true;
 //        }
     }
 
@@ -65,6 +68,7 @@ public class Level1 extends State {
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 800) + GameTutorial.WIDTH;
             apple.reposition(apple.getPosObs().x + distance, 58);
+            appleIsTouched = false;
         }
     }
 
@@ -72,7 +76,9 @@ public class Level1 extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(haybale.getObstacle(), haybale.getPosObs().x, haybale.getPosObs().y);
-        sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
+        if (appleIsTouched == false) {
+            sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
+        }
         sb.end();
     }
 
