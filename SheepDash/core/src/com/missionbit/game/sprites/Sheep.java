@@ -42,9 +42,6 @@ public class Sheep extends Animals{
         if(position.y < 60){
             position.y = 60;
         }
-        if(position.y>300){
-            position.y=60;
-        }
         bounds1.setPosition(position.x,position.y);
     }
 
@@ -55,7 +52,7 @@ public class Sheep extends Animals{
 
     public void reduceSpd(){
         if (Gdx.graphics.getDeltaTime() < 1){
-            MOVEMENT = 100;
+            MOVEMENT = 190;
         }
     }
 
@@ -67,6 +64,7 @@ public class Sheep extends Animals{
 
     public void sheepDied() {
         MOVEMENT = 0;
+        velocity.y = 0;
     }
 
     public Vector3 getPosition() {
