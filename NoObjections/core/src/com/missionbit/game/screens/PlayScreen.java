@@ -83,7 +83,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed()){
+        if((Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed()) && hero.isLanded()) {
             hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
                     true );
         }

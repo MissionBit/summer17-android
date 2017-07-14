@@ -30,6 +30,7 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
+    public boolean isLanded;
    private static final float y_deathposition=-100;
 
     public Hero(World world, PlayScreen screen){
@@ -39,7 +40,7 @@ public class Hero extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-
+        isLanded = true;
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i = 1; i <5; i++) {
             frames.add(new TextureRegion(getTexture(), i * 46, 0, 35, 45));
@@ -160,6 +161,13 @@ public class Hero extends Sprite {
 
     }
 
+    public boolean isLanded() {
+        return isLanded;
+    }
+
+    public void setLanded(boolean landed) {
+        isLanded = landed;
+    }
 }
 
 

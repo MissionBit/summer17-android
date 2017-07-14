@@ -33,7 +33,7 @@ public class Controller {
         Table table = new Table();
         table.left().bottom();
 
-        float arrows = 40;
+        float arrows = 50;
 
         Image upImg = new Image(new Texture("upArrow.png"));
         upImg.setSize(arrows, arrows);
@@ -42,13 +42,13 @@ public class Controller {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = true;
+                upPressed = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = false;
+                upPressed = false;
             }
         });
         Image downImg = new Image(new Texture("downArrow.png"));
