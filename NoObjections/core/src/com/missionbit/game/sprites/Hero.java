@@ -20,7 +20,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
  */
 
 public class Hero extends Sprite {
-    public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD};
+
+    public enum State { FALLING, CLIMBING, STANDING, RUNNING, DEAD};
     public State currentState;
     public State previousState;
     public World world;
@@ -33,7 +34,7 @@ public class Hero extends Sprite {
    private static final float y_deathposition=-100;
 
     public Hero(World world, PlayScreen screen){
-        super(screen.getAtlas().findRegion("dudeRun2"));
+        super(screen.getAtlas().findRegion("dudeRun4"));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -41,19 +42,25 @@ public class Hero extends Sprite {
         runningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 1; i <5; i++) {
-            frames.add(new TextureRegion(getTexture(), i * 46, 0, 35, 45));
+        //running animation
+        for(int i = 1; i < 5; i++) {
+            frames.add(new TextureRegion(getTexture(), i * 53, 2, 40, 60));
         }
         heroRun = new Animation(0.1f, frames);
-
-        //TODO: add climbing images to image pack
-
         frames.clear();
+
+        //climbing animation
+        for(int i = 6; i < 9 ; i++){
+            frames.add(new TextureRegion(getTexture(), i*53, 2, 40, 60));
+        }
+        heroClimb = new Animation(0.1f, frames);
+
 
         defineHero();
 
-        heroStand = new TextureRegion(getTexture(), 0, 0, 40, 45);
-        setBounds(0, 0, 40 / NoObjectionGame.PPM, 45/ NoObjectionGame.PPM);
+        //determines size and starting position of standing on spritesheet
+        heroStand = new TextureRegion(getTexture(), 2, 2, 40, 60);
+        setBounds(0, 0, 40 / NoObjectionGame.PPM, 60/ NoObjectionGame.PPM);
         setRegion(heroStand);
 
     }
@@ -74,15 +81,20 @@ public class Hero extends Sprite {
         TextureRegion region;
         switch(currentState){
             //TODO: case climbing
+            case CLIMBING:
+                region = (TextureRegion) heroClimb.getKeyFrame(stateTimer);
+                break;
             case RUNNING:
                 region = (TextureRegion) heroRun.getKeyFrame(stateTimer, true);
                 break;
+            case FALLING:
             case STANDING:
-                default:
-                    region = heroStand;
-                    break;
+            default:
+                region = heroStand;
+                break;
         }
 
+        //flips the hero when he changes direction
         if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
@@ -96,12 +108,13 @@ public class Hero extends Sprite {
     }
 
     public State getState(){
-//        if(b2body.getLinearVelocity().y > 0){
-//            return State.JUMPING;
-//        }
+        //TODO: need to code climbing instead jump
+        if(b2body.getLinearVelocity().y > 0 ){
+            return State.CLIMBING;
 
-        //TODO: need to code climbing
-        if(b2body.getLinearVelocity().x != 0){
+        } else if(b2body.getLinearVelocity().y < 0){
+            return State.FALLING;
+        } else if(b2body.getLinearVelocity().x != 0){
             return State.RUNNING;
         }
         else if(b2body.getPosition().y < y_deathposition){
@@ -155,7 +168,6 @@ public class Hero extends Sprite {
 
         b2body.createFixture(fdef1).setUserData("right");
         b2body.createFixture(fdef2).setUserData("left");
-
 
     }
 
