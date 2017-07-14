@@ -86,7 +86,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && hero.b2body.getLinearVelocity().y == 0){
+        if(((Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed()) && hero.b2body.getLinearVelocity().y == 0)){
             hero.b2body.applyLinearImpulse(new Vector2(0, 3f), hero.b2body.getWorldCenter(),
                     true );
         }
@@ -94,7 +94,7 @@ public class PlayScreen implements Screen {
         isLadderHit = worldContactListener.getIsTouched();
 
         //temp climbing
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && isLadderHit){
+        if(((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isLadderHit)){
             hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
                     true );
         }
