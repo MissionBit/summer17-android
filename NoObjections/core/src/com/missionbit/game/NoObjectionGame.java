@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 //import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.missionbit.game.screens.MenuScreen;
 import com.missionbit.game.screens.PlayScreen;
 import com.missionbit.game.states.EndState;
 
@@ -28,7 +29,7 @@ public class NoObjectionGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 
 //	gsm = new GameStateManager();
 		//gsm.push(new MenuState(gsm));
