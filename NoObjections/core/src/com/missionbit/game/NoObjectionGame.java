@@ -2,6 +2,7 @@ package com.missionbit.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,6 +32,7 @@ public class NoObjectionGame extends Game {
 	public static final short FLOOR_BIT = 16;
 	public static final short DEFAULT_BIT = 1;
 	//private GameStateManager gsm;
+    private Music music;
 	public static SpriteBatch batch;
     World world;
     public Viewport viewport;
@@ -40,6 +42,13 @@ public class NoObjectionGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
+        music = Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
+//		gsm = new GameStateManager();
+//		gsm.push(new MenuState(gsm));
         viewport = new FitViewport(V_WIDTH, V_HEIGHT);
         world = new World(new Vector2(0, -10), true);
 //	gsm = new GameStateManager();
