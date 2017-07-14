@@ -1,12 +1,9 @@
 package com.missionbit.game;
 
-//import com.badlogic.gdx.ApplicationAdapter;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-//import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -18,11 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.missionbit.game.screens.PlayScreen;
 import com.missionbit.game.sprites.Hero;
-//import com.missionbit.game.states.EndState;
-//import com.missionbit.game.states.GameStateManager;
-//import com.missionbit.game.states.MenuState;
-//import com.missionbit.game.states.MenuState;
-//import com.missionbit.game.states.PlayState;
+import com.missionbit.game.states.EndState;
 
 public class NoObjectionGame extends Game {
     public static final int V_WIDTH = 400;
@@ -35,7 +28,7 @@ public class NoObjectionGame extends Game {
 	public static final short HERO_BIT = 2;
 	public static final short LADDER_BIT = 4;
 	public static final short DOOR_BIT = 8;
-	public static final short DESTROYED_BIT = 16;
+	public static final short FLOOR_BIT = 16;
 	public static final short DEFAULT_BIT = 1;
 	//private GameStateManager gsm;
 	public static SpriteBatch batch;

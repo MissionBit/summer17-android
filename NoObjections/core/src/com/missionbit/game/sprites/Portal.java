@@ -15,7 +15,8 @@ public class Portal extends InteractiveTileObject{
     }
 
     @Override
-    public void onCollisionDetected() {
+    public boolean onCollisionDetected() {
         Gdx.app.log("Portal", "Portal Hit");
+        return false;
     }
 }
