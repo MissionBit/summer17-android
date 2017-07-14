@@ -177,7 +177,7 @@ public class Level4 extends State {
         else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
         }
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,130,130);
         sb.end();
     }
 

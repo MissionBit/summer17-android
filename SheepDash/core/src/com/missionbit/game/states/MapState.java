@@ -170,7 +170,7 @@ public class MapState extends State {
         backButton = new ImageButton(myTexRegionDrawableBack);
         stage.addActor(backButton);
         Gdx.input.setInputProcessor(stage);
-        backButton.setBounds(-7,0,64,47);
+        backButton.setBounds(703,383,50,50);
         backButton.getImageCell().expand().fill();
 
         backButton.addListener(new ClickListener(){
@@ -215,6 +215,12 @@ public class MapState extends State {
     @Override
     public void dispose() {
         bg.dispose();
+
+        myTexture1.dispose();
+        myTexture2.dispose();
+        myTexture3.dispose();
+        myTexture4.dispose();
+        myTexture5.dispose();
         stage.dispose();
         System.out.println("Disposing of Menu State");
     }

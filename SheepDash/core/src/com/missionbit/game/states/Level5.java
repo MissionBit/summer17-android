@@ -1,11 +1,17 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
+import com.missionbit.game.sprites.Poop;
 import com.missionbit.game.sprites.Sheep;
 
 /**
@@ -31,12 +37,23 @@ public class Level5 extends State {
     private static final int GROUND_Y_OFFSET = -80;
     private static final int buildings_width = 260;
     private static final int ground_width = 550;
+    private Poop poop;
+    private static final int POOP_SPACING = 300;
+    private static final int POOP_WIDTH = 30;
+
+
+    private Texture myTexture2;
+    private TextureRegion myTextureRegion2;
+    private TextureRegionDrawable myTexRegionDrawable2;
+    private ImageButton restart;
+
 
     public Level5(GameStateManager gsm) {
         super(gsm);
-        sheep = new Sheep(50,60);
+        poop = new Poop(100,60);
+        sheep = new Sheep(100,60);
         sky = new Texture("CitySky.png");
-        farmer = new Farmer(-50,60);
+        farmer = new Farmer(-60,160);
         buildings = new Texture("CityBuildings.png");
         ground = new Texture("CityGround.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
@@ -63,12 +80,14 @@ public class Level5 extends State {
     public void update(float dt) {
         handleInput();
         sheep.update(dt);
+        updatePoops();
         cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
         updateGround();
         updateSky();
         updateBuildings();
         collisionCheck();
+        collisionCheck2();
         cam.update();
 
     }
@@ -114,10 +133,61 @@ public class Level5 extends State {
         }
     }
 
+    public void updatePoops(){
+        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+            poop.getPosPoop().add(2*POOP_SPACING,0);
+            poop.getBoundsPoop().setPosition(poop.getPosPoop().x,poop.getPosPoop().y);
+        }
+        if (poop.getPosPoop2().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+            poop.getPosPoop2().add(2*POOP_SPACING,0);
+            poop.getBoundsPoop2().setPosition(poop.getPosPoop2().x,poop.getPosPoop2().y);
+        }
+    }
+
+    public void collisionCheck2(){
+
+        if (poop.collides(sheep.getBounds1())){
+            sheep.reduceSpd();
+            sheep.increaseSpd();
+        }
+    }
+
+
+    //Functioning Game Over screen appears upon death
+    public void gameOver() {
+        System.out.println("Game Over");
+
+
+        float delay = 0.5f; // seconds
+        Timer.schedule(new Timer.Task(){
+            @Override
+            public void run() {
+                gsm.push(new GameOver(gsm));
+
+            }
+        }, delay);
+
+
+
+
+//        try {
+//            Thread.sleep(7000);
+//        } catch (InterruptedException e) { }
+//        gsm.push(new GameOver(gsm));
+        //use abve code to pause the game
+
+
+
+
+    }
+
 
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())){
             sheep.getSheepDead();
+            gameOver();
+            //gsm.push(new CharacterState(gsm));
+
         }
     }
 
@@ -136,13 +206,15 @@ public class Level5 extends State {
         sb.draw(ground,groundPos1.x,0,ground_width,350);
         sb.draw(ground,groundPos2.x,0,ground_width,350);
         sb.draw(ground,groundPos3.x,0,ground_width,350);
+        sb.draw(poop.getPoop(),poop.getPosPoop().x,poop.getPosPoop().y,30,30);
+        sb.draw(poop.getPoop(),poop.getPosPoop2().x,poop.getPosPoop2().y,30,30);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
         }
         else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
         }
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,130,130);
         sb.end();
     }
 
