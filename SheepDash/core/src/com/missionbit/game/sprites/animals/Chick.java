@@ -23,7 +23,7 @@ public class Chick extends Animals {
     public Chick(int x, int y) {
         super(x, y);
         chick = new Texture("chickRun.png");
-        chickDead = new Texture("SquishDuck20_1.png");
+        chickDead = new Texture("ducksquish.png");
         chickAnimation = new Animation(new TextureRegion(chick),20,0.5f);
         chick2Animation = new Animation(new TextureRegion(chickDead),19,0.5f);
         chickBounds = new Rectangle(x,y,70,45);
@@ -37,7 +37,7 @@ public class Chick extends Animals {
             velocity.add(0,GRAVITY,0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt,velocity.y,0);
+        position.add(movement * dt,velocity.y,0);
         velocity.scl(1/dt);
         if(position.y < 60){
             position.y = 60;
@@ -75,20 +75,20 @@ public class Chick extends Animals {
     }
 
     public void reduceSpd(){
-        MOVEMENT = 110;
+        movement = 110;
     }
 
     public void resetSpd(){
-        MOVEMENT = 200;
+        movement = 200;
 
     }
 
     public void stopSpd(){
-        MOVEMENT = 0;
+        movement = 0;
     }
 
     public void increaseSpd(){
-        MOVEMENT = 250;
+        movement = 250;
     }
 
 

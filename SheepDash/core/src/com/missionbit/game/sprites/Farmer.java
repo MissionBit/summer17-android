@@ -17,7 +17,7 @@ public class Farmer {
     private Vector3 velocity;
     private Rectangle boundsFarmer;
     private Vector2 posFarmer;
-    private static final int MOVEMENT = 150;
+    private int movement = 200;
 
     public Farmer(int x, int y){
         farmer = new Texture("farmerOnATractor.png");
@@ -32,9 +32,14 @@ public class Farmer {
     public void update(float dt) {
         farmerAnimation.update(dt);
         velocity.scl(dt);
-        position.add(MOVEMENT * dt, 0,0);
+        position.add(movement * dt, 0,0);
         velocity.scl(1/dt);
         boundsFarmer.setPosition(position.x,position.y);
+        //System.out.println("Farmer's speed:" + movement);
+    }
+
+    public void killedSheep() {
+        movement = 0;
     }
 
 
@@ -52,6 +57,11 @@ public class Farmer {
 
     public Rectangle getBoundsFarmer() {
         return boundsFarmer;
+    }
+
+    public void setBoundsFarmer(int x, int y){
+        boundsFarmer.width = x;
+        boundsFarmer.height = y;
     }
 
     public void dispose(){

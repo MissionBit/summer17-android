@@ -37,7 +37,7 @@ public class Pig extends Animals {
             velocity.add(0,GRAVITY,0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt,velocity.y,0);
+        position.add(movement * dt,velocity.y,0);
         velocity.scl(1/dt);
         if(position.y < 60){
             position.y = 60;
@@ -76,20 +76,20 @@ public class Pig extends Animals {
     }
 
     public void reduceSpd(){
-        MOVEMENT = 110;
+        movement = 110;
     }
 
     public void resetSpd(){
-        MOVEMENT = 200;
+        movement = 200;
 
     }
 
     public void stopSpd(){
-        MOVEMENT = 0;
+        movement = 0;
     }
 
     public void increaseSpd(){
-        MOVEMENT = 250;
+        movement = 250;
     }
 
 

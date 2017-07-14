@@ -23,7 +23,7 @@ public class Cow extends Animals {
     public Cow(int x, int y) {
         super(x, y);
         cow = new Texture("RunningCow1.png");
-        cowDead = new Texture("SquishCow24_1.png");
+        cowDead = new Texture("cowsquish.png");
         cowAnimation = new Animation(new TextureRegion(cow),4,0.5f);
         cow1Animation = new Animation(new TextureRegion(cowDead),24,0.5f);
         cowBounds = new Rectangle(x,y,70,45);
@@ -37,7 +37,7 @@ public class Cow extends Animals {
             velocity.add(0,GRAVITY,0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt,velocity.y,0);
+        position.add(movement * dt,velocity.y,0);
         velocity.scl(1/dt);
         if(position.y < 60){
             position.y = 60;
@@ -75,20 +75,20 @@ public class Cow extends Animals {
     }
 
     public void reduceSpd(){
-        MOVEMENT = 110;
+        movement = 110;
     }
 
     public void resetSpd(){
-        MOVEMENT = 200;
+        movement = 200;
 
     }
 
     public void stopSpd(){
-        MOVEMENT = 0;
+        movement = 0;
     }
 
     public void increaseSpd(){
-        MOVEMENT = 250;
+        movement = 250;
     }
 
 

@@ -19,8 +19,8 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        menu = new Texture("menuBackground.png");
-        cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
+        menu = new Texture("coolbg3.png");
+        //cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MenuState extends State {
         if (Gdx.input.justTouched()) {
             if (Gdx.input.getX() > 0 && Gdx.input.getX() < 600) {
                 if (Gdx.input.getY() > 200 && Gdx.input.getY() < 500) {
-                    gsm.set(new PlayState(gsm));
+                   // gsm.set(new PlayState(gsm));
                 }
             }
 
@@ -43,7 +43,7 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(cam.combined);
+        //sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(menu, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();

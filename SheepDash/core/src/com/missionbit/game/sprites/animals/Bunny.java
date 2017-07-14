@@ -1,6 +1,7 @@
 package com.missionbit.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,36 +18,35 @@ public class Bunny extends Animals {
     private Texture bunnyDead;
     private Rectangle boundsBunny;
     private Animation bunnyAnimation;
-    private Animation bunny2Animation;
-    private Animation bunny3Animation;
+    private Animation jumpAnimation;
+    private Animation deathAnimation;
     private float timer;
     private boolean isTimerStarted = false;
     private static final float PENALTY_TIMER=1;
+    private Sound jump;
 
     public Bunny(int x, int y) {
-
         super(x, y);
-        bunny = new Texture("bunnyrunning7_0.35.png");
-        bunnyJump = new Texture("bunnyjumpinplace12_0.4.png");
-        bunnyDead = new Texture("bunnydeath17_1.png");
+        bunny = new Texture("bunnyrunning.png");
+        bunnyJump = new Texture("bunnyjumpinplace.png");
+        bunnyDead = new Texture("bunnysquish.png");
         bunnyAnimation = new Animation(new TextureRegion(bunny),7,0.5f);
-        bunny2Animation = new Animation(new TextureRegion(bunnyJump),12,0.5f);
-        bunny3Animation = new Animation(new TextureRegion(bunnyDead),17,0.5f);
+        jumpAnimation = new Animation(new TextureRegion(bunnyJump),12,0.5f);
+        deathAnimation = new Animation(new TextureRegion(bunnyDead),17,0.5f);
         boundsBunny = new Rectangle(x,y,70,45);
+        jump = Gdx.audio.newSound(Gdx.files.internal("jump_07.mp3"));
     }
-
-
 
     @Override
     public void update(float dt) {
         bunnyAnimation.update(dt);
-        bunny2Animation.update(dt);
-        bunny3Animation.update(dt);
+        jumpAnimation.update(dt);
+        deathAnimation.update(dt);
         if (position.y >0){
             velocity.add(0,GRAVITY,0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt,velocity.y,0);
+        position.add(movement * dt,velocity.y,0);
         velocity.scl(1/dt);
         if(position.y < 60){
             position.y = 60;
@@ -55,7 +55,6 @@ public class Bunny extends Animals {
             position.y=60;
         }
         boundsBunny.setPosition(position.x,position.y);
-
     }
 
     public void jump() {
@@ -77,33 +76,30 @@ public class Bunny extends Animals {
     }
 
     public boolean isTimerDone(){
-        if (timer > PENALTY_TIMER ){
-            return true;
-        }
-        return false;
+        return timer > PENALTY_TIMER;
     }
 
     public void reduceSpd(){
-        MOVEMENT = 110;
+        movement = 110;
     }
 
     public void resetSpd(){
-        MOVEMENT = 200;
-
+        movement = 200;
     }
 
     public void stopSpd(){
-        MOVEMENT = 0;
+        movement = 0;
     }
 
     public void increaseSpd(){
-        MOVEMENT = 250;
+        movement = 250;
     }
 
     @Override
     public void dispose() {
         bunny.dispose();
-
+        bunnyJump.dispose();
+        bunnyDead.dispose();
     }
 
     public Rectangle getBoundsBunny() {
@@ -115,11 +111,11 @@ public class Bunny extends Animals {
     }
 
     public TextureRegion getBunnyJump() {
-        return bunny2Animation.getFrame();
+        return jumpAnimation.getFrame();
     }
 
     public TextureRegion getBunnyDead() {
-        return bunny3Animation.getFrame();
+        return deathAnimation.getFrame();
     }
 
     public Vector3 getPosition() {

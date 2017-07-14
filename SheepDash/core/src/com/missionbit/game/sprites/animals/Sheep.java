@@ -1,6 +1,7 @@
 package com.missionbit.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,17 +23,18 @@ public class Sheep extends Animals {
     private Random rand;
     private float timer;
     private boolean isTimerStarted = false;
-    private static final float PENALTY_TIMER=1;
+    private static final float PENALTY_TIMER =2;
+    private Sound jump;
 
     public Sheep(int x, int y) {
         super(x, y);
-        sheep = new Texture("sheepClone1.png");
-        sheepDead = new Texture("squishSheep1.png");
+        sheep = new Texture("sheeprunning.png");
+        sheepDead = new Texture("sheepsquish.png");
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
         sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
         bounds1 = new Rectangle(x,y,70,45);
         rand = new Random();
-
+        jump = Gdx.audio.newSound(Gdx.files.internal("jump_07.mp3"));
     }
 
     @Override
@@ -43,56 +45,64 @@ public class Sheep extends Animals {
             velocity.add(0,GRAVITY,0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt,velocity.y,0);
+        position.add(movement * dt,velocity.y,0);
         velocity.scl(1/dt);
         if(position.y < 60){
             position.y = 60;
         }
         bounds1.setPosition(position.x,position.y);
+        //System.out.println("Sheep's speed:" + movement);
     }
 
     public void jump() {
         if (position.y <= 150){
             velocity.y = 500;
         }
-
     }
 
-    public void updateTimer(float elaspedTime){
-        if (isTimerStarted){
+    public void updateTimer(float elaspedTime) {
+        if (isTimerStarted) {
             timer = timer + elaspedTime;
         }
     }
 
-    public void startTimer(){
+    public void startTimer() {
         timer = 0;
         isTimerStarted = true;
     }
 
-    public boolean isTimerDone(){
-        if (timer > PENALTY_TIMER ){
+    public boolean isTimerDone() {
+        if (timer > PENALTY_TIMER) {
             return true;
         }
         return false;
     }
-
+  
     public void reduceSpd(){
-        MOVEMENT = 110;
+        movement = 300;
     }
 
-    public void resetSpd(){
-        MOVEMENT = 200;
-
+    public void resetSpd() {
+        movement = 440;
     }
 
-    public void stopSpd(){
-        MOVEMENT = 0;
+    public void noSpd() {
+        movement = 0;
     }
 
     public void increaseSpd(){
-        MOVEMENT = 250;
+        //movement = movement + 20;
+        movement = 500;
     }
 
+    public void goBackwards() {
+        movement = -200;
+    }
+
+    public void sheepDied() {
+        movement = 0;
+
+    }
 
     public Vector3 getPosition() {
         return position;
@@ -107,8 +117,13 @@ public class Sheep extends Animals {
     }
 
     public TextureRegion getSheepDead(){
-        return sheep2Animation.getFrame();
+        return sheep2Animation.getLastFrame();
     }
+
+    public void setDead(boolean dead) {
+        sheep2Animation.setDead(false);
+    }
+
 
     @Override
     public void dispose() {

@@ -25,7 +25,6 @@ public class Poop {
         posPoop = new Vector2(rand.nextInt(FLUCTUATION)+POOP_MIN_X,60);
         boundsPoop = new Rectangle(posPoop.x,posPoop.y,30,30);
         collided = false;
-
     }
 
     public Texture getPoop() {
@@ -40,6 +39,10 @@ public class Poop {
         return posPoop;
     }
 
+    public void reposition(float x, int y){
+        posPoop.set(x, y);
+        boundsPoop.setPosition(posPoop.x,posPoop.y);
+    }
 
     public boolean collides(Rectangle player){
         if ((player.overlaps(boundsPoop)&& !collided)) {

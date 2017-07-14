@@ -13,6 +13,7 @@ public class Animation {
     float currentFrameTime;
     int frameCount;
     int frame;
+    boolean dead = false;
 
     public Animation(TextureRegion region, int frameCount, float cycleTime) {
         frames = new Array<TextureRegion>();
@@ -34,7 +35,21 @@ public class Animation {
             frame = 0;
         }
     }
+
+    public void setDead(boolean isDead) {
+        this.dead = isDead;
+    }
+
     public TextureRegion getFrame(){
         return frames.get(frame);
+    }
+
+    public TextureRegion getLastFrame(){
+        if (dead || frame >= frameCount-1) {
+            dead = true;
+            return frames.get(frameCount - 1);
+        } else {
+            return frames.get(frame);
+        }
     }
 }

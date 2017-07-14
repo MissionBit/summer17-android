@@ -10,12 +10,18 @@ import com.missionbit.game.sprites.animals.Sheep;
 import com.missionbit.game.sprites.obstacles.Barrel;
 import com.missionbit.game.sprites.obstacles.Cherry;
 import com.missionbit.game.sprites.obstacles.Poop;
+import com.missionbit.game.sprites.obstacles.Obstacle;
+import java.util.Random;
 
-/**
- * Created by missionbit on 6/26/17.
- */
 
 public class Level1 extends State{
+    private Texture bg;
+    private Texture haybaleTexture;
+    private Obstacle haybale;
+    private Texture appleTexture;
+    private Obstacle apple;
+    private boolean appleIsTouched;
+
     private Barrel barrel;
     private Cherry cherry;
     private Poop poop;
@@ -50,6 +56,12 @@ public class Level1 extends State{
     public Level1(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
+        bg = new Texture("FarmBg1.png");
+        haybaleTexture = new Texture("haybale.png");
+        haybale = new Obstacle(haybaleTexture, 600, 50, 1, 0.5f);
+        appleTexture = new Texture("Apple.png");
+        apple = new Obstacle(appleTexture, 1000, 50, 2, 0.5f);
+        appleIsTouched = false;
         barrel = new Barrel(1000,60);
         poop = new Poop(260,60);
         cherry = new Cherry(500,50);
@@ -71,7 +83,6 @@ public class Level1 extends State{
         shedPos = new Vector2(350,0);
         bgPos1 = new Vector2(cam.position.x - cam.viewportWidth/2,0);
         bgPos2 = new Vector2(background.getWidth()+bgPos1.x,0);
-
     }
 
     @Override
@@ -79,12 +90,18 @@ public class Level1 extends State{
         if (Gdx.input.justTouched()){
             sheep.jump();
         }
-
     }
 
     @Override
+    public void create() {
+
+    }
+
     public void update(float dt) {
         handleInput();
+        apple.update(dt);
+        updateHaybale();
+        updateApple();
         sheep.update(dt);
         cherry.update(dt);
         cam.position.x = sheep.getPosition().x + 80;
@@ -171,18 +188,35 @@ public class Level1 extends State{
         }
     }
 
-    public void updateTrees(){
-        if(treePos1.x+trees.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            treePos1.add(3*trees.getWidth(),0);
+    public void updateTrees() {
+        if (treePos1.x + trees.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            treePos1.add(3 * trees.getWidth(), 0);
         }
-        if(treePos2.x+trees2.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            treePos2.add(3*trees2.getWidth(),0);
+        if (treePos2.x + trees2.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            treePos2.add(3 * trees2.getWidth(), 0);
         }
-        if(treePos3.x+trees3.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            treePos3.add(3*trees3.getWidth(),0);
+        if (treePos3.x + trees3.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            treePos3.add(3 * trees3.getWidth(), 0);
         }
+    }
 
+    public void updateHaybale() {
+        if (cam.position.x - cam.viewportWidth / 2 > haybale.getPosObs().x + haybale.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 600) + GameTutorial.WIDTH;
+            haybale.reposition(haybale.getPosObs().x + distance, 58);
+        }
+    }
 
+    public void updateApple() {
+        if (cam.position.x - cam.viewportWidth / 2 > apple.getPosObs().x + apple.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 800) + GameTutorial.WIDTH;
+            apple.reposition(apple.getPosObs().x + distance, 58);
+            appleIsTouched = false;
+        }
     }
 
     @Override
@@ -200,6 +234,10 @@ public class Level1 extends State{
         sb.draw(shed,shedPos.x,60);
         sb.draw(cherry.getCherry(),cherry.getPosCherry().x,cherry.getPosCherry().y,90,50);
         sb.draw(poop.getPoop(),poop.getPosPoop().x,poop.getPosPoop().y,30,30);
+        sb.draw(haybale.getObstacle(), haybale.getPosObs().x, haybale.getPosObs().y);
+        if (appleIsTouched == false) {
+            sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
+        }
         sb.draw(barrel.getBarrel(),barrel.getPosBarrel().x,barrel.getPosBarrel().y,60,50);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
@@ -214,6 +252,11 @@ public class Level1 extends State{
 
     @Override
     public void dispose() {
+        bg.dispose();
+        haybaleTexture.dispose();
+        haybale.dispose();
+        appleTexture.dispose();
+        apple.dispose();
         sheep.dispose();
         barn.dispose();
         shed.dispose();
@@ -224,6 +267,5 @@ public class Level1 extends State{
         cherry.dispose();
         poop.dispose();
         barrel.dispose();
-
     }
 }
