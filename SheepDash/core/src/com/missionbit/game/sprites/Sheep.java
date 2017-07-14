@@ -83,6 +83,7 @@ public class Sheep extends Animals{
     public void noSpd() {
         MOVEMENT = 0;
     }
+
     public void increaseSpd(){
         //MOVEMENT = MOVEMENT + 20;
         MOVEMENT = 500;
@@ -94,6 +95,7 @@ public class Sheep extends Animals{
 
     public void sheepDied() {
         MOVEMENT = 0;
+
     }
 
     public Vector3 getPosition() {

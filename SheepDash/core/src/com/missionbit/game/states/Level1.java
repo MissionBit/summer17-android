@@ -23,7 +23,6 @@ public class Level1 extends State {
     public Level1(GameStateManager gsm) {
         super(gsm);
         bg = new Texture("FarmBg1.png");
-
         haybaleTexture = new Texture("haybale.png");
         haybale = new Obstacle(haybaleTexture, 600, 50, 1, 0.5f);
         appleTexture = new Texture("Apple.png");
