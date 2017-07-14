@@ -130,7 +130,7 @@ public class Hero extends Sprite {
 
     public void defineHero() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / NoObjectionGame.PPM, 32 / NoObjectionGame.PPM);
+        bdef.position.set(100 / NoObjectionGame.PPM, 200 / NoObjectionGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
