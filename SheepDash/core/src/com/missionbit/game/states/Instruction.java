@@ -5,12 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Timer;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
 import com.missionbit.game.sprites.Sheep;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by MissionBit on 7/7/17.
