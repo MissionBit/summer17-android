@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.missionbit.game.screens.MenuScreen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -41,11 +42,14 @@ public class NoObjectionGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+
+		setScreen(new MenuScreen(this));
+
         music = Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
+
 
 //		gsm = new GameStateManager();
 //		gsm.push(new MenuState(gsm));

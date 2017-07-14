@@ -33,12 +33,6 @@ public class EndState extends State {
         if(Gdx.input.justTouched()){
             gsm.set(new MenuState(gsm));
         }
-//        tb.addListener(new ChangeListener() {
-//            @Override
-//            public void  changed(ChangeEvent event, Actor actor) {
-//                gsm.set(new MenuState(gsm));
-//            }
-//        });
     }
 
 
