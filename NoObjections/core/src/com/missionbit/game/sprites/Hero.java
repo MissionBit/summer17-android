@@ -33,13 +33,8 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
-<<<<<<< HEAD
-   private static final float y_deathposition=-10;
-=======
     private static final float y_deathposition = -100;
     private PlayScreen playScreen;
-
->>>>>>> e36800c37005c67017a8628319941e30f74fb7b3
 
     public Hero(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("dudeRun4"));
