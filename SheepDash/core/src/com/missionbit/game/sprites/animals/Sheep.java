@@ -77,7 +77,7 @@ public class Sheep extends Animals {
         }
         return false;
     }
-  
+
     public void reduceSpd(){
         movement = 300;
     }
