@@ -47,17 +47,6 @@ public class WorldContactListener implements ContactListener {
 
             }
         }
-//
-//        if (fixA.getUserData() == "bottom" || fixB.getUserData() == "bottom") {
-//            Fixture bottom = fixA.getUserData() == "bottom" ? fixA : fixB;
-//            Fixture object = bottom == fixA ? fixB : fixA;
-//
-//            //checks if object is InteractiveTileObject (aka ladder, door, or ground)
-//            if (object.getUserData() != null &&
-//                    InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-//                isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
-//            }
-//        }
     }
 
     @Override
