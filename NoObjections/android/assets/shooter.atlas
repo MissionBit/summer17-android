@@ -1,0 +1,59 @@
+
+shooter.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+climb0
+  rotate: false
+  xy: 2, 192
+  size: 1280, 1280
+  orig: 1280, 1280
+  offset: 0, 0
+  index: -1
+dudeRun
+  rotate: false
+  xy: 2, 2
+  size: 940, 188
+  orig: 940, 188
+  offset: 0, 0
+  index: -1
+
+shooter2.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+climb1
+  rotate: false
+  xy: 2, 2
+  size: 1280, 1280
+  orig: 1280, 1280
+  offset: 0, 0
+  index: -1
+
+shooter3.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+climb2
+  rotate: false
+  xy: 2, 2
+  size: 1280, 1280
+  orig: 1280, 1280
+  offset: 0, 0
+  index: -1
+
+shooter4.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+climb3
+  rotate: false
+  xy: 2, 2
+  size: 1280, 1280
+  orig: 1280, 1280
+  offset: 0, 0
+  index: -1

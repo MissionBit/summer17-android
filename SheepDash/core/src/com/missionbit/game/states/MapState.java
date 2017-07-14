@@ -63,7 +63,6 @@ public class MapState extends State {
     public MapState(final GameStateManager gsm) {
         super(gsm);
         bg = new Texture("LevelBg.png");
-
         myTexture1 = new Texture(Gdx.files.internal("Lvl1.png"));
         myTextureRegion1 = new TextureRegion(myTexture1);
         myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);

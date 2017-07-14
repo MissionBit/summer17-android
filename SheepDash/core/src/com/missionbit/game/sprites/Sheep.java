@@ -17,12 +17,15 @@ public class Sheep extends Animals{
     private Animation sheepAnimation;
     private Texture sheepDead;
     private Animation sheep2Animation;
+    private float timer;
+    private boolean isTimerStarted = false;
+    private static final float PENALTY_TIMER =2;
     private Sound jump;
 
     public Sheep(int x, int y) {
         super(x, y);
-        sheep = new Texture("sheepClone1.png");
-        sheepDead = new Texture("squishSheep1.png");
+        sheep = new Texture("sheeprunning.png");
+        sheepDead = new Texture("sheepsquish.png");
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
         sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
         bounds1 = new Rectangle(x,y,70,45);
@@ -42,29 +45,58 @@ public class Sheep extends Animals{
         if(position.y < 60){
             position.y = 60;
         }
+
         bounds1.setPosition(position.x,position.y);
+        //System.out.println("Sheep's speed:" + MOVEMENT);
     }
 
     public void jump() {
         velocity.y = 440;
+    }
+
+    public void updateTimer(float elapsedTime) {
+        if (isTimerStarted) {
+            timer = timer + elapsedTime;
+        }
+    }
+
+    public void startTimer() {
+        timer = 0;
+        isTimerStarted = true;
+    }
+
+    public boolean isTimerDone() {
+        if(timer> PENALTY_TIMER) {
+            return true;
+        }
+        return false;
+    }
+
+    public void reduceSpd() {
+        MOVEMENT = 240;
 
     }
 
-    public void reduceSpd(){
-        if (Gdx.graphics.getDeltaTime() < 1){
-            MOVEMENT = 190;
-        }
+    public void resetSpd() {
+        MOVEMENT = 250;
+    }
+
+    public void noSpd() {
+        MOVEMENT = 0;
     }
 
     public void increaseSpd(){
-        if (Gdx.graphics.getDeltaTime() > 0.02){
-            MOVEMENT = 210;
-        }
+        MOVEMENT = 260;
+    }
+
+    public void goBackwards() {
+        MOVEMENT = -250;
     }
 
     public void sheepDied() {
         MOVEMENT = 0;
         velocity.y = 0;
+
     }
 
     public Vector3 getPosition() {
@@ -80,8 +112,13 @@ public class Sheep extends Animals{
     }
 
     public TextureRegion getSheepDead(){
-        return sheep2Animation.getFrame();
+        return sheep2Animation.getLastFrame();
     }
+
+    public void setDead(boolean dead) {
+        sheep2Animation.dead = false;
+    }
+
 
     @Override
     public void dispose() {

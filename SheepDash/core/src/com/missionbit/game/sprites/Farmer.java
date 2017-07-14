@@ -35,6 +35,7 @@ public class Farmer {
         position.add(MOVEMENT * dt, 0,0);
         velocity.scl(1/dt);
         boundsFarmer.setPosition(position.x,position.y);
+        //System.out.println("Farmer's speed:" + MOVEMENT);
     }
 
     public void killedSheep() {
@@ -56,6 +57,11 @@ public class Farmer {
 
     public Rectangle getBoundsFarmer() {
         return boundsFarmer;
+    }
+
+    public void setBoundsFarmer(int x, int y){
+        boundsFarmer.width = x;
+        boundsFarmer.height = y;
     }
 
     public void dispose(){

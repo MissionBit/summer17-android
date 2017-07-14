@@ -11,7 +11,7 @@ public abstract class Animals {
     protected Vector3 position;
     protected Vector3 velocity;
     protected static final int GRAVITY = -23;
-    protected int MOVEMENT = 200;
+    protected int MOVEMENT = 250;
 
     protected Animals(int x, int y){
         position = new Vector3(x,y,0);
