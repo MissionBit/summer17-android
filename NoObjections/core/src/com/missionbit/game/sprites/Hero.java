@@ -35,6 +35,7 @@ public class Hero extends Sprite {
     private boolean runningRight;
     public boolean isLanded;
     private static final float y_deathposition = -100;
+    private static final double PIT_DEATH = 0.6;
     private PlayScreen playScreen;
 
     public Hero(World world, PlayScreen screen) {
@@ -73,10 +74,14 @@ public class Hero extends Sprite {
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
-        //System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+       // System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
         if (b2body.getPosition().y < y_deathposition) {
             currentState = State.DEAD;
             System.out.println("hero is dead");
+        }
+
+        if(b2body.getPosition().y < PIT_DEATH){
+            currentState = State.DEAD;
         }
     }
 
