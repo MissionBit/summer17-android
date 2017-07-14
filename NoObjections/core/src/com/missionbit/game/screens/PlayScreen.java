@@ -91,6 +91,8 @@ public class PlayScreen implements Screen {
         }
 
         isLadderHit = worldContactListener.getIsTouched();
+        //Gdx.app.log("ladder hit ", ": " + isLadderHit());
+
         //temp climbing
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && isLadderHit){
             hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
