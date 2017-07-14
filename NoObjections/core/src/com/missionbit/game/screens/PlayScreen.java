@@ -43,7 +43,7 @@ public class PlayScreen implements Screen {
 
     private Hero hero;
 
-    private boolean isLadderHit = false;
+    private int isObjectHit = 0;
 
     //box2d
     private World world;
@@ -91,10 +91,10 @@ public class PlayScreen implements Screen {
                     true );
         }
 
-        isLadderHit = worldContactListener.getIsTouched();
+        isObjectHit = worldContactListener.getIsObjectTouched();
 
         //temp climbing
-        if(((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isLadderHit)){
+        if(((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isObjectHit == 1000)){
             hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
                     true );
         }
@@ -149,6 +149,13 @@ public class PlayScreen implements Screen {
             game.setScreen(new EndScreen(game));
             dispose();
         }
+
+        if(hero.currentState == Hero.State.WIN){
+            game.setScreen(new WinScreen(game));
+            dispose();
+        }
+
+
     }
 
     @Override
@@ -178,10 +185,10 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        //hud.dispose();
+        hud.dispose();
     }
 
-    public boolean isLadderHit(){
-        return isLadderHit;
+    public int isObjectHit(){
+        return isObjectHit;
     }
 }
