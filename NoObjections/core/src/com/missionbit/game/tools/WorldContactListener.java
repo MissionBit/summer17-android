@@ -9,8 +9,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.sprites.InteractiveTileObject;
 
-import java.awt.event.ContainerListener;
-
 /**
  * Created by missionbit on 7/13/17.
  */
@@ -55,7 +53,7 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-      //  Gdx.app.log("world contact listener", "end contact");
+        Gdx.app.log("End Contact", "");
     }
 
     @Override

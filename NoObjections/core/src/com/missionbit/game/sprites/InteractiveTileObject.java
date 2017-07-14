@@ -50,4 +50,5 @@ public abstract class InteractiveTileObject {
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
+
 }

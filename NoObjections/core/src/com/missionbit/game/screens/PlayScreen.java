@@ -49,7 +49,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     public PlayScreen(NoObjectionGame game) {
-        atlas = new TextureAtlas("dudeRun4.pack");
+        atlas = new TextureAtlas("dudestuff3.pack");
 
         this.game = game;
         bg = new Texture("main_background.png");
