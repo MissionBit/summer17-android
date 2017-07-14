@@ -34,8 +34,8 @@ public class NoObjectionGame extends Game {
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
 
-//	gsm = new GameStateManager();
-		//gsm.push(new MenuState(gsm));
+	gsm = new GameStateManager();
+		gsm.push(new MenuState(gsm));
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 

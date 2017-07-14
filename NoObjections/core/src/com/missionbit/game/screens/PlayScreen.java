@@ -44,6 +44,8 @@ public class PlayScreen implements Screen {
 
     private Hero hero;
 
+    private com.missionbit.game.Controller controller;
+
     //box2d
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -70,6 +72,7 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener(hero));
 
+        controller = new com.missionbit.game.Controller(hero);
         }
 
     public TextureAtlas getAtlas(){
@@ -83,7 +86,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.upPressed && hero.isLanded() ){
             hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
                     true );
         }
