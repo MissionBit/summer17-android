@@ -1,5 +1,6 @@
 package com.missionbit.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,16 +12,11 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Portal extends InteractiveTileObject{
     public Portal(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
-
     }
 
     @Override
-    public void onLadderHit() {
-
-    }
-
-    @Override
-    public void onDoorHit() {
-
+    public boolean onCollisionDetected() {
+        Gdx.app.log("Portal", "Portal Hit");
+        return false;
     }
 }

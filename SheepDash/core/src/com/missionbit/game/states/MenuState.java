@@ -78,6 +78,11 @@ public class MenuState extends State {
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void update(float dt) {
 
 
@@ -87,8 +92,6 @@ public class MenuState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        //sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,60);
-        //sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
         sb.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -98,8 +101,6 @@ public class MenuState extends State {
     public void dispose() {
         background.dispose();
         playBtn.dispose();
-        //   sheep.dispose();
-        //   farmer.dispose();
         stage.dispose();
     }
 }

@@ -1,5 +1,6 @@
 package com.missionbit.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,12 +16,8 @@ public class Plank extends InteractiveTileObject{
     }
 
     @Override
-    public void onLadderHit() {
-
-    }
-
-    @Override
-    public void onDoorHit() {
-
+    public boolean onCollisionDetected() {
+        Gdx.app.log("Plank", "Plank Hit");
+        return false;
     }
 }

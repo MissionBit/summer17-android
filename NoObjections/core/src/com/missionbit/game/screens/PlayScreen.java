@@ -14,23 +14,25 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-//import com.badlogic.gdx.utils.viewport.ScreenViewport;
-//import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.missionbit.game.Controller;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.tools.B2WorldCreator;
+import com.missionbit.game.tools.WorldContactListener;
 
 /**
  * Created by missionbit on 7/10/17.
  */
 
 public class PlayScreen implements Screen {
+
+    private WorldContactListener worldContactListener;
     private NoObjectionGame game;
     private TextureAtlas atlas;
     private Texture bg;
-
+    public Controller controller;
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -41,12 +43,14 @@ public class PlayScreen implements Screen {
 
     private Hero hero;
 
+    private boolean isLadderHit = false;
+
     //box2d
     private World world;
     private Box2DDebugRenderer b2dr;
 
     public PlayScreen(NoObjectionGame game) {
-        atlas = new TextureAtlas("dudeRun4.pack");
+        atlas = new TextureAtlas("dudestuff3.pack");
 
         this.game = game;
         bg = new Texture("main_background.png");
@@ -64,8 +68,12 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world,map);
         hero = new Hero(world, this);
+        controller = new Controller();
+        worldContactListener = new WorldContactListener();
+        world.setContactListener(worldContactListener);
 
-        }
+    }
+
 
     public TextureAtlas getAtlas(){
         return atlas;
@@ -78,14 +86,24 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && hero.b2body.getLinearVelocity().y == 0){
+            hero.b2body.applyLinearImpulse(new Vector2(0, 3f), hero.b2body.getWorldCenter(),
                     true );
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && hero.b2body.getLinearVelocity().x <= 2){
+
+        isLadderHit = worldContactListener.getIsTouched();
+
+        //temp climbing
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && isLadderHit){
+            hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
+                    true );
+        }
+        if((Gdx.input.isKeyPressed(Input.Keys.RIGHT)  || controller.isRightPressed())
+                && hero.b2body.getLinearVelocity().x <= 2){
             hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && hero.b2body.getLinearVelocity().x >= -2){
+        if((Gdx.input.isKeyPressed(Input.Keys.LEFT) || controller.isLeftPressed())
+                && hero.b2body.getLinearVelocity().x >= -2){
             hero.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
     }
@@ -101,10 +119,12 @@ public class PlayScreen implements Screen {
         gameCam.update();
         renderer.setView(gameCam);
 
+
     }
 
     @Override
     public void render(float delta) {
+
         update(delta);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -123,11 +143,18 @@ public class PlayScreen implements Screen {
         //Set our batch to now draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        controller.draw();
+
+        if(hero.currentState == Hero.State.DEAD){
+            game.setScreen(new EndScreen(game));
+            dispose();
+        }
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        controller.resize(width, height);
     }
 
     @Override
@@ -152,5 +179,9 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         //hud.dispose();
+    }
+
+    public boolean isLadderHit(){
+        return isLadderHit;
     }
 }

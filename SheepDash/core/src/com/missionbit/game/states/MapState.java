@@ -60,23 +60,9 @@ public class MapState extends State {
     private TextureRegionDrawable myTexRegionDrawableBack;
     private ImageButton backButton;
 
-
-//    private Texture l1;
-//    private Texture l2;
-//    private Texture l3;
-//    private Texture l4;
-//    private Texture l5;
-
-
     public MapState(final GameStateManager gsm) {
         super(gsm);
         bg = new Texture("LevelBg.png");
-//        l1 = new Texture("Lvl1.png");
-//        l2 = new Texture("Lvl2.png");
-//        l3 = new Texture("Lvl3.png");
-//        l4 = new Texture("Lvl4.png");
-//        l5 = new Texture("Lvl5.png");
-
         myTexture1 = new Texture(Gdx.files.internal("Lvl1.png"));
         myTextureRegion1 = new TextureRegion(myTexture1);
         myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
@@ -91,7 +77,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 1");
-                gsm.push(new Level1(gsm));
+                gsm.set(new Level1(gsm));
             }
         });
 
@@ -108,7 +94,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 2");
-                gsm.push(new Level2(gsm));
+                gsm.set(new Level2(gsm));
             }
         });
 
@@ -125,7 +111,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 3");
-                gsm.push(new Level3(gsm));
+                gsm.set(new Level3(gsm));
             }
         });
 
@@ -142,7 +128,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 4");
-                gsm.push(new Level4(gsm));
+                gsm.set(new Level4(gsm));
             }
         });
 
@@ -160,7 +146,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 5");
-                gsm.push(new Level5(gsm));
+                gsm.set(new Level5(gsm));
             }
         });
 
@@ -170,20 +156,25 @@ public class MapState extends State {
         backButton = new ImageButton(myTexRegionDrawableBack);
         stage.addActor(backButton);
         Gdx.input.setInputProcessor(stage);
-        backButton.setBounds(-7,0,64,47);
+        backButton.setBounds(-7,1,64,47);
         backButton.getImageCell().expand().fill();
 
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Go back");
-                gsm.push(new CharacterState(gsm));
+                gsm.set(new CharacterState(gsm));
             }
         });
     }
 
     @Override
     protected void handleInput() {
+
+    }
+
+    @Override
+    public void create() {
 
     }
 
@@ -199,11 +190,6 @@ public class MapState extends State {
 
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-//        sb.draw(l1,117,322,64,47);
-//        sb.draw(l2,200,138,64,47);
-//        sb.draw(l3,369,251,64,47);
-//        sb.draw(l4,526,354,64,47);
-//        sb.draw(l5,522,107,64,47);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
