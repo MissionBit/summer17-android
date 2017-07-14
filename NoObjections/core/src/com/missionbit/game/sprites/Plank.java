@@ -16,7 +16,8 @@ public class Plank extends InteractiveTileObject{
     }
 
     @Override
-    public void onCollisionDetected() {
+    public boolean onCollisionDetected() {
         Gdx.app.log("Plank", "Plank Hit");
+        return false;
     }
 }

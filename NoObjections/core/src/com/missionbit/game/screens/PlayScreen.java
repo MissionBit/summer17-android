@@ -14,14 +14,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-//import com.badlogic.gdx.utils.viewport.ScreenViewport;
-//import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
-import com.missionbit.game.states.EndState;
-import com.missionbit.game.states.MenuState;
 import com.missionbit.game.tools.B2WorldCreator;
 import com.missionbit.game.tools.WorldContactListener;
 
@@ -30,6 +26,8 @@ import com.missionbit.game.tools.WorldContactListener;
  */
 
 public class PlayScreen implements Screen {
+
+    private WorldContactListener worldContactListener;
     private NoObjectionGame game;
     private TextureAtlas atlas;
     private Texture bg;
@@ -43,6 +41,8 @@ public class PlayScreen implements Screen {
     private OrthoCachedTiledMapRenderer renderer;
 
     private Hero hero;
+
+    private boolean isLadderHit = false;
 
     //box2d
     private World world;
@@ -68,7 +68,9 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world,map);
         hero = new Hero(world, this);
 
-        world.setContactListener(new WorldContactListener(hero));
+        worldContactListener = new WorldContactListener();
+
+        world.setContactListener(worldContactListener);
 
         }
 
@@ -84,7 +86,14 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
+            hero.b2body.applyLinearImpulse(new Vector2(0, 3f), hero.b2body.getWorldCenter(),
+                    true );
+        }
+
+        isLadderHit = worldContactListener.getIsTouched();
+        //temp climbing
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && isLadderHit){
+            hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
                     true );
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && hero.b2body.getLinearVelocity().x <= 2){
@@ -164,5 +173,9 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         //hud.dispose();
+    }
+
+    public boolean isLadderHit(){
+        return isLadderHit;
     }
 }
