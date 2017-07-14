@@ -27,5 +27,4 @@ public class Ladder extends InteractiveTileObject{
         //return true for hero jumping
         return true;
     }
-
 }

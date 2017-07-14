@@ -20,7 +20,6 @@ public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
 
-//        Gdx.app.log("world contact listener", "begin contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
@@ -31,7 +30,8 @@ public class WorldContactListener implements ContactListener {
             //checks if object is InteractiveTileObject (aka ladder or door)
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-                isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
+                isTouched = (((InteractiveTileObject) object.getUserData()).onCollisionDetected());
+                Gdx.app.log("WorldContactListener", "right side touched");
             }
         }
 
@@ -42,7 +42,9 @@ public class WorldContactListener implements ContactListener {
             //checks if object is InteractiveTileObject (aka ladder or door)
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-               isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
+                isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
+                Gdx.app.log("WorldContactListener", "right side touched");
+
             }
         }
     }
@@ -50,6 +52,21 @@ public class WorldContactListener implements ContactListener {
     @Override
     public void endContact(Contact contact) {
         Gdx.app.log("End Contact", "");
+
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        if (fixA.getUserData() == "bottom" || fixB.getUserData() == "bottom") {
+            Fixture bottom = fixA.getUserData() == "bottom" ? fixA : fixB;
+            Fixture object = bottom == fixA ? fixB : fixA;
+
+            //checks if object is InteractiveTileObject (aka ladder, door, or ground)
+            if (object.getUserData() != null &&
+                    InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
+                isTouched = false;
+
+            }
+        }
+
     }
 
     @Override
@@ -62,7 +79,8 @@ public class WorldContactListener implements ContactListener {
 
     }
 
-    public boolean getIsTouched(){
+    public boolean getIsTouched() {
         return isTouched;
+
     }
 }

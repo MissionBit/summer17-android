@@ -33,9 +33,9 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
+    public boolean isLanded;
     private static final float y_deathposition = -100;
     private PlayScreen playScreen;
-
 
     public Hero(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("dudeRun4"));
@@ -44,6 +44,7 @@ public class Hero extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        isLanded = true;
         this.playScreen = screen;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -67,9 +68,8 @@ public class Hero extends Sprite {
         heroStand = new TextureRegion(getTexture(), 2, 2, 40, 60);
         setBounds(0, 0, 40 / NoObjectionGame.PPM, 60 / NoObjectionGame.PPM);
         setRegion(heroStand);
-
     }
-
+  
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
@@ -130,7 +130,7 @@ public class Hero extends Sprite {
 
     public void defineHero() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100 / NoObjectionGame.PPM, 200 / NoObjectionGame.PPM);
+        bdef.position.set(50 / NoObjectionGame.PPM, 200 / NoObjectionGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -140,7 +140,7 @@ public class Hero extends Sprite {
         shape.setAsBox(5 / NoObjectionGame.PPM, 18 / NoObjectionGame.PPM);
 
         fdef1.filter.categoryBits = NoObjectionGame.HERO_BIT;
-        fdef1.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT;
+        fdef1.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT| NoObjectionGame.FLOOR_BIT;
 
         fdef1.shape = shape;
         b2body.createFixture(fdef1);
@@ -156,7 +156,7 @@ public class Hero extends Sprite {
         FixtureDef fdef2 = new FixtureDef();
 
         fdef2.filter.categoryBits = NoObjectionGame.HERO_BIT;
-        fdef2.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT;
+        fdef2.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT| NoObjectionGame.FLOOR_BIT;
 
 
         fdef2.shape = shape;
@@ -167,12 +167,36 @@ public class Hero extends Sprite {
         fdef2.shape = left;
         fdef2.isSensor = true;
 
+        //fixture3
+
+        FixtureDef fdef3 = new FixtureDef();
+
+        fdef3.filter.categoryBits = NoObjectionGame.HERO_BIT;
+        fdef3.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT | NoObjectionGame.FLOOR_BIT;
+
+
+        fdef3.shape = shape;
+        b2body.createFixture(fdef3);
+
+        EdgeShape bottom = new EdgeShape();
+        bottom.set(new Vector2(5 / NoObjectionGame.PPM, -19 / NoObjectionGame.PPM), new Vector2(-5 / NoObjectionGame.PPM, -19 / NoObjectionGame.PPM));
+        fdef3.shape = bottom;
+        fdef3.isSensor = true;
+
 
         b2body.createFixture(fdef1).setUserData("right");
         b2body.createFixture(fdef2).setUserData("left");
+        b2body.createFixture(fdef3).setUserData("bottom");
 
     }
 
+    public boolean isLanded() {
+        return isLanded;
+    }
+
+    public void setLanded(boolean landed) {
+        isLanded = landed;
+    }
 }
 
 
