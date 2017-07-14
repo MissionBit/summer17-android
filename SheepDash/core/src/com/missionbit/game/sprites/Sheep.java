@@ -1,6 +1,7 @@
 package com.missionbit.game.sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,6 +17,7 @@ public class Sheep extends Animals{
     private Animation sheepAnimation;
     private Texture sheepDead;
     private Animation sheep2Animation;
+    private Sound jump;
 
     public Sheep(int x, int y) {
         super(x, y);
@@ -24,7 +26,7 @@ public class Sheep extends Animals{
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
         sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
         bounds1 = new Rectangle(x,y,70,45);
-
+        jump = Gdx.audio.newSound(Gdx.files.internal("jump_07.mp3"));
     }
 
     @Override

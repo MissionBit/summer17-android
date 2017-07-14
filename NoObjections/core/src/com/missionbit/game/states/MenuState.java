@@ -39,24 +39,25 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        // cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
-        cam.setToOrtho(false, NoObjectionGame.WIDTH / 2, NoObjectionGame.HEIGHT / 2);
         menu = new Texture("coolbg3.png");
-        //log = new Logger();
-        create();
-
+        //cam.setToOrtho(false, NoObjectionGame.WIDTH, NoObjectionGame.HEIGHT);
     }
 
     @Override
     public void handleInput() {
-
+        if (Gdx.input.justTouched()) {
+            if (Gdx.input.getX() > 0 && Gdx.input.getX() < 600) {
+                if (Gdx.input.getY() > 200 && Gdx.input.getY() < 500) {
+                    // gsm.set(new PlayState(gsm));
+                }
+            }
 
 
 //        if (Gdx.input.justTouched()) {
 //            gsm.set(new PlayState(gsm));
 //        }
+        }
     }
-
 
     public void create() {
         stage = new Stage();
