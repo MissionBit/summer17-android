@@ -42,9 +42,9 @@ public class Poop {
         return posPoop;
     }
 
-    public void reposition(float x){
-        posPoop.set(rand.nextInt(FLUCTUATION)+POOP_MIN_X,60);
-        posPoop2.set(rand.nextInt(FLUCTUATION)+POOP_MIN_X+posPoop.x,60);
+    public void reposition(float x, int y){
+        posPoop.set(x, y);
+        posPoop2.set(x, y);
         boundsPoop.setPosition(posPoop.x,posPoop.y);
         boundsPoop2.setPosition(posPoop2.x,posPoop2.y);
     }
