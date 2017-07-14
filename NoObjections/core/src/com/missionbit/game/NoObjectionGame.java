@@ -8,10 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.screens.PlayScreen;
 import com.missionbit.game.states.EndState;
-//import com.missionbit.game.states.GameStateManager;
-//import com.missionbit.game.states.MenuState;
-//import com.missionbit.game.states.MenuState;
-//import com.missionbit.game.states.PlayState;
 
 public class NoObjectionGame extends Game {
     public static final int V_WIDTH = 400;
@@ -24,7 +20,7 @@ public class NoObjectionGame extends Game {
 	public static final short HERO_BIT = 2;
 	public static final short LADDER_BIT = 4;
 	public static final short DOOR_BIT = 8;
-	public static final short DESTROYED_BIT = 16;
+	public static final short FLOOR_BIT = 16;
 	public static final short DEFAULT_BIT = 1;
 	//private GameStateManager gsm;
 	public static SpriteBatch batch;
