@@ -15,11 +15,7 @@ import com.missionbit.game.sprites.InteractiveTileObject;
 
 public class WorldContactListener implements ContactListener {
 
-    private Hero hero;
-
-    public WorldContactListener(Hero hero){
-        this.hero = hero;
-    }
+    public boolean isTouched = false;
 
     @Override
     public void beginContact(Contact contact) {
@@ -35,7 +31,7 @@ public class WorldContactListener implements ContactListener {
             //checks if object is InteractiveTileObject (aka ladder or door)
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-                ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
+                isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
             }
         }
 
@@ -46,7 +42,7 @@ public class WorldContactListener implements ContactListener {
             //checks if object is InteractiveTileObject (aka ladder or door)
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-                ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
+               isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
             }
         }
     }
@@ -64,5 +60,9 @@ public class WorldContactListener implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public boolean getIsTouched(){
+        return isTouched;
     }
 }

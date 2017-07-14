@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.screens.PlayScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.missionbit.game.tools.WorldContactListener;
 
 
 /**
@@ -21,7 +22,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Hero extends Sprite {
 
-    public enum State { FALLING, CLIMBING, STANDING, RUNNING, DEAD};
+    public enum State {FALLING, CLIMBING, STANDING, RUNNING, DEAD}
+    ;
     public State currentState;
     public State previousState;
     public World world;
@@ -31,27 +33,30 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
-   private static final float y_deathposition=-100;
+    private static final float y_deathposition = -100;
+    private PlayScreen playScreen;
 
-    public Hero(World world, PlayScreen screen){
+
+    public Hero(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("dudeRun4"));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        this.playScreen = screen;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         //running animation
-        for(int i = 1; i < 5; i++) {
+        for (int i = 1; i < 5; i++) {
             frames.add(new TextureRegion(getTexture(), i * 53, 2, 40, 60));
         }
         heroRun = new Animation(0.1f, frames);
         frames.clear();
 
         //climbing animation
-        for(int i = 6; i < 9 ; i++){
-            frames.add(new TextureRegion(getTexture(), i*53, 2, 40, 60));
+        for (int i = 6; i < 9; i++) {
+            frames.add(new TextureRegion(getTexture(), i * 53, 2, 40, 60));
         }
         heroClimb = new Animation(0.1f, frames);
 
@@ -60,26 +65,26 @@ public class Hero extends Sprite {
 
         //determines size and starting position of standing on spritesheet
         heroStand = new TextureRegion(getTexture(), 2, 2, 40, 60);
-        setBounds(0, 0, 40 / NoObjectionGame.PPM, 60/ NoObjectionGame.PPM);
+        setBounds(0, 0, 40 / NoObjectionGame.PPM, 60 / NoObjectionGame.PPM);
         setRegion(heroStand);
 
     }
 
-    public void update(float dt){
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+    public void update(float dt) {
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
-        System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
-        if(b2body.getPosition().y < y_deathposition){
-            currentState=State.DEAD;
+        //System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+        if (b2body.getPosition().y < y_deathposition) {
+            currentState = State.DEAD;
             System.out.println("hero is dead");
         }
     }
 
-    public TextureRegion getFrame(float dt){
+    public TextureRegion getFrame(float dt) {
         currentState = getState();
 
         TextureRegion region;
-        switch(currentState){
+        switch (currentState) {
             //TODO: case climbing
             case CLIMBING:
                 region = (TextureRegion) heroClimb.getKeyFrame(stateTimer);
@@ -95,40 +100,37 @@ public class Hero extends Sprite {
         }
 
         //flips the hero when he changes direction
-        if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
+        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        }else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
-        stateTimer = currentState == previousState ? stateTimer + dt :0;
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         return region;
     }
 
-    public State getState(){
+    public State getState() {
         //TODO: need to code climbing instead jump
-        if(b2body.getLinearVelocity().y > 0 ){
+        if (b2body.getLinearVelocity().y > 0 && playScreen.isLadderHit()) {
             return State.CLIMBING;
-
-        } else if(b2body.getLinearVelocity().y < 0){
+        } else if (b2body.getLinearVelocity().y < 0) {
             return State.FALLING;
-        } else if(b2body.getLinearVelocity().x != 0){
+        } else if (b2body.getLinearVelocity().x != 0) {
             return State.RUNNING;
-        }
-        else if(b2body.getPosition().y < y_deathposition){
+        } else if (b2body.getPosition().y < y_deathposition) {
             System.out.println("hero is dead");
             return State.DEAD;
-        }
-        else{
+        } else {
             return State.STANDING;
         }
     }
 
-    public void defineHero(){
+    public void defineHero() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32/ NoObjectionGame.PPM,32/ NoObjectionGame.PPM);
+        bdef.position.set(32 / NoObjectionGame.PPM, 32 / NoObjectionGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -144,7 +146,7 @@ public class Hero extends Sprite {
         b2body.createFixture(fdef1);
 
         EdgeShape right = new EdgeShape();
-        right.set(new Vector2(6/NoObjectionGame.PPM, -10/NoObjectionGame.PPM),new Vector2(6/NoObjectionGame.PPM, 10/NoObjectionGame.PPM));
+        right.set(new Vector2(6 / NoObjectionGame.PPM, -10 / NoObjectionGame.PPM), new Vector2(6 / NoObjectionGame.PPM, 10 / NoObjectionGame.PPM));
         fdef1.shape = right;
         fdef1.isSensor = true;
 
@@ -161,7 +163,7 @@ public class Hero extends Sprite {
         b2body.createFixture(fdef2);
 
         EdgeShape left = new EdgeShape();
-        left.set(new Vector2(-6/NoObjectionGame.PPM, -10/NoObjectionGame.PPM),new Vector2(-6/NoObjectionGame.PPM, 10/NoObjectionGame.PPM));
+        left.set(new Vector2(-6 / NoObjectionGame.PPM, -10 / NoObjectionGame.PPM), new Vector2(-6 / NoObjectionGame.PPM, 10 / NoObjectionGame.PPM));
         fdef2.shape = left;
         fdef2.isSensor = true;
 
