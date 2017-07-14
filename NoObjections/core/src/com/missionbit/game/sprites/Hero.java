@@ -33,9 +33,9 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
+    public boolean isLanded;
     private static final float y_deathposition = -100;
     private PlayScreen playScreen;
-
 
     public Hero(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("dudeRun4"));
@@ -44,6 +44,7 @@ public class Hero extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        isLanded = true;
         this.playScreen = screen;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -68,7 +69,7 @@ public class Hero extends Sprite {
         setBounds(0, 0, 40 / NoObjectionGame.PPM, 60 / NoObjectionGame.PPM);
         setRegion(heroStand);
     }
-
+  
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
@@ -189,6 +190,13 @@ public class Hero extends Sprite {
 
     }
 
+    public boolean isLanded() {
+        return isLanded;
+    }
+
+    public void setLanded(boolean landed) {
+        isLanded = landed;
+    }
 }
 
 
