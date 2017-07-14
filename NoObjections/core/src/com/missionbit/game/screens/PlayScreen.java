@@ -94,7 +94,7 @@ public class PlayScreen implements Screen {
         isLadderHit = worldContactListener.getIsTouched();
 
         //temp climbing
-        if(((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isLadderHit)){
+        if(((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 2) && isLadderHit)){
             hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
                     true );
         }
@@ -133,7 +133,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //renderer our box2ddebuglines
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
