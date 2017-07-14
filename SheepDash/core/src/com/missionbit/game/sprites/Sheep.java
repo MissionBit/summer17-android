@@ -27,7 +27,7 @@ public class Sheep extends Animals{
         sheep = new Texture("sheeprunning.png");
         sheepDead = new Texture("sheepsquish.png");
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
-        sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
+        sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.7f);
         bounds1 = new Rectangle(x,y,70,45);
         jump = Gdx.audio.newSound(Gdx.files.internal("jump_07.mp3"));
     }

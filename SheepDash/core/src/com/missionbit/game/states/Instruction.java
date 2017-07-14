@@ -51,7 +51,7 @@ public class Instruction extends State {
         farmer.update(dt);
         collisionCheck();
         //ifs and butts
-        if (sheep.getPosition().x > 150) {
+        if (sheep.getPosition().y  ==  280) {
             sheep.jump();
         }
         if (sheep.getPosition().x > 250) {
