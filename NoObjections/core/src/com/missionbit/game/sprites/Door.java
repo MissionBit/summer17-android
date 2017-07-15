@@ -4,19 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
+import com.missionbit.game.NoObjectionGame;
+
 
 /**
  * Created by missionbit on 6/26/17.
  */
 
-public class Portal extends InteractiveTileObject{
-    public Portal(World world, TiledMap map, Rectangle bounds){
+public class Door extends InteractiveTileObject {
+
+    public Door(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
+        fixture.setUserData(this);
+        setCategoryFilter(NoObjectionGame.DOOR_BIT);
     }
 
     @Override
     public boolean onCollisionDetected() {
-        Gdx.app.log("Portal", "Portal Hit");
+        Gdx.app.log("Door", "Door Hit");
         return false;
     }
+
 }

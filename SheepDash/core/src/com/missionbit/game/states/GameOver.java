@@ -19,6 +19,7 @@ import com.missionbit.game.GameTutorial;
 public class GameOver extends State{
 
     public Texture black;
+    public Texture gameOverTxt;
 
     private Stage stage;
 
@@ -33,9 +34,11 @@ public class GameOver extends State{
     private ImageButton restart;
 
     public GameOver(final GameStateManager gsm) {
+
         super(gsm);
 
         black = new Texture("blackness.jpg");
+        gameOverTxt = new Texture("GameOver.png");
 
         myTexture1 = new Texture(Gdx.files.internal("back.png"));
         myTextureRegion1 = new TextureRegion(myTexture1);
@@ -44,7 +47,7 @@ public class GameOver extends State{
         stage = new Stage(new StretchViewport(GameTutorial.WIDTH, GameTutorial.HEIGHT));
         stage.addActor(back);
         Gdx.input.setInputProcessor(stage);
-        back.setBounds(124,322,64,47);
+        back.setBounds(GameTutorial.WIDTH/2 - 50,230,64,47);
         back.getImageCell().expand().fill();
 
         back.addListener(new ClickListener(){
@@ -59,13 +62,12 @@ public class GameOver extends State{
         myTextureRegion2 = new TextureRegion(myTexture2);
         myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
         restart = new ImageButton(myTexRegionDrawable2);
-        stage = new Stage(new StretchViewport(GameTutorial.WIDTH, GameTutorial.HEIGHT));
         stage.addActor(restart);
         Gdx.input.setInputProcessor(stage);
-        restart.setBounds(230,230,64,47);
+        restart.setBounds(GameTutorial.WIDTH/2 + 50,230,64,47);
         restart.getImageCell().expand().fill();
 
-        back.addListener(new ClickListener(){
+        restart.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level restarting");
@@ -80,12 +82,18 @@ public class GameOver extends State{
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void update(float dt) {handleInput();}
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(black, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
+        sb.draw(gameOverTxt,GameTutorial.WIDTH/2,300);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
@@ -94,8 +102,11 @@ public class GameOver extends State{
 
     @Override
     public void dispose() {
-        stage.dispose();
+
         black.dispose();
+        gameOverTxt.dispose();
+        stage.dispose();
+
 
 
     }

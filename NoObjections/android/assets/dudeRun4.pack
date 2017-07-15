@@ -1,0 +1,13 @@
+
+dudeRun4.png
+size: 256,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dudeRun2
+  rotate: false
+  xy: 2, 2
+  size: 250, 63
+  orig: 250, 63
+  offset: 0, 0
+  index: -1
