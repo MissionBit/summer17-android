@@ -43,7 +43,7 @@ public abstract class InteractiveTileObject {
         fixture = body.createFixture(fdef);
     }
 
-    public abstract boolean onCollisionDetected();
+    public abstract int onCollisionDetected();
 
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();

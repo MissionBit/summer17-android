@@ -21,15 +21,15 @@ import com.missionbit.game.NoObjectionGame;
  * Created by missionbit on 7/13/17.
  */
 
-public class EndScreen implements Screen {
+public class WinScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
     private NoObjectionGame game;
     private Texture bg;
 
-    public EndScreen(NoObjectionGame game) {
+    public WinScreen(NoObjectionGame game) {
         this.game = game;
-        bg = new Texture("pixil-layer-Background2.png");
+        bg = new Texture("pixil-layer-Background.png");
         viewport = new StretchViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((NoObjectionGame) game).batch);
 
@@ -80,9 +80,7 @@ public class EndScreen implements Screen {
 
     @Override
     public void dispose() {
-       // background.dispose(); 
-        //stage.dispose(); 
-        //myTexture1.dispose();
-
+        stage.dispose();
+        bg.dispose();
     }
 }

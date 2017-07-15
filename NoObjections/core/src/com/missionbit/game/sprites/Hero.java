@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.screens.PlayScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.missionbit.game.tools.WorldContactListener;
 
 
 /**
@@ -22,8 +21,7 @@ import com.missionbit.game.tools.WorldContactListener;
 
 public class Hero extends Sprite {
 
-    public enum State {FALLING, CLIMBING, STANDING, RUNNING, DEAD}
-    ;
+    public enum State {FALLING, CLIMBING, STANDING, RUNNING, DEAD, WIN};
     public State currentState;
     public State previousState;
     public World world;
@@ -33,9 +31,10 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
+    public boolean isLanded;
     private static final float y_deathposition = -100;
+    private static final double PIT_DEATH = 0.6;
     private PlayScreen playScreen;
-
 
     public Hero(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("dudeRun4"));
@@ -44,6 +43,7 @@ public class Hero extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        isLanded = true;
         this.playScreen = screen;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -68,14 +68,26 @@ public class Hero extends Sprite {
         setBounds(0, 0, 40 / NoObjectionGame.PPM, 60 / NoObjectionGame.PPM);
         setRegion(heroStand);
     }
-
+  
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
-        //System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+       // System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+
+        //if you fall off the side of the screen
         if (b2body.getPosition().y < y_deathposition) {
             currentState = State.DEAD;
             System.out.println("hero is dead");
+        }
+
+        //if you fall in the put
+        if(b2body.getPosition().y < PIT_DEATH){
+            currentState = State.DEAD;
+        }
+
+        //if the object hit is a door
+        if(playScreen.isObjectHit() == NoObjectionGame.DOOR){
+            currentState = State.WIN;
         }
     }
 
@@ -84,7 +96,6 @@ public class Hero extends Sprite {
 
         TextureRegion region;
         switch (currentState) {
-            //TODO: case climbing
             case CLIMBING:
                 region = (TextureRegion) heroClimb.getKeyFrame(stateTimer);
                 break;
@@ -112,8 +123,7 @@ public class Hero extends Sprite {
     }
 
     public State getState() {
-        //TODO: need to code climbing instead jump
-        if (b2body.getLinearVelocity().y > 0 && playScreen.isLadderHit()) {
+        if (b2body.getLinearVelocity().y > 0 && playScreen.isObjectHit() == NoObjectionGame.LADDER) {
             return State.CLIMBING;
         } else if (b2body.getLinearVelocity().y < 0) {
             return State.FALLING;
@@ -122,6 +132,8 @@ public class Hero extends Sprite {
         } else if (b2body.getPosition().y < y_deathposition) {
             System.out.println("hero is dead");
             return State.DEAD;
+        }else if(playScreen.isObjectHit() == NoObjectionGame.DOOR){
+            return State.WIN;
         } else {
             return State.STANDING;
         }

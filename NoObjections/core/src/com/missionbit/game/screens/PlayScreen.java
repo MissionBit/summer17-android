@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.missionbit.game.Controller;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
@@ -31,7 +32,7 @@ public class PlayScreen implements Screen {
     private NoObjectionGame game;
     private TextureAtlas atlas;
     private Texture bg;
-
+    public Controller controller;
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -42,7 +43,7 @@ public class PlayScreen implements Screen {
 
     private Hero hero;
 
-    private boolean isLadderHit = false;
+    private int isObjectHit = 0;
 
     //box2d
     private World world;
@@ -67,12 +68,12 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world,map);
         hero = new Hero(world, this);
-
+        controller = new Controller();
         worldContactListener = new WorldContactListener();
-
         world.setContactListener(worldContactListener);
 
-        }
+    }
+
 
     public TextureAtlas getAtlas(){
         return atlas;
@@ -85,22 +86,24 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && hero.b2body.getLinearVelocity().y == 0){
+        if(((Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed()) && hero.b2body.getLinearVelocity().y == 0)){
             hero.b2body.applyLinearImpulse(new Vector2(0, 3f), hero.b2body.getWorldCenter(),
                     true );
         }
 
-        isLadderHit = worldContactListener.getIsTouched();
+        isObjectHit = worldContactListener.getIsObjectTouched();
 
         //temp climbing
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && isLadderHit){
+        if(((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isObjectHit == 1000)){
             hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
                     true );
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && hero.b2body.getLinearVelocity().x <= 2){
+        if((Gdx.input.isKeyPressed(Input.Keys.RIGHT)  || controller.isRightPressed())
+                && hero.b2body.getLinearVelocity().x <= 2){
             hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && hero.b2body.getLinearVelocity().x >= -2){
+        if((Gdx.input.isKeyPressed(Input.Keys.LEFT) || controller.isLeftPressed())
+                && hero.b2body.getLinearVelocity().x >= -2){
             hero.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
     }
@@ -140,16 +143,25 @@ public class PlayScreen implements Screen {
         //Set our batch to now draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        controller.draw();
 
         if(hero.currentState == Hero.State.DEAD){
             game.setScreen(new EndScreen(game));
             dispose();
         }
+
+        if(hero.currentState == Hero.State.WIN){
+            game.setScreen(new WinScreen(game));
+            dispose();
+        }
+
+
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        controller.resize(width, height);
     }
 
     @Override
@@ -173,10 +185,10 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        //hud.dispose();
+        hud.dispose();
     }
 
-    public boolean isLadderHit(){
-        return isLadderHit;
+    public int isObjectHit(){
+        return isObjectHit;
     }
 }
