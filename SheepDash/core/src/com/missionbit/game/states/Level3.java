@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Obstacle;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.obstacles.Obstacle;
+import com.missionbit.game.sprites.animals.Sheep;
 
 import java.util.Random;
 

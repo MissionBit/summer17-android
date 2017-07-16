@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.animals.Sheep;
 
 /**
  * Created by MissionBit on 7/7/17.

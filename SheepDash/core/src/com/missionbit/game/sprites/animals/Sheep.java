@@ -1,4 +1,4 @@
-package com.missionbit.game.sprites;
+package com.missionbit.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -6,17 +6,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.sprites.Animation;
+
+import java.util.Random;
 
 /**
  * Created by MissionBit on 6/27/17.
  */
 
-public class Sheep extends Animals{
+public class Sheep extends Animals {
     private Texture sheep;
     private Rectangle bounds1;
     private Animation sheepAnimation;
     private Texture sheepDead;
     private Animation sheep2Animation;
+    private Random rand;
     private float timer;
     private boolean isTimerStarted = false;
     private static final float PENALTY_TIMER =2;
@@ -29,6 +33,7 @@ public class Sheep extends Animals{
         sheepAnimation = new Animation(new TextureRegion(sheep),4,0.5f);
         sheep2Animation = new Animation(new TextureRegion(sheepDead),15,0.5f);
         bounds1 = new Rectangle(x,y,70,45);
+        rand = new Random();
         jump = Gdx.audio.newSound(Gdx.files.internal("jump_07.mp3"));
     }
 
@@ -40,18 +45,19 @@ public class Sheep extends Animals{
             velocity.add(0,GRAVITY,0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt,velocity.y,0);
+        position.add(movement * dt,velocity.y,0);
         velocity.scl(1/dt);
         if(position.y < 60){
             position.y = 60;
         }
-
         bounds1.setPosition(position.x,position.y);
-        //System.out.println("Sheep's speed:" + MOVEMENT);
+        //System.out.println("Sheep's speed:" + movement);
     }
 
     public void jump() {
-        velocity.y = 500;
+        if (position.y <= 150){
+            velocity.y = 500;
+        }
     }
 
     public void updateTimer(float elaspedTime) {
@@ -71,30 +77,30 @@ public class Sheep extends Animals{
         }
         return false;
     }
-  
+
     public void reduceSpd(){
-        MOVEMENT = 300;
+        movement = 300;
     }
 
     public void resetSpd() {
-        MOVEMENT = 440;
+        movement = 440;
     }
 
     public void noSpd() {
-        MOVEMENT = 0;
+        movement = 0;
     }
 
     public void increaseSpd(){
-        //MOVEMENT = MOVEMENT + 20;
-        MOVEMENT = 500;
+        //movement = movement + 20;
+        movement = 500;
     }
 
     public void goBackwards() {
-        MOVEMENT = -200;
+        movement = -200;
     }
 
     public void sheepDied() {
-        MOVEMENT = 0;
+        movement = 0;
 
     }
 
@@ -115,7 +121,7 @@ public class Sheep extends Animals{
     }
 
     public void setDead(boolean dead) {
-        sheep2Animation.dead = false;
+        sheep2Animation.setDead(false);
     }
 
 

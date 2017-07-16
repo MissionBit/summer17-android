@@ -1,4 +1,4 @@
-package com.missionbit.game.sprites;
+package com.missionbit.game.sprites.obstacles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,21 +13,18 @@ import java.util.Random;
 public class Poop {
     private Texture poop;
     private static final int FLUCTUATION = 300;
-    private static final int POOP_MIN_X = 200;
+    private static final int POOP_MIN_X = 400;
     private Vector2 posPoop;
-    private Vector2 posPoop2;
-    private Rectangle boundsPoop2;
     private Rectangle boundsPoop;
     private Random rand;
+    private boolean collided;
 
     public Poop(int x, int y){
         poop = new Texture("poop.png");
         rand = new Random();
         posPoop = new Vector2(rand.nextInt(FLUCTUATION)+POOP_MIN_X,60);
-        posPoop2 = new Vector2(rand.nextInt(FLUCTUATION)+POOP_MIN_X+posPoop.x,60);
-        boundsPoop = new Rectangle(posPoop.x,posPoop.y,poop.getWidth(),poop.getHeight());
-        boundsPoop2 = new Rectangle(posPoop2.x,posPoop2.y,poop.getWidth(),poop.getHeight());
-
+        boundsPoop = new Rectangle(posPoop.x,posPoop.y,30,30);
+        collided = false;
     }
 
     public Texture getPoop() {
@@ -44,24 +41,28 @@ public class Poop {
 
     public void reposition(float x, int y){
         posPoop.set(x, y);
-        posPoop2.set(x, y);
         boundsPoop.setPosition(posPoop.x,posPoop.y);
-        boundsPoop2.setPosition(posPoop2.x,posPoop2.y);
     }
 
     public boolean collides(Rectangle player){
-        return player.overlaps(boundsPoop) || player.overlaps(boundsPoop2);
+        if ((player.overlaps(boundsPoop)&& !collided)) {
+            collided = true;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public void dispose(){
         poop.dispose();
     }
 
-    public Vector2 getPosPoop2() {
-        return posPoop2;
+    public boolean isCollided() {
+        return collided;
     }
 
-    public Rectangle getBoundsPoop2() {
-        return boundsPoop2;
+    public void setCollided(boolean collided) {
+        this.collided = collided;
     }
 }

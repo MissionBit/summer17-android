@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
+import com.missionbit.game.sprites.animals.Bunny;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Obstacle;
-import com.missionbit.game.sprites.Poop;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.obstacles.Poop;
+import com.missionbit.game.sprites.animals.Sheep;
+import com.missionbit.game.sprites.obstacles.Obstacle;
 
 import java.util.Random;
 
@@ -26,11 +27,10 @@ public class Level4 extends State {
     private Vector2 groundPos1, groundPos2;
     private Vector2 skyPos, skyPos2;
     private Vector2 carsPos, carsPos2, carsPos3;
-    private Poop poop;
+    private Poop poop, poop2;
     private Obstacle car;
     private static final int POOP_SPACING = 1000;
     private static final int POOP_WIDTH = 30;
-    private int car_Width=270;
     //obstacles
     private Texture redCarTexture;
     private Obstacle redCar;
@@ -40,11 +40,13 @@ public class Level4 extends State {
     private Obstacle apple;
     private boolean appleIsTouched;
     long startTime;
-    
+    //private static final int GROUND_Y_OFFSET = -80;
+    private static final int CAR_WIDTH =270;
+    private static final int SKY_WIDTH = 800;
+    private static final int GROUND_WIDTH = 790;
 
     public Level4(GameStateManager gsm) {
         super(gsm);
-
         poop = new Poop(100,60);
         sheep = new Sheep(150,60);
         sky = new Texture("sunCloudsForHighway.png");
@@ -89,20 +91,17 @@ public class Level4 extends State {
         sheep.update(dt);
         cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
-        apple.update(dt);
-        updatePoops();
         updateGround();
         updateSky();
         updateCars();
+        timerCheck(dt);
+        apple.update(dt);
+        //updatePoops();
         collisionCheck();
         changeLevels();
         updateRed();
         updateGreen();
         updateApple();
-        timerCheck(dt);
-        collisionCheck();
-        cam.update();
-        collisionCheck2();
         cam.update();
         if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level5(gsm));
@@ -134,11 +133,11 @@ public class Level4 extends State {
             float distance = (fluctuation * 600) + GameTutorial.WIDTH;
             poop.reposition(poop.getPosPoop().x+ distance, 58);
         }
-        if (poop.getPosPoop2().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+        if (poop2.getPosPoop().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 600) + GameTutorial.WIDTH;
-            poop.reposition(poop.getPosPoop2().x + distance, 58);
+            poop.reposition(poop2.getPosPoop().x + distance, 58);
         }
     }
 
@@ -152,17 +151,16 @@ public class Level4 extends State {
         }
     }
 
-    public void updateCar(){
-        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
-            poop.getPosPoop().add(2*POOP_SPACING,0);
-            poop.getBoundsPoop().setPosition(poop.getPosPoop().x,poop.getPosPoop().y);
-        }
-        if (poop.getPosPoop2().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
-            poop.getPosPoop2().add(2*POOP_SPACING,0);
-            poop.getBoundsPoop2().setPosition(poop.getPosPoop2().x,poop.getPosPoop2().y);
-        }
-    }
-
+//    public void updateCar(){
+//        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+//            poop.getPosPoop().add(2*POOP_SPACING,0);
+//            poop.getBoundsPoop().setPosition(poop.getPosPoop().x,poop.getPosPoop().y);
+//        }
+//        if (poop2.getPosPoop().x+POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+//            poop2.getPosPoop().add(2*POOP_SPACING,0);
+//            poop2.getBoundsPoop().setPosition(poop2.getPosPoop().x,poop2.getPosPoop().y);
+//        }
+//    }
 
     public void updateGround(){
         if(groundPos1.x+ground.getWidth() <= cam.position.x-cam.viewportWidth/2){
@@ -219,20 +217,17 @@ public class Level4 extends State {
         }
     }
 
-    public void timerCheck(float timePassed) {
-        sheep.updateTimer(timePassed);
-        if (sheep.isTimerDone()) {
-            sheep.resetSpd();
-        }
-    }
-
     public void changeLevels(){
         if (sheep.getPosition().x > 3000){
             gsm.set(new Level5(gsm));
         }
     }
 
-    public void collisionCheck2(){
+    public void timerCheck(float timePassed) {
+        sheep.updateTimer(timePassed);
+        if (sheep.isTimerDone()) {
+            sheep.resetSpd();
+        }
         if (poop.collides(sheep.getBounds1())){
             sheep.reduceSpd();
         }
@@ -242,26 +237,26 @@ public class Level4 extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(sky,skyPos.x,0,800,400);
-        sb.draw(sky,skyPos2.x,0,800,400);
-        sb.draw(ground,groundPos1.x,0,790,350);
-        sb.draw(ground,groundPos2.x,0,790,350);
-        sb.draw(cars,carsPos.x,20,car_Width,300);
-        sb.draw(cars,carsPos2.x,20,car_Width,300);
-        sb.draw(cars,carsPos3.x,20,car_Width,300);
-        sb.draw(poop.getPoop(),poop.getPosPoop().x,poop.getPosPoop().y,30,30);
-        sb.draw(poop.getPoop(),poop.getPosPoop2().x,poop.getPosPoop2().y,30,30);
+        sb.draw(sky,skyPos.x,0,SKY_WIDTH,400);
+        sb.draw(sky,skyPos2.x,0,SKY_WIDTH,400);
+        sb.draw(ground,groundPos1.x,0,GROUND_WIDTH,350);
+        sb.draw(ground,groundPos2.x,0,GROUND_WIDTH,350);
+        sb.draw(cars,carsPos.x,20,CAR_WIDTH,300);
+        sb.draw(cars,carsPos2.x,20,CAR_WIDTH,300);
+        sb.draw(cars,carsPos3.x,20,CAR_WIDTH,300);
+        if (farmer.collides(sheep.getBounds1())) {
+            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
+        } else {
+            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+        }
+        //sb.draw(poop.getPoop(),poop.getPosPoop().x,poop.getPosPoop().y,30,30);
+        //sb.draw(poop.getPoop(),poop.getPosPoop2().x,poop.getPosPoop2().y,30,30);
         sb.draw(redCar.getObstacle(), redCar.getPosObs().x, redCar.getPosObs().y);
         sb.draw(greenCar.getObstacle(), greenCar.getPosObs().x, greenCar.getPosObs().y);
         if (appleIsTouched == false) {
             sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
         }
-        if (farmer.collides(sheep.getBounds1())) {
-            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
-        } else {
-            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
-        }
-        sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,120,110);
         sb.end();
     }
 
