@@ -56,13 +56,13 @@ public class Sheep extends Animals {
 
     public void jump() {
         if (position.y <= 150){
-            velocity.y = 500;
+            velocity.y = 440;
         }
     }
 
-    public void updateTimer(float elaspedTime) {
+    public void updateTimer(float elapsedTime) {
         if (isTimerStarted) {
-            timer = timer + elaspedTime;
+            timer = timer + elapsedTime;
         }
     }
 
@@ -72,18 +72,18 @@ public class Sheep extends Animals {
     }
 
     public boolean isTimerDone() {
-        if (timer > PENALTY_TIMER) {
+        if(timer> PENALTY_TIMER) {
             return true;
         }
         return false;
     }
 
     public void reduceSpd(){
-        movement = 300;
+        movement = 240;
     }
 
     public void resetSpd() {
-        movement = 440;
+        movement = 250;
     }
 
     public void noSpd() {
@@ -91,17 +91,16 @@ public class Sheep extends Animals {
     }
 
     public void increaseSpd(){
-        //movement = movement + 20;
-        movement = 500;
+        movement = 260;
     }
 
     public void goBackwards() {
-        movement = -200;
+        movement = -250;
     }
 
     public void sheepDied() {
         movement = 0;
-
+        velocity.y = 0;
     }
 
     public Vector3 getPosition() {
