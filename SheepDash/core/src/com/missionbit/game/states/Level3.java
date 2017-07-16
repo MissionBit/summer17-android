@@ -34,6 +34,8 @@ public class Level3 extends State {
     private Obstacle spikes;
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
+    private static final int OBS_GAP = 400;
+    long startTime;
 
     public Level3(GameStateManager gsm) {
         super(gsm);
@@ -53,6 +55,9 @@ public class Level3 extends State {
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
+        Texture spikeTexture = new Texture("SPIKES2.0.18.png");
+        spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
+        startTime = System.currentTimeMillis();
         mudTexture = new Texture("mud.png");
         mud = new Obstacle(mudTexture, 700, 58, 1, 0.5f);
         carrotTexture = new Texture("Carrott.png");
@@ -93,6 +98,9 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new Level4(gsm));
+        }
     }
 
     public void updateGround() {
@@ -167,6 +175,8 @@ public class Level3 extends State {
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
         }
         if (mud.collides(sheep.getBounds1())) {
             sheep.reduceSpd();

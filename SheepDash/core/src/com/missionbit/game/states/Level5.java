@@ -187,6 +187,8 @@ public class Level5 extends State {
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())){
             sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
         }
         if (greyCar.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
