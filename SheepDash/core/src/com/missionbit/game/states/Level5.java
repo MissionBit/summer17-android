@@ -204,6 +204,7 @@ public class Level5 extends State {
             sheep.getSheepDead();
             sheep.sheepDied();
             farmer.killedSheep();
+            gameOver(5);
         }
         if (greyCar.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
@@ -249,6 +250,7 @@ public class Level5 extends State {
         }
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
+            gameOver(5);
         }
         else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
