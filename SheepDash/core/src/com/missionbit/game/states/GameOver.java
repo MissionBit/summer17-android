@@ -53,7 +53,7 @@ public class GameOver extends State{
         stage = new Stage(new StretchViewport(GameTutorial.WIDTH, GameTutorial.HEIGHT));
         stage.addActor(back);
         Gdx.input.setInputProcessor(stage);
-        back.setBounds(GameTutorial.WIDTH/2 - 100,200,80,80);
+        back.setBounds(GameTutorial.WIDTH/2 - 120,200,80,80);
         back.getImageCell().expand().fill();
 
         back.addListener(new ClickListener(){
@@ -146,5 +146,8 @@ public class GameOver extends State{
     public void dispose() {
         black.dispose();
         stage.dispose();
+        myTexture1.dispose();
+        myTexture2.dispose();
+        myTexture3.dispose();
     }
 }

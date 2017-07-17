@@ -99,7 +99,7 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level4(gsm));
         }
     }

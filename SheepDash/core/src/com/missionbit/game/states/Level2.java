@@ -152,7 +152,7 @@ public class Level2 extends State {
     }
 
     public void changeLevels() {
-        if (sheep.getPosition().x > 3000) {
+        if (sheep.getPosition().x > 4500) {
             gsm.set(new Level3(gsm));
         }
     }

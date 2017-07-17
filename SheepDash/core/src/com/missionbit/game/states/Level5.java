@@ -108,7 +108,7 @@ public class Level5 extends State {
         collisionCheck();
         timerCheck(dt);
         cam.update();
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new MenuState(gsm));
         }
     }
