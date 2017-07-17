@@ -12,18 +12,18 @@ import java.util.Random;
 
 public class Poop {
     private Texture poop;
-    private static final int FLUCTUATION = 300;
+    private static final int FLUCTUATION = 350;
     private static final int POOP_MIN_X = 400;
     private Vector2 posPoop;
     private Rectangle boundsPoop;
     private Random rand;
     private boolean collided;
 
-    public Poop(int x, int y){
+    public Poop(int x, int y) {
         poop = new Texture("poop.png");
         rand = new Random();
-        posPoop = new Vector2(rand.nextInt(FLUCTUATION)+POOP_MIN_X,60);
-        boundsPoop = new Rectangle(posPoop.x,posPoop.y,30,30);
+        posPoop = new Vector2(rand.nextInt(FLUCTUATION) + POOP_MIN_X, 60);
+        boundsPoop = new Rectangle(posPoop.x, posPoop.y, 30, 30);
         collided = false;
     }
 
@@ -39,22 +39,21 @@ public class Poop {
         return posPoop;
     }
 
-    public void reposition(float x, int y){
+    public void reposition(float x, int y) {
         posPoop.set(x, y);
-        boundsPoop.setPosition(posPoop.x,posPoop.y);
+        boundsPoop.setPosition(posPoop.x, posPoop.y);
     }
 
-    public boolean collides(Rectangle player){
-        if ((player.overlaps(boundsPoop)&& !collided)) {
+    public boolean collides(Rectangle player) {
+        if ((player.overlaps(boundsPoop) && !collided)) {
             collided = true;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public void dispose(){
+    public void dispose() {
         poop.dispose();
     }
 

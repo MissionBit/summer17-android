@@ -25,6 +25,7 @@ public class Level3 extends State {
     private Vector2 skyPos, skyPos2;
     private Texture hills;
     private Vector2 hillsPos, hillsPos2, hillsPos3, hillsPos4, hillsPos5;
+    //OBSTACLES
     private Texture mudTexture;
     private Obstacle mud;
     private Texture carrotTexture;
@@ -34,7 +35,6 @@ public class Level3 extends State {
     private Obstacle spikes;
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
-    private static final int OBS_GAP = 400;
     long startTime;
 
     public Level3(GameStateManager gsm) {
@@ -55,6 +55,7 @@ public class Level3 extends State {
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
+        //OBSTACLES
         Texture spikeTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
         startTime = System.currentTimeMillis();

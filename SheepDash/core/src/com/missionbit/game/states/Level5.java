@@ -26,7 +26,7 @@ public class Level5 extends State {
     private Vector2 groundPos1, groundPos2, groundPos3;
     private Vector2 skyPos, skyPos2;
     private Vector2 buildingsPos, buildingsPos2, buildingsPos3, buildingsPos4, buildingsPos5;
-    //obstacles
+    //OBSTACLES
     private Texture greyTexture;
     private Obstacle greyCar;
     private Texture mushroomTexture;
@@ -61,6 +61,7 @@ public class Level5 extends State {
         buildingsPos5 = new Vector2(4*BUILDINGS_WIDTH+buildingsPos.x,0);
         greyTexture = new Texture("CarGrey.png");
         greyCar = new Obstacle(greyTexture, 700, 48, 1, 0.5f);
+        //OBSTACLES
         mushroomTexture = new Texture("Mushroom.png");
         mushroom = new Obstacle(mushroomTexture, 2000, 60, 2, 0.2f);
         mushroomIsTouched = false;
