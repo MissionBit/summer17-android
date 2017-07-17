@@ -64,10 +64,10 @@ public class Level5 extends State {
         greyTexture = new Texture("CarGrey.png");
         greyCar = new Obstacle(greyTexture, 700, 48, 1, 0.5f);
         mushroomTexture = new Texture("Mushroom.png");
-        mushroom = new Obstacle(mushroomTexture, 2000, 60, 2, 0.2f);
+        mushroom = new Obstacle(mushroomTexture, 2000, 70, 2, 0.2f);
         mushroomIsTouched = false;
         cherryTexture = new Texture("Cherry2_0.35.png");
-        cherry = new Obstacle(cherryTexture, 1000, 50, 2, 0.35f);
+        cherry = new Obstacle(cherryTexture, 1000, 150, 2, 0.35f);
         cherryIsTouched = false;
         spikeTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikeTexture, 1700, 50, 2, 0.5f);
@@ -105,8 +105,8 @@ public class Level5 extends State {
         updateCherry();
         updateSpikes();
         timerCheck(dt);
-        collisionCheck();
         timerCheck(dt);
+        collisionCheck();
         cam.update();
         if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new MenuState(gsm));
@@ -175,7 +175,7 @@ public class Level5 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 1300) + GameTutorial.WIDTH;
-            mushroom.reposition(mushroom.getPosObs().x + distance, 58);
+            mushroom.reposition(mushroom.getPosObs().x + distance, 70);
             mushroomIsTouched = false;
         }
     }
@@ -185,7 +185,7 @@ public class Level5 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 850) + GameTutorial.WIDTH;
-            cherry.reposition(cherry.getPosObs().x + distance, 58);
+            cherry.reposition(cherry.getPosObs().x + distance, 150);
             cherryIsTouched = false;
         }
     }
@@ -245,7 +245,7 @@ public class Level5 extends State {
             sb.draw(mushroom.getObsAnimation(), mushroom.getPosObs().x, mushroom.getPosObs().y);
         }
         if (cherryIsTouched == false) {
-            sb.draw(cherry.getObsAnimation(), cherry.getPosObs().x, cherry.getPosObs().y);
+            sb.draw(cherry.getObsAnimation(), cherry.getPosObs().x, cherry.getPosObs().y,90,50);
         }
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
