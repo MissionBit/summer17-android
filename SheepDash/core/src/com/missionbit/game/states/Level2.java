@@ -49,9 +49,9 @@ public class Level2 extends State {
         farmer = new Farmer(-50, 60);
         ground = new Texture("CornFieldGround.png");
         background = new Texture("CornField.png");
-        groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
+        groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2 - ground.getWidth(), GROUND_Y_OFFSET);
         groundPos2 = new Vector2(ground.getWidth() + groundPos1.x, GROUND_Y_OFFSET);
-        bgPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
+        bgPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2 - bg_width, 0);
         bgPos2 = new Vector2(background.getWidth() + bgPos1.x, 0);
         bgPos3 = new Vector2(background.getWidth() + bgPos2.x, 0);
         //OBSTACLES
@@ -68,8 +68,10 @@ public class Level2 extends State {
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()) {
-            sheep.jump();
+        if (sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
     }
 
@@ -102,6 +104,7 @@ public class Level2 extends State {
             sheep.getSheepDead();
             sheep.sheepDied();
             farmer.killedSheep();
+            gameOver(2);
         }
         if (mud.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
@@ -131,22 +134,22 @@ public class Level2 extends State {
     }
 
     public void updateBg() {
-        if (bgPos1.x + background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (bgPos1.x + 2*background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             bgPos1.add(3 * background.getWidth(), 0);
         }
-        if (bgPos2.x + background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (bgPos2.x + 2*background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             bgPos2.add(3 * background.getWidth(), 0);
         }
-        if (bgPos3.x + background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (bgPos3.x + 2*background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             bgPos3.add(3 * background.getWidth(), 0);
         }
     }
 
     public void updateGround() {
-        if (groundPos1.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (groundPos1.x + 2*ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             groundPos1.add(2 * ground.getWidth(), 0);
         }
-        if (groundPos2.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (groundPos2.x + 2*ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             groundPos2.add(2 * ground.getWidth(), 0);
         }
 
@@ -217,6 +220,7 @@ public class Level2 extends State {
         }
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            gameOver(2);
         } else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }

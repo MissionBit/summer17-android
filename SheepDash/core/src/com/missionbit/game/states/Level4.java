@@ -176,6 +176,7 @@ public class Level4 extends State {
             sheep.getSheepDead();
             sheep.sheepDied();
             farmer.killedSheep();
+            gameOver(4);
         }
         if (poop.collides(sheep.getBounds1())){
             poopIsTouched = true;
@@ -224,6 +225,7 @@ public class Level4 extends State {
         }
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
+            gameOver(4);
         } else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }

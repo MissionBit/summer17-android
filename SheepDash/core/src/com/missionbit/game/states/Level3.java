@@ -99,7 +99,7 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level4(gsm));
         }
     }
@@ -178,6 +178,7 @@ public class Level3 extends State {
             sheep.getSheepDead();
             sheep.sheepDied();
             farmer.killedSheep();
+            gameOver(3);
         }
         if (mud.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
@@ -222,6 +223,7 @@ public class Level3 extends State {
         sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            gameOver(3);
         } else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }
