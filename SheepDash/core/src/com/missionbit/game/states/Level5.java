@@ -26,7 +26,7 @@ public class Level5 extends State {
     private Vector2 groundPos1, groundPos2, groundPos3;
     private Vector2 skyPos, skyPos2;
     private Vector2 buildingsPos, buildingsPos2, buildingsPos3, buildingsPos4, buildingsPos5;
-    //obstacles
+    //OBSTACLES
     private Texture greyTexture;
     private Obstacle greyCar;
     private Texture mushroomTexture;
@@ -35,7 +35,8 @@ public class Level5 extends State {
     private Texture cherryTexture;
     private Obstacle cherry;
     private boolean cherryIsTouched;
-    private static final int GROUND_Y_OFFSET = -80;
+    private Texture spikeTexture;
+    private Obstacle spikes;
     private static final int BUILDINGS_WIDTH = 193;
     private static final int GROUND_WIDTH = 550;
     private static final int SKY_WIDTH = 800;
@@ -59,6 +60,7 @@ public class Level5 extends State {
         buildingsPos3 = new Vector2(2*BUILDINGS_WIDTH+buildingsPos.x,0);
         buildingsPos4 = new Vector2(3*BUILDINGS_WIDTH+buildingsPos.x,0);
         buildingsPos5 = new Vector2(4*BUILDINGS_WIDTH+buildingsPos.x,0);
+        //OBSTACLES
         greyTexture = new Texture("CarGrey.png");
         greyCar = new Obstacle(greyTexture, 700, 48, 1, 0.5f);
         mushroomTexture = new Texture("Mushroom.png");
@@ -67,6 +69,8 @@ public class Level5 extends State {
         cherryTexture = new Texture("Cherry2_0.35.png");
         cherry = new Obstacle(cherryTexture, 1000, 50, 2, 0.35f);
         cherryIsTouched = false;
+        spikeTexture = new Texture("SPIKES2.0.18.png");
+        spikes = new Obstacle(spikeTexture, 1700, 50, 2, 0.5f);
         startTime = System.currentTimeMillis();
     }
 
@@ -92,12 +96,14 @@ public class Level5 extends State {
         farmer.update(dt);
         mushroom.update(dt);
         cherry.update(dt);
+        spikes.update(dt);
         updateGround();
         updateSky();
         updateBuildings();
         updateGrey();
         updateMushroom();
         updateCherry();
+        updateSpikes();
         timerCheck(dt);
         collisionCheck();
         timerCheck(dt);
@@ -184,6 +190,15 @@ public class Level5 extends State {
         }
     }
 
+    public void updateSpikes() {
+        if (cam.position.x - cam.viewportWidth / 2 > spikes.getPosObs().x + spikes.getWidth()) {
+            Random rand = new Random();
+            float fluctuation = rand.nextFloat();
+            float distance = (fluctuation * 900) + GameTutorial.WIDTH;
+            spikes.reposition(spikes.getPosObs().x + distance, 58);
+        }
+    }
+
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())){
             sheep.getSheepDead();
@@ -197,6 +212,10 @@ public class Level5 extends State {
         if (cherry.collides(sheep.getBounds1())) {
             cherryIsTouched = true;
             sheep.increaseSpd();
+            sheep.startTimer();
+        }
+        if (spikes.collides((sheep.getBounds1()))) {
+            sheep.reduceSpd();
             sheep.startTimer();
         }
         if (mushroom.collides(sheep.getBounds1())) {
@@ -220,6 +239,7 @@ public class Level5 extends State {
         sb.draw(ground,groundPos1.x,0,GROUND_WIDTH,350);
         sb.draw(ground,groundPos2.x,0,GROUND_WIDTH,350);
         sb.draw(ground,groundPos3.x,0,GROUND_WIDTH,350);
+        sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
         sb.draw(greyCar.getObstacle(), greyCar.getPosObs().x, greyCar.getPosObs().y);
         if (mushroomIsTouched == false) {
             sb.draw(mushroom.getObsAnimation(), mushroom.getPosObs().x, mushroom.getPosObs().y);
@@ -250,5 +270,7 @@ public class Level5 extends State {
         mushroom.dispose();
         cherryTexture.dispose();
         cherry.dispose();
+        spikeTexture.dispose();
+        spikes.dispose();
     }
 }

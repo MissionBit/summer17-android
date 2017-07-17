@@ -22,7 +22,7 @@ public class Mud {
     public Mud(int x, int y){
         mud = new Texture("mud.png");
         rand = new Random();
-        posMud = new Vector2(rand.nextInt(FLUCTUATION)+MUD_MIN_X,37);
+        posMud = new Vector2(rand.nextInt(FLUCTUATION)+MUD_MIN_X, y);
         boundsMud = new Rectangle(posMud.x,posMud.y,30,30);
         collided = false;
 
@@ -40,6 +40,10 @@ public class Mud {
         return posMud;
     }
 
+    public void reposition(float x, int y){
+        posMud.set(x, y);
+        boundsMud.setPosition(posMud.x,posMud.y);
+    }
 
     public boolean collides(Rectangle player){
         if ((player.overlaps(boundsMud))) {

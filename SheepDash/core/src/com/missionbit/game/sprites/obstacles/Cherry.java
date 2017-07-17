@@ -18,7 +18,7 @@ public class Cherry {
     private Animation cherryAnimation;
     private Vector2 posCherry;
     private Random rand;
-    private static final int FLUCTUATION = 300;
+    private static final int FLUCTUATION = 500;
     private static final int CHERRY_MIN_X = 250;
     private boolean collided;
 
@@ -26,10 +26,15 @@ public class Cherry {
         cherry = new Texture("Cherry2_0.35.png");
         cherryAnimation = new Animation(new TextureRegion(cherry),2,0.5f);
         rand = new Random();
-        posCherry = new Vector2(rand.nextInt(FLUCTUATION)+CHERRY_MIN_X,60);
+        posCherry = new Vector2(rand.nextInt(FLUCTUATION)+CHERRY_MIN_X, y);
         cherryBounds = new Rectangle(posCherry.x,posCherry.y,cherry.getWidth(),cherry.getHeight());
         collided = false;
 
+    }
+
+    public void reposition(float x, int y){
+        posCherry.set(x, y);
+        cherryBounds.setPosition(posCherry.x,posCherry.y);
     }
 
     public boolean collides(Rectangle player){
