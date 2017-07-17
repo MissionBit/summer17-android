@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.states.CharacterState;
+import com.missionbit.game.states.GameOver;
 import com.missionbit.game.states.GameStateManager;
 import com.missionbit.game.states.Level5;
 import com.missionbit.game.states.MenuState;

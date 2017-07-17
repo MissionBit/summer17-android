@@ -47,7 +47,7 @@ public class GameOver extends State{
         stage = new Stage(new StretchViewport(GameTutorial.WIDTH, GameTutorial.HEIGHT));
         stage.addActor(back);
         Gdx.input.setInputProcessor(stage);
-        back.setBounds(GameTutorial.WIDTH/2 - 50,230,64,47);
+        back.setBounds(GameTutorial.WIDTH/2 - 100,200,80,80);
         back.getImageCell().expand().fill();
 
         back.addListener(new ClickListener(){
@@ -58,13 +58,14 @@ public class GameOver extends State{
             }
         });
 
+
         myTexture2 = new Texture(Gdx.files.internal("restart.png"));
         myTextureRegion2 = new TextureRegion(myTexture2);
         myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
         restart = new ImageButton(myTexRegionDrawable2);
         stage.addActor(restart);
         Gdx.input.setInputProcessor(stage);
-        restart.setBounds(GameTutorial.WIDTH/2 + 50,230,64,47);
+        restart.setBounds(GameTutorial.WIDTH/2 + 50,200,80,80);
         restart.getImageCell().expand().fill();
 
         restart.addListener(new ClickListener(){
@@ -74,6 +75,7 @@ public class GameOver extends State{
                 gsm.push(new Level5(gsm));
             }
         });
+
     }
 
     @Override
@@ -93,21 +95,18 @@ public class GameOver extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(black, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        sb.draw(gameOverTxt,GameTutorial.WIDTH/2,300);
+        sb.draw(gameOverTxt,200,270,400,90);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+
     }
 
     @Override
     public void dispose() {
-
         black.dispose();
         gameOverTxt.dispose();
         stage.dispose();
-
-
-
     }
 }

@@ -10,9 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.missionbit.game.GameTutorial;
+import com.missionbit.game.sprites.obstacles.Cherry;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Obstacle;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.animals.Sheep;
+import com.missionbit.game.sprites.obstacles.Obstacle;
+import com.missionbit.game.sprites.animals.Sheep;
+
 import java.util.Random;
 
 /**
@@ -49,26 +52,30 @@ public class Level5 extends State {
     private TextureRegionDrawable myTexRegionDrawable2;
     private ImageButton restart;
 
+    private static final int BUILDINGS_WIDTH = 193;
+    private static final int GROUND_WIDTH = 550;
+    private static final int SKY_WIDTH = 800;
+
     long startTime;
 
     public Level5(GameStateManager gsm) {
         super(gsm);
-        sheep = new Sheep(150,60);
+        sheep = new Sheep(150, 60);
         sky = new Texture("CitySky.png");
-        farmer = new Farmer(-50,60);
+        farmer = new Farmer(-50, 60);
         buildings = new Texture("UpdatedCityBuildings.png");
         ground = new Texture("CityGround.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        groundPos1 = new Vector2(cam.position.x-cam.viewportWidth/2,0);
-        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x,0);
-        groundPos3 = new Vector2(ground.getWidth()+groundPos2.x,0);
-        skyPos = new Vector2(cam.position.x - cam.viewportWidth/2,0);
-        skyPos2 = new Vector2(sky.getWidth()+skyPos.x,0);
-        buildingsPos = new Vector2(cam.position.x-cam.viewportWidth/2,0);
-        buildingsPos2 = new Vector2(buildings_width+buildingsPos.x,0);
-        buildingsPos3 = new Vector2(2*buildings_width+buildingsPos.x,0);
-        buildingsPos4 = new Vector2(3*buildings_width+buildingsPos.x,0);
-        buildingsPos5 = new Vector2(4*buildings_width+buildingsPos.x,0);
+        groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
+        groundPos2 = new Vector2(ground.getWidth() + groundPos1.x, 0);
+        groundPos3 = new Vector2(ground.getWidth() + groundPos2.x, 0);
+        skyPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
+        skyPos2 = new Vector2(sky.getWidth() + skyPos.x, 0);
+        buildingsPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
+        buildingsPos2 = new Vector2(BUILDINGS_WIDTH + buildingsPos.x, 0);
+        buildingsPos3 = new Vector2(2 * BUILDINGS_WIDTH + buildingsPos.x, 0);
+        buildingsPos4 = new Vector2(3 * BUILDINGS_WIDTH + buildingsPos.x, 0);
+        buildingsPos5 = new Vector2(4 * BUILDINGS_WIDTH + buildingsPos.x, 0);
         greyTexture = new Texture("CarGrey.png");
         greyCar = new Obstacle(greyTexture, 700, 48, 1, 0.5f);
         mushroomTexture = new Texture("Mushroom.png");
@@ -82,7 +89,7 @@ public class Level5 extends State {
 
     @Override
     protected void handleInput() {
-        if(sheep.getPosition().y == 60) {
+        if (sheep.getPosition().y == 60) {
             if (Gdx.input.justTouched()) {
                 sheep.jump();
             }
@@ -110,50 +117,58 @@ public class Level5 extends State {
         updateCherry();
         timerCheck(dt);
         collisionCheck();
+        timerCheck(dt);
         cam.update();
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if (((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new MenuState(gsm));
         }
     }
 
-    public void updateGround(){
-        if(groundPos1.x+ground.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            groundPos1.add(3*ground.getWidth(),0);
+    public void timerCheck(float timePassed) {
+        sheep.updateTimer(timePassed);
+        if (sheep.isTimerDone()) {
+            sheep.resetSpd();
         }
-        if(groundPos2.x+ground.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            groundPos2.add(3*ground.getWidth(),0);
+    }
+
+    public void updateGround() {
+        if (groundPos1.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            groundPos1.add(3 * ground.getWidth(), 0);
         }
-        if (groundPos3.x+ground.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            groundPos3.add(3*ground.getWidth(),0);
+        if (groundPos2.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            groundPos2.add(3 * ground.getWidth(), 0);
+        }
+        if (groundPos3.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            groundPos3.add(3 * ground.getWidth(), 0);
         }
 
     }
 
-    public void updateSky(){
-        if(skyPos.x+sky.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            skyPos.add(2*sky.getWidth(),0);
+    public void updateSky() {
+        if (skyPos.x + sky.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            skyPos.add(2 * sky.getWidth(), 0);
         }
-        if(skyPos2.x+sky.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            skyPos2.add(2*sky.getWidth(),0);
+        if (skyPos2.x + sky.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            skyPos2.add(2 * sky.getWidth(), 0);
         }
 
     }
 
-    public void updateBuildings(){
-        if(buildingsPos.x+buildings.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            buildingsPos.add(5*buildings.getWidth(),0);
+    public void updateBuildings() {
+        if (buildingsPos.x + buildings.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            buildingsPos.add(5 * buildings.getWidth(), 0);
         }
-        if(buildingsPos2.x+buildings.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            buildingsPos2.add(5*buildings.getWidth(),0);
+        if (buildingsPos2.x + buildings.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            buildingsPos2.add(5 * buildings.getWidth(), 0);
         }
-        if(buildingsPos3.x+buildings.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            buildingsPos3.add(5*buildings.getWidth(),0);
+        if (buildingsPos3.x + buildings.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            buildingsPos3.add(5 * buildings.getWidth(), 0);
         }
-        if(buildingsPos4.x+buildings.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            buildingsPos4.add(5*buildings.getWidth(),0);
+        if (buildingsPos4.x + buildings.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            buildingsPos4.add(5 * buildings.getWidth(), 0);
         }
-        if(buildingsPos5.x+buildings.getWidth() <= cam.position.x-cam.viewportWidth/2){
-            buildingsPos5.add(5*buildings.getWidth(),0);
+        if (buildingsPos5.x + buildings.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+            buildingsPos5.add(5 * buildings.getWidth(), 0);
         }
     }
 
@@ -162,16 +177,17 @@ public class Level5 extends State {
     public void gameOver() {
         System.out.println("Game Over");
 
+//
+//        float delay = 0.9f; // seconds
+//        Timer.schedule(new Timer.Task() {
+//            @Override
+//            public void run() {
+//                gsm.push(new GameOver(gsm));
+//
+//            }
+//        }, delay);
 
-        float delay = 0.9f; // seconds
-        Timer.schedule(new Timer.Task(){
-            @Override
-            public void run() {
-                gsm.push(new GameOver(gsm));
-
-            }
-        }, delay);
-
+        gsm.set(new GameOver(gsm));
 
 
 
@@ -180,9 +196,6 @@ public class Level5 extends State {
 //        } catch (InterruptedException e) { }
 //        gsm.push(new GameOver(gsm));
         //use abve code to pause the game
-
-
-
 
     }
 
@@ -216,18 +229,13 @@ public class Level5 extends State {
         }
     }
 
-    public void timerCheck(float timePassed) {
-        sheep.updateTimer(timePassed);
-        if (sheep.isTimerDone()) {
-            sheep.resetSpd();
-        }
-    }
-
     public void collisionCheck() {
-        if (farmer.collides(sheep.getBounds1())){
+        if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
             gameOver();
-            //gsm.push(new CharacterState(gsm));
+
 
         }
         if (greyCar.collides(sheep.getBounds1())) {
@@ -246,21 +254,32 @@ public class Level5 extends State {
         }
     }
 
-
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(sky,skyPos.x,0,800,400);
-        sb.draw(sky,skyPos2.x,0,800,400);
-        sb.draw(buildings,buildingsPos.x,0,buildings_width,200);
-        sb.draw(buildings,buildingsPos2.x,0,buildings_width,200);
-        sb.draw(buildings,buildingsPos3.x,0,buildings_width,200);
-        sb.draw(buildings,buildingsPos4.x,0,buildings_width,200);
-        sb.draw(buildings,buildingsPos5.x,0,buildings_width,200);
-        sb.draw(ground,groundPos1.x,0,ground_width,350);
-        sb.draw(ground,groundPos2.x,0,ground_width,350);
-        sb.draw(ground,groundPos3.x,0,ground_width,350);
+        sb.draw(sky, skyPos.x, 0, 800, 400);
+        sb.draw(sky, skyPos2.x, 0, 800, 400);
+        sb.draw(buildings, buildingsPos.x, 0, buildings_width, 200);
+        sb.draw(buildings, buildingsPos2.x, 0, buildings_width, 200);
+        sb.draw(buildings, buildingsPos3.x, 0, buildings_width, 200);
+        sb.draw(buildings, buildingsPos4.x, 0, buildings_width, 200);
+        sb.draw(buildings, buildingsPos5.x, 0, buildings_width, 200);
+        sb.draw(ground, groundPos1.x, 0, ground_width, 350);
+        sb.draw(ground, groundPos2.x, 0, ground_width, 350);
+        sb.draw(ground, groundPos3.x, 0, ground_width, 350);
+
+
+        sb.draw(sky, skyPos.x, 0, SKY_WIDTH, 400);
+        sb.draw(sky, skyPos2.x, 0, SKY_WIDTH, 400);
+        sb.draw(buildings, buildingsPos.x, 0, BUILDINGS_WIDTH, 200);
+        sb.draw(buildings, buildingsPos2.x, 0, BUILDINGS_WIDTH, 200);
+        sb.draw(buildings, buildingsPos3.x, 0, BUILDINGS_WIDTH, 200);
+        sb.draw(buildings, buildingsPos4.x, 0, BUILDINGS_WIDTH, 200);
+        sb.draw(buildings, buildingsPos5.x, 0, BUILDINGS_WIDTH, 200);
+        sb.draw(ground, groundPos1.x, 0, GROUND_WIDTH, 350);
+        sb.draw(ground, groundPos2.x, 0, GROUND_WIDTH, 350);
+        sb.draw(ground, groundPos3.x, 0, GROUND_WIDTH, 350);
 
         sb.draw(greyCar.getObstacle(), greyCar.getPosObs().x, greyCar.getPosObs().y);
         if (mushroomIsTouched == false) {
@@ -271,12 +290,13 @@ public class Level5 extends State {
         }
 
         if (farmer.collides(sheep.getBounds1())) {
-            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y,70,45);
+            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+        } else {
+            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }
-        else {
-            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70,45);
-        }
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,130,130);
+
+        sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y, 130, 130);
+
         sb.end();
     }
 

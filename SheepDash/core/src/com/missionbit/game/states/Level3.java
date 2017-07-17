@@ -4,10 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Obstacle;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.obstacles.Obstacle;
+import com.missionbit.game.sprites.animals.Sheep;
 
 import java.util.Random;
 
@@ -34,6 +35,8 @@ public class Level3 extends State {
     private Obstacle spikes;
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
+    private static final int OBS_GAP = 400;
+    long startTime;
 
     public Level3(GameStateManager gsm) {
         super(gsm);
@@ -53,6 +56,9 @@ public class Level3 extends State {
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
+        Texture spikeTexture = new Texture("SPIKES2.0.18.png");
+        spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
+        startTime = System.currentTimeMillis();
         mudTexture = new Texture("mud.png");
         mud = new Obstacle(mudTexture, 700, 58, 1, 0.5f);
         carrotTexture = new Texture("Carrott.png");
@@ -93,6 +99,9 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new Level4(gsm));
+        }
     }
 
     public void updateGround() {
@@ -167,20 +176,41 @@ public class Level3 extends State {
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
+            gameOver();
         }
         if (mud.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
             sheep.startTimer();
         }
         if (spikes.collides(sheep.getBounds1())) {
-            sheep.reduceSpd();
-            sheep.startTimer();
+            sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
+            gameOver();
         }
         if (carrot.collides(sheep.getBounds1())) {
             carrotIsTouched = true;
             sheep.startTimer();
             sheep.increaseSpd();
         }
+    }
+
+
+    public void gameOver() {
+        System.out.println("Game Over");
+
+
+        float delay = 0.9f; // seconds
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                gsm.push(new GameOver(gsm));
+
+            }
+        }, delay);
+
     }
 
     public void timerCheck(float timePassed) {
