@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.sprites.InteractiveTileObject;
 
@@ -15,7 +16,7 @@ import com.missionbit.game.sprites.InteractiveTileObject;
 
 public class WorldContactListener implements ContactListener {
 
-    public boolean isTouched = false;
+    public int isObjectTouched = NoObjectionGame.DEFAULT;
 
     @Override
     public void beginContact(Contact contact) {
@@ -30,7 +31,7 @@ public class WorldContactListener implements ContactListener {
             //checks if object is InteractiveTileObject (aka ladder or door)
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-                isTouched = (((InteractiveTileObject) object.getUserData()).onCollisionDetected());
+                isObjectTouched = (((InteractiveTileObject) object.getUserData()).onCollisionDetected());
                 Gdx.app.log("WorldContactListener", "right side touched");
             }
         }
@@ -42,7 +43,7 @@ public class WorldContactListener implements ContactListener {
             //checks if object is InteractiveTileObject (aka ladder or door)
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-                isTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
+                isObjectTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
                 Gdx.app.log("WorldContactListener", "right side touched");
 
             }
@@ -59,11 +60,10 @@ public class WorldContactListener implements ContactListener {
             Fixture bottom = fixA.getUserData() == "bottom" ? fixA : fixB;
             Fixture object = bottom == fixA ? fixB : fixA;
 
-            //checks if object is InteractiveTileObject (aka ladder, door, or ground)
+            //resets object touched
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
-                isTouched = false;
-
+                isObjectTouched = NoObjectionGame.DEFAULT;
             }
         }
 
@@ -79,8 +79,8 @@ public class WorldContactListener implements ContactListener {
 
     }
 
-    public boolean getIsTouched() {
-        return isTouched;
-
+    //Getter method for object touch code
+    public int getIsObjectTouched() {
+        return isObjectTouched;
     }
 }

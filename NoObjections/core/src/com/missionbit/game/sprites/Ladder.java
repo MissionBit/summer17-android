@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.missionbit.game.NoObjectionGame;
-import com.missionbit.game.screens.PlayScreen;
 
 /**
  * Created by missionbit on 6/26/17.
@@ -22,9 +21,9 @@ public class Ladder extends InteractiveTileObject{
 
 
     @Override
-    public boolean onCollisionDetected() {
+    public int onCollisionDetected() {
         Gdx.app.log("Ladder", "Ladder Hit");
         //return true for hero jumping
-        return true;
+        return NoObjectionGame.LADDER;
     }
 }

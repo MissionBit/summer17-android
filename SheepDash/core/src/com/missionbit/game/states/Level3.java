@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.Obstacle;
-import com.missionbit.game.sprites.Sheep;
+import com.missionbit.game.sprites.obstacles.Obstacle;
+import com.missionbit.game.sprites.animals.Sheep;
 
 import java.util.Random;
 
@@ -25,6 +25,7 @@ public class Level3 extends State {
     private Vector2 skyPos, skyPos2;
     private Texture hills;
     private Vector2 hillsPos, hillsPos2, hillsPos3, hillsPos4, hillsPos5;
+    //OBSTACLES
     private Texture mudTexture;
     private Obstacle mud;
     private Texture carrotTexture;
@@ -34,6 +35,7 @@ public class Level3 extends State {
     private Obstacle spikes;
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
+    long startTime;
 
     public Level3(GameStateManager gsm) {
         super(gsm);
@@ -53,10 +55,14 @@ public class Level3 extends State {
         hillsPos3 = new Vector2(2 * hills_width + hillsPos.x, 0);
         hillsPos4 = new Vector2(3 * hills_width + hillsPos.x, 0);
         hillsPos5 = new Vector2(4 * hills_width + hillsPos.x, 0);
+        //OBSTACLES
+        Texture spikeTexture = new Texture("SPIKES2.0.18.png");
+        spikes = new Obstacle(spikeTexture, 400, 50, 2, 0.5f);
+        startTime = System.currentTimeMillis();
         mudTexture = new Texture("mud.png");
         mud = new Obstacle(mudTexture, 700, 58, 1, 0.5f);
         carrotTexture = new Texture("Carrott.png");
-        carrot = new Obstacle(carrotTexture, 1100, 50, 2, 0.3f);
+        carrot = new Obstacle(carrotTexture, 500, 40, 2, 0.3f);
         spikesTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
         carrotIsTouched = false;
@@ -93,6 +99,9 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new Level4(gsm));
+        }
     }
 
     public void updateGround() {
@@ -150,7 +159,7 @@ public class Level3 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 500) + GameTutorial.WIDTH;
-            carrot.reposition(carrot.getPosObs().x + distance, 58);
+            carrot.reposition(carrot.getPosObs().x + distance, 30);
             carrotIsTouched = false;
         }
     }
@@ -167,6 +176,8 @@ public class Level3 extends State {
     public void collisionCheck() {
         if (farmer.collides(sheep.getBounds1())) {
             sheep.getSheepDead();
+            sheep.sheepDied();
+            farmer.killedSheep();
         }
         if (mud.collides(sheep.getBounds1())) {
             sheep.reduceSpd();

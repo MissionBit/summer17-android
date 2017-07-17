@@ -18,9 +18,9 @@ public class Floor extends InteractiveTileObject{
     }
 
     @Override
-    public boolean onCollisionDetected() {
+    public int onCollisionDetected() {
         Gdx.app.log("Floor", "Floor Hit");
-        return false;
+        return NoObjectionGame.FLOOR;
     }
 
 }

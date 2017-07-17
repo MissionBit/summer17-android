@@ -1,9 +1,10 @@
-package com.missionbit.game.sprites;
+package com.missionbit.game.sprites.obstacles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.missionbit.game.sprites.Animation;
 
 import java.util.Random;
 

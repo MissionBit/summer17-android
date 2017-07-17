@@ -20,9 +20,9 @@ public class Door extends InteractiveTileObject {
     }
 
     @Override
-    public boolean onCollisionDetected() {
+    public int onCollisionDetected() {
         Gdx.app.log("Door", "Door Hit");
-        return false;
+        return NoObjectionGame.DOOR;
     }
 
 }

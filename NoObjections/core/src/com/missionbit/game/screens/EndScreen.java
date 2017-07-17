@@ -33,21 +33,6 @@ public class EndScreen implements Screen {
         viewport = new StretchViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((NoObjectionGame) game).batch);
 
-//        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-//
-//        Table table = new Table();
-//        table.center();
-//        table.setFillParent(true);
-
-        //Label gameOverLabel = new Label("GAME OVER", font);
-//        Label playAgainLabel = new Label("Click to Play Again", font);
-
-        //table.add(gameOverLabel).expandX();
-        //table.row();
-//        table.add(playAgainLabel).expandX().padTop(10f);
-
-//        stage.addActor(table);
-        //stage.addActor(new Image(bg));
     }
 
 

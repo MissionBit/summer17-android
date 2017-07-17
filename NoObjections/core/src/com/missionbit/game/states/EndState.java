@@ -25,7 +25,6 @@ public class EndState extends State {
         background = new Texture("pixil-layer-Background.png");
         textButtonStyle = new TextButton.TextButtonStyle();
         tb = new TextButton("Restart", textButtonStyle);
-
     }
 
     @Override
