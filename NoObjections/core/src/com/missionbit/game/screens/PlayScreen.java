@@ -59,7 +59,7 @@ public class PlayScreen implements Screen {
     //timer
     SpriteBatch batch;
     private BitmapFont font;
-    private float deltaTime = 11; //currently one off, so this means 10 seconds
+    private float deltaTime = 30; //not off anymore
     Label countDownLabel;
     float playTime = 10;
 
@@ -157,7 +157,7 @@ public class PlayScreen implements Screen {
         renderer.setView(gameCam);
 
         deltaTime -= Gdx.graphics.getDeltaTime();
-        playTime = Math.round(deltaTime * 100) / 100.0f;
+        playTime = Math.round((deltaTime +1) * 100) / 100.0f;
 
         seconds = ((int) playTime) % 60;
 
