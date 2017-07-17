@@ -36,6 +36,10 @@ public class Animation {
         }
     }
 
+    public void setDead(boolean isDead) {
+        this.dead = isDead;
+    }
+
     public TextureRegion getFrame(){
         return frames.get(frame);
     }

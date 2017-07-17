@@ -25,7 +25,6 @@ public class EndState extends State {
         background = new Texture("pixil-layer-Background.png");
         textButtonStyle = new TextButton.TextButtonStyle();
         tb = new TextButton("Restart", textButtonStyle);
-
     }
 
     @Override
@@ -33,12 +32,6 @@ public class EndState extends State {
         if(Gdx.input.justTouched()){
             gsm.set(new MenuState(gsm));
         }
-//        tb.addListener(new ChangeListener() {
-//            @Override
-//            public void  changed(ChangeEvent event, Actor actor) {
-//                gsm.set(new MenuState(gsm));
-//            }
-//        });
     }
 
 

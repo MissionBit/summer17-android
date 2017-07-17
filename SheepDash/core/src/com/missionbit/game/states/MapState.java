@@ -187,9 +187,9 @@ public class MapState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
+        //sb.draw(bg, 0, 0, 256,180);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
