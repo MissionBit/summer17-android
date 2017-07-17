@@ -58,7 +58,7 @@ public class Level4 extends State {
         carsPos3 = new Vector2(cars.getWidth() + carsPos2.x, 0);
         //OBSTACLES
         greenCarTexture = new Texture("CarGreen.png");
-        greenCar = new Obstacle(greenCarTexture, 1000, 20, 1, 0.5f);
+        greenCar = new Obstacle(greenCarTexture, 1000, 35, 1, 0.5f);
         appleTexture = new Texture("Apple2.png");
         apple = new Obstacle(appleTexture, 700, 55, 2, 0.5f);
         appleIsTouched = false;
@@ -96,9 +96,9 @@ public class Level4 extends State {
         changeLevels();
         updateGreen();
         cam.update();
-//        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
-//            gsm.set(new Level5(gsm));
-//    }
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new Level5(gsm));
+    }
 
     }
 
@@ -107,7 +107,7 @@ public class Level4 extends State {
         if (cam.position.x - cam.viewportWidth / 2 > greenCar.getPosObs().x + greenCar.getWidth()) {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
-            float distance = (fluctuation * 400) + GameTutorial.WIDTH;
+            float distance = (fluctuation * 1500) + GameTutorial.WIDTH;
             greenCar.reposition(greenCar.getPosObs().x + distance, 35);
         }
     }
@@ -125,7 +125,7 @@ public class Level4 extends State {
         if (cam.position.x - cam.viewportWidth / 2 > apple.getPosObs().x + apple.getWidth()) {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
-            float distance = (fluctuation * 800) + GameTutorial.WIDTH;
+            float distance = (fluctuation * 700) + GameTutorial.WIDTH;
             apple.reposition(apple.getPosObs().x + distance, 58);
             appleIsTouched = false;
         }
@@ -180,19 +180,17 @@ public class Level4 extends State {
             appleIsTouched = true;
             sheep.increaseSpd();
             sheep.startTimer();
-            System.out.println("Apple Touched");
         }
         if (greenCar.collides(sheep.getBounds1())) {
-            System.out.println("Car touched");
             sheep.reduceSpd();
             sheep.startTimer();
         }
     }
 
     public void changeLevels(){
-//        if (sheep.getPosition().x > 3000){
-//            gsm.set(new Level5(gsm));
-//        }
+        if (sheep.getPosition().x > 3000){
+            gsm.set(new Level5(gsm));
+        }
     }
 
     public void timerCheck(float timePassed) {

@@ -62,7 +62,7 @@ public class Level3 extends State {
         mudTexture = new Texture("mud.png");
         mud = new Obstacle(mudTexture, 700, 58, 1, 0.5f);
         carrotTexture = new Texture("Carrott.png");
-        carrot = new Obstacle(carrotTexture, 1100, 50, 2, 0.3f);
+        carrot = new Obstacle(carrotTexture, 500, 40, 2, 0.3f);
         spikesTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
         carrotIsTouched = false;
@@ -159,7 +159,7 @@ public class Level3 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 500) + GameTutorial.WIDTH;
-            carrot.reposition(carrot.getPosObs().x + distance, 58);
+            carrot.reposition(carrot.getPosObs().x + distance, 30);
             carrotIsTouched = false;
         }
     }
