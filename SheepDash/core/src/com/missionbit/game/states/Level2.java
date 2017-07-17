@@ -66,8 +66,10 @@ public class Level2 extends State {
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()) {
-            sheep.jump();
+        if (sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
     }
 
