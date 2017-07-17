@@ -66,8 +66,10 @@ public class Level2 extends State {
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()) {
-            sheep.jump();
+        if (sheep.getPosition().y == 60) {
+            if (Gdx.input.justTouched()) {
+                sheep.jump();
+            }
         }
     }
 
@@ -100,6 +102,7 @@ public class Level2 extends State {
             sheep.getSheepDead();
             sheep.sheepDied();
             farmer.killedSheep();
+            gameOver(2);
         }
         if (mud.collides(sheep.getBounds1())) {
             sheep.reduceSpd();
@@ -151,7 +154,7 @@ public class Level2 extends State {
     }
 
     public void changeLevels() {
-        if (sheep.getPosition().x > 3000) {
+        if (sheep.getPosition().x > 4500) {
             gsm.set(new Level3(gsm));
         }
     }
@@ -215,6 +218,7 @@ public class Level2 extends State {
         }
         if (farmer.collides(sheep.getBounds1())) {
             sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            gameOver(2);
         } else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }
