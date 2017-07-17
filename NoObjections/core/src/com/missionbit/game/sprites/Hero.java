@@ -68,11 +68,11 @@ public class Hero extends Sprite {
         setBounds(0, 0, 40 / NoObjectionGame.PPM, 60 / NoObjectionGame.PPM);
         setRegion(heroStand);
     }
-  
+
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
-       // System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
+        // System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
 
         //if you fall off the side of the screen
         if (b2body.getPosition().y < y_deathposition) {
@@ -201,8 +201,10 @@ public class Hero extends Sprite {
 
     }
 
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
+    }
 }
-
 
 
 
