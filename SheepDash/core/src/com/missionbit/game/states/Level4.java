@@ -42,7 +42,9 @@ public class Level4 extends State {
     private Texture appleTexture;
     private Obstacle apple;
     private boolean appleIsTouched;
-    private Poop poop;
+    private Obstacle poop;
+    private Texture poopTexture;
+    private boolean poopIsTouched;
     long startTime;
     private static final int CAR_WIDTH = 270;
     private static final int SKY_WIDTH = 800;
@@ -87,8 +89,11 @@ public class Level4 extends State {
         greenCarTexture = new Texture("CarGreen.png");
         greenCar = new Obstacle(greenCarTexture, 1000, 35, 1, 0.5f);
         appleTexture = new Texture("Apple2.png");
-        apple = new Obstacle(appleTexture, 700, 55, 2, 0.5f);
+        apple = new Obstacle(appleTexture, 700, 150, 2, 0.5f);
         appleIsTouched = false;
+        poopTexture = new Texture("poop.png");
+        poop = new Obstacle(poopTexture, 800, 60, 1, 0.5f);
+        poopIsTouched = false;
         startTime = System.currentTimeMillis();
 
     }
@@ -176,9 +181,8 @@ public class Level4 extends State {
         apple.update(dt);
         updateApple();
         updatePoops();
-        collisionCheck();
-        changeLevels();
         updateGreen();
+        collisionCheck();
         cam.update();
     //    if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
       //      gsm.set(new Level5(gsm));
@@ -197,11 +201,12 @@ public class Level4 extends State {
     }
 
     public void updatePoops(){
-        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+        if (cam.position.x - cam.viewportWidth / 2 > poop.getPosObs().x + poop.getWidth()) {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
-            float distance = (fluctuation * 600) + GameTutorial.WIDTH;
-            poop.reposition(poop.getPosPoop().x+ distance, 58);
+            float distance = (fluctuation * 1500) + GameTutorial.WIDTH;
+            poop.reposition(poop.getPosObs().x + distance, 60);
+            poopIsTouched = false;
         }
     }
 
@@ -210,7 +215,7 @@ public class Level4 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 700) + GameTutorial.WIDTH;
-            apple.reposition(apple.getPosObs().x + distance, 58);
+            apple.reposition(apple.getPosObs().x + distance, 150);
             appleIsTouched = false;
         }
     }
@@ -263,6 +268,7 @@ public class Level4 extends State {
             if (poop.collides(sheep.getBounds1())||greenCar.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
                 sheep.startTimer();
+                poopIsTouched = true;
             }
             if (apple.collides(sheep.getBounds1())) {
                 appleIsTouched = true;
@@ -281,6 +287,7 @@ public class Level4 extends State {
             if (poop.collides(cow.getCowBounds())||greenCar.collides(cow.getCowBounds())){
                 cow.reduceSpd();
                 cow.startTimer();
+                poopIsTouched = true;
             }
             if (apple.collides(cow.getCowBounds())) {
                 appleIsTouched = true;
@@ -299,6 +306,7 @@ public class Level4 extends State {
             if (poop.collides(pig.getPigBounds())||greenCar.collides(pig.getPigBounds())){
                 pig.reduceSpd();
                 pig.startTimer();
+                poopIsTouched = true;
             }
             if (apple.collides(pig.getPigBounds())) {
                 appleIsTouched = true;
@@ -317,6 +325,7 @@ public class Level4 extends State {
             if (poop.collides(bunny.getBoundsBunny())||greenCar.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
                 bunny.startTimer();
+                poopIsTouched = true;
             }
             if (apple.collides(bunny.getBoundsBunny())) {
                 appleIsTouched = true;
@@ -335,6 +344,7 @@ public class Level4 extends State {
             if (poop.collides(chick.getChickBounds()) || greenCar.collides(chick.getChickBounds())) {
                 chick.reduceSpd();
                 chick.startTimer();
+                poopIsTouched = true;
             }
             if (apple.collides(chick.getChickBounds())) {
                 appleIsTouched = true;
@@ -397,7 +407,9 @@ public class Level4 extends State {
         sb.draw(cars,carsPos.x,20,CAR_WIDTH,300);
         sb.draw(cars,carsPos2.x,20,CAR_WIDTH,300);
         sb.draw(cars,carsPos3.x,20,CAR_WIDTH,300);
-        sb.draw(poop.getPoop(),poop.getPosPoop().x,poop.getPosPoop().y,30,30);
+        if (poopIsTouched== false) {
+            sb.draw(poop.getObsAnimation(), poop.getPosObs().x, poop.getPosObs().y,30,30);
+        }
         sb.draw(greenCar.getObstacle(), greenCar.getPosObs().x, greenCar.getPosObs().y);
         if (appleIsTouched == false) {
             sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);

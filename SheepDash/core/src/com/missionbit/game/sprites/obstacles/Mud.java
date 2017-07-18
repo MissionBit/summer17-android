@@ -46,7 +46,7 @@ public class Mud {
     }
 
     public boolean collides(Rectangle player){
-        if ((player.overlaps(boundsMud))) {
+        if ((player.overlaps(boundsMud ) && !collided)) {
             collided = true;
             return true;
         }
