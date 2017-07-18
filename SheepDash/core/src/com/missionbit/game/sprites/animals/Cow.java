@@ -48,7 +48,7 @@ public class Cow extends Animals {
     }
 
     public void jump() {
-        if (position.y == 60){
+        if (position.y <= 60){
             velocity.y = 500;
         }
 
