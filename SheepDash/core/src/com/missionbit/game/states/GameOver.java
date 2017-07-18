@@ -55,7 +55,7 @@ public class GameOver extends State{
         stage = new Stage(new StretchViewport(GameTutorial.WIDTH, GameTutorial.HEIGHT));
         stage.addActor(back);
         Gdx.input.setInputProcessor(stage);
-        back.setBounds(GameTutorial.WIDTH/2 - 120,200,80,80);
+        back.setBounds(GameTutorial.WIDTH/2 - 130,200,80,80);
         back.getImageCell().expand().fill();
 
         back.addListener(new ClickListener(){
@@ -73,7 +73,7 @@ public class GameOver extends State{
         restart = new ImageButton(myTexRegionDrawable2);
         stage.addActor(restart);
         Gdx.input.setInputProcessor(stage);
-        restart.setBounds(GameTutorial.WIDTH/2 + 50,200,80,80);
+        restart.setBounds(GameTutorial.WIDTH/2 + 41,200,80,80);
         restart.getImageCell().expand().fill();
 
         restart.addListener(new ClickListener(){
