@@ -21,7 +21,7 @@ public class Controller {
     private SpriteBatch batch;
     Viewport viewport;
     Stage stage;
-    boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed;
     OrthographicCamera cam;
 
     public Controller() {
