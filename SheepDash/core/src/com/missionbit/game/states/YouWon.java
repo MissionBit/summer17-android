@@ -38,11 +38,14 @@ public class YouWon extends State{
     private TextureRegion myTextureRegion3;
     private TextureRegionDrawable myTexRegionDrawable3;
     private ImageButton Gtext;
+    //
+    private int a;
 
 
-    public YouWon(final GameStateManager gsm, int level) {
+    public YouWon(final GameStateManager gsm, int level, int c ) {
 
         super(gsm);
+        a = c;
         this.nextlevel = level;
         black = new Texture("blackness.jpg");
 
@@ -61,7 +64,7 @@ public class YouWon extends State{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Exiting to Menu");
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, a));
             }
         });
 
@@ -113,17 +116,22 @@ public class YouWon extends State{
     //recognizes next level
     public void restart() {
         if(nextlevel == 1) {
-            gsm.set(new Level2(gsm));
+            gsm.set(new Level2(gsm , a ));
+
         } else if (nextlevel == 2) {
-            gsm.set(new Level2(gsm));
+            gsm.set(new Level3(gsm, a));
+
         } else if (nextlevel == 3) {
-            gsm.set(new Level2(gsm));
+            gsm.set(new Level4(gsm, a));
+
         } else if (nextlevel == 4) {
-            gsm.set(new Level5(gsm));
+            gsm.set(new Level5(gsm , a));
+
         } else if (nextlevel == 5) {
-            gsm.set(new MapState(gsm));
+            gsm.set(new MapState(gsm , a));
+
         } else {
-            gsm.set(new MapState(gsm));
+            gsm.set(new MapState(gsm , a));
         }
     }
 

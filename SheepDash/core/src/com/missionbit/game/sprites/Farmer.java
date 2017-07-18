@@ -25,7 +25,7 @@ public class Farmer {
         posFarmer = new Vector2(0,45);
         velocity = new Vector3(0,0,0);
         position = new Vector3(posFarmer.x,posFarmer.y,0);
-        boundsFarmer = new Rectangle(posFarmer.x,posFarmer.y,70,45);
+        boundsFarmer = new Rectangle(posFarmer.x,posFarmer.y,120,110);
 
     }
 
@@ -38,7 +38,7 @@ public class Farmer {
         //System.out.println("Farmer's speed:" + movement);
     }
 
-    public void killedSheep() {
+    public void killed() {
         movement = 0;
     }
 

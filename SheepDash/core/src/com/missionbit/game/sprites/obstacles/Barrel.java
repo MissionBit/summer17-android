@@ -37,7 +37,13 @@ public class Barrel {
     }
 
     public boolean collides(Rectangle player) {
-        return player.overlaps(barrelBounds);
+        if ((player.overlaps(barrelBounds) && !collided)){
+            collided = true;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public Texture getBarrel() {

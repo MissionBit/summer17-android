@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
+import com.missionbit.game.sprites.animals.Bunny;
+import com.missionbit.game.sprites.animals.Chick;
+import com.missionbit.game.sprites.animals.Cow;
+import com.missionbit.game.sprites.animals.Pig;
 import com.missionbit.game.sprites.obstacles.Barrel;
 import com.missionbit.game.sprites.obstacles.Mud;
 import com.missionbit.game.sprites.animals.Sheep;
@@ -18,7 +22,14 @@ import java.util.Random;
  */
 
 public class Level2 extends State {
+
+    //CHARACTERS
     private Sheep sheep;
+    private Bunny bunny;
+    private Chick chick;
+    private Cow cow;
+    private Pig pig;
+    //others
     private Farmer farmer;
     private Texture background;
     private Texture ground;
@@ -39,36 +50,67 @@ public class Level2 extends State {
     private static final int MUD_SPACING = 250;
     private static final int MUD_WIDTH = 30;
     private static final int BARREL_WIDTH = 30;
+    private int a;
+    long startTime;
 
-
-    public Level2(GameStateManager gsm) {
+    public Level2(GameStateManager gsm, int c) {
         super(gsm);
+        a = c;
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        sheep = new Sheep(150, 60);
+        // INITIALIZING ANIMALS
+        if (a == 1){
+            sheep = new Sheep(150, 60);
+        }
+        if (a == 2){
+            cow = new Cow(150, 60);
+        }
+        if (a == 3){
+            pig = new Pig(150, 60);
+        }
+        if (a == 4){
+            bunny = new Bunny(150, 60);
+        }
+        if (a == 5){
+            chick = new Chick(150, 60);
+        }
         farmer = new Farmer(-50, 60);
         ground = new Texture("CornFieldGround.png");
         background = new Texture("CornField.png");
-        groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
+        groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2 - ground.getWidth(), GROUND_Y_OFFSET);
         groundPos2 = new Vector2(ground.getWidth() + groundPos1.x, GROUND_Y_OFFSET);
-        bgPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
+        bgPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2 - bg_width, 0);
         bgPos2 = new Vector2(background.getWidth() + bgPos1.x, 0);
         bgPos3 = new Vector2(background.getWidth() + bgPos2.x, 0);
         //OBSTACLES
         mushroomTexture = new Texture("Mushroom.png");
-        mushroom = new Obstacle(mushroomTexture, 700, 50, 2, 0.3f);
+        mushroom = new Obstacle(mushroomTexture, 700, 70, 2, 0.3f);
         mushroomIsTouched = false;
         mud = new Mud(260, 37);
         appleTexture = new Texture("Apple.png");
-        apple = new Obstacle(appleTexture, 1000, 50, 2, 0.5f);
+        apple = new Obstacle(appleTexture, 1000, 150, 2, 0.5f);
         appleIsTouched = false;
         barrel = new Barrel(300, 60);
+        startTime = System.currentTimeMillis();
     }
 
     @Override
     protected void handleInput() {
-        if (sheep.getPosition().y == 60) {
-            if (Gdx.input.justTouched()) {
+
+        if (Gdx.input.justTouched()) {
+            if ( a == 5){
                 sheep.jump();
+            }
+            if (a == 2){
+                cow.jump();
+            }
+            if (a == 3){
+                pig.jump();
+            }
+            if (a == 4){
+                bunny.jump();
+            }
+            if ( a == 5){
+                chick.jump();
             }
         }
     }
@@ -80,82 +122,235 @@ public class Level2 extends State {
 
     public void update(float dt) {
         handleInput();
-        sheep.update(dt);
+        //the characters (this is getting tiring and repetitive but I guess that's what programmimg is yay
+        if (a == 1){
+            sheep.update(dt);
+            cam.position.x = sheep.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
+                gsm.set(new Level3(gsm, a));
+            }
+        }
+        if (a == 2){
+            cow.update(dt);
+            cam.position.x = cow.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
+                gsm.set(new Level3(gsm, a));
+            }
+        }
+        if (a == 3){
+            pig.update(dt);
+            cam.position.x = pig.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
+                gsm.set(new Level3(gsm, a));
+            }
+        }
+        if (a == 4){
+            bunny.update(dt);
+            cam.position.x = bunny.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
+                gsm.set(new Level3(gsm, a));
+            }
+        }
+        if (a == 5){
+            chick.update(dt);
+            cam.position.x = chick.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
+                gsm.set(new Level3(gsm, a));
+            }
+        }
         mushroom.update(dt);
         updateMushroom();
         apple.update(dt);
         updateApple();
         updateMud();
         updateBarrel();
-        cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
         updateBg();
         updateGround();
-        collisionCheck();
         timerCheck(dt);
         changeLevels();
+        collisionCheck();
         cam.update();
     }
 
     public void collisionCheck() {
-        if (farmer.collides(sheep.getBounds1())) {
-            sheep.getSheepDead();
-            sheep.sheepDied();
-            farmer.killedSheep();
-            gameOver(2);
+        //for sheep
+        if (a == 1) {
+            if (farmer.collides(sheep.getBounds1())){
+                sheep.getSheepDead();
+                sheep.sheepDied();
+                farmer.killed();
+                gameOver(2, a);
+            }
+            if (mud.collides(sheep.getBounds1())||barrel.collides(sheep.getBounds1())) {
+                sheep.reduceSpd();
+                sheep.startTimer();
+            }
+            if (apple.collides(sheep.getBounds1())) {
+                appleIsTouched = true;
+                sheep.increaseSpd();
+                sheep.startTimer();
+            }
+            if (mushroom.collides(sheep.getBounds1())) {
+                mushroomIsTouched = true;
+                sheep.goBackwards();
+                sheep.startTimer();
+            }
         }
-        if (mud.collides(sheep.getBounds1())) {
-            sheep.reduceSpd();
-            sheep.startTimer();
+//for cow
+        if (a == 2){
+            if (farmer.collides(cow.getCowBounds())){
+                cow.getCowDead();
+                cow.cowDied();
+                farmer.killed();
+                gameOver(2, a);
+            }
+            if (mud.collides(cow.getCowBounds())||barrel.collides(cow.getCowBounds())){
+                cow.reduceSpd();
+                cow.startTimer();
+            }
+            if (apple.collides(cow.getCowBounds())) {
+                appleIsTouched = true;
+                cow.increaseSpd();
+                cow.startTimer();
+            }
+            if (mushroom.collides(cow.getCowBounds())) {
+                mushroomIsTouched = true;
+                cow.goBackwards();
+                cow.startTimer();
+            }
         }
-        if (apple.collides(sheep.getBounds1())) {
-            appleIsTouched = true;
-            sheep.increaseSpd();
-            sheep.startTimer();
+//for pig
+        if(a == 3){
+            if (farmer.collides(pig.getPigBounds())){
+                pig.getPigDead();
+                pig.pigDied();
+                farmer.killed();
+                gameOver(2, a);
+            }
+            if (mud.collides(pig.getPigBounds())||barrel.collides(pig.getPigBounds())){
+                pig.reduceSpd();
+                pig.startTimer();
+            }
+            if (apple.collides(pig.getPigBounds())) {
+                appleIsTouched = true;
+                pig.increaseSpd();
+                pig.startTimer();
+            }
+            if (mushroom.collides(pig.getPigBounds())) {
+                mushroomIsTouched = true;
+                pig.goBackwards();
+                pig.startTimer();
+            }
         }
-        if (barrel.collides(sheep.getBounds1())) {
-            sheep.reduceSpd();
-            sheep.startTimer();
+//for bunny
+        if (a == 4){
+            if (farmer.collides(bunny.getBoundsBunny())){
+                bunny.getBunnyDead();
+                bunny.bunnyDied();
+                farmer.killed();
+                gameOver(2, a);
+            }
+            if (mud.collides(bunny.getBoundsBunny())||barrel.collides(bunny.getBoundsBunny())) {
+                bunny.reduceSpd();
+                bunny.startTimer();
+            }
+            if (apple.collides(bunny.getBoundsBunny())) {
+                appleIsTouched = true;
+                bunny.increaseSpd();
+                bunny.startTimer();
+            }
+            if (mushroom.collides(bunny.getBoundsBunny())) {
+                mushroomIsTouched = true;
+                bunny.goBackwards();
+                bunny.startTimer();
+            }
         }
-        if (mushroom.collides(sheep.getBounds1())) {
-            mushroomIsTouched = true;
-            sheep.goBackwards();
-            sheep.startTimer();
+//for chick
+        if (a == 5) {
+            if (farmer.collides(chick.getChickBounds())) {
+                chick.getChickDead();
+                chick.chickDied();
+                farmer.killed();
+                gameOver(2, a);
+            }
+            if (mud.collides(chick.getChickBounds()) || barrel.collides(chick.getChickBounds())) {
+                chick.reduceSpd();
+                chick.startTimer();
+            }
+            if (apple.collides(chick.getChickBounds())) {
+                appleIsTouched = true;
+                chick.increaseSpd();
+                chick.startTimer();
+            }
+            if (mushroom.collides(chick.getChickBounds())) {
+                mushroomIsTouched = true;
+                chick.goBackwards();
+                chick.startTimer();
+            }
         }
     }
 
     public void timerCheck(float timePassed) {
-        sheep.updateTimer(timePassed);
-        if (sheep.isTimerDone()) {
-            sheep.resetSpd();
+        if (a == 1){
+            sheep.updateTimer(timePassed);
+            if (sheep.isTimerDone()) {
+                sheep.resetSpd();
+            }
+        }
+        if (a == 2){
+            cow.updateTimer(timePassed);
+            if (cow.isTimerDone()) {
+                cow.resetSpd();
+            }
+        }
+        if (a == 3){
+            pig.updateTimer(timePassed);
+            if (pig.isTimerDone()) {
+                pig.resetSpd();
+            }
+        }
+        if (a == 4){
+            bunny.updateTimer(timePassed);
+            if (bunny.isTimerDone()) {
+                bunny.resetSpd();
+            }
+        }
+        if (a == 5){
+            chick.updateTimer(timePassed);
+            if (chick.isTimerDone()) {
+                chick.resetSpd();
+            }
         }
     }
 
     public void updateBg() {
-        if (bgPos1.x + background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (bgPos1.x + 2*background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             bgPos1.add(3 * background.getWidth(), 0);
         }
-        if (bgPos2.x + background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (bgPos2.x + 2*background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             bgPos2.add(3 * background.getWidth(), 0);
         }
-        if (bgPos3.x + background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (bgPos3.x + 2*background.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             bgPos3.add(3 * background.getWidth(), 0);
         }
     }
 
     public void updateGround() {
-        if (groundPos1.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (groundPos1.x + 2*ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             groundPos1.add(2 * ground.getWidth(), 0);
         }
-        if (groundPos2.x + ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
+        if (groundPos2.x + 2*ground.getWidth() <= cam.position.x - cam.viewportWidth / 2) {
             groundPos2.add(2 * ground.getWidth(), 0);
         }
 
     }
 
     public void changeLevels() {
-        if (sheep.getPosition().x > 4500) {
-            gsm.set(new YouWon(gsm,2));
+
+        if((System.currentTimeMillis() - startTime) > 30000) {
+            gsm.set(new YouWon(gsm,2,a));
+
         }
     }
 
@@ -164,7 +359,7 @@ public class Level2 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 2500) + GameTutorial.WIDTH;
-            mushroom.reposition(mushroom.getPosObs().x + distance, 58);
+            mushroom.reposition(mushroom.getPosObs().x + distance, 70);
             mushroomIsTouched = false;
         }
     }
@@ -174,7 +369,7 @@ public class Level2 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 800) + GameTutorial.WIDTH;
-            apple.reposition(apple.getPosObs().x + distance, 58);
+            apple.reposition(apple.getPosObs().x + distance, 70);
             appleIsTouched = false;
         }
     }
@@ -209,18 +404,47 @@ public class Level2 extends State {
         sb.draw(ground, groundPos1.x, 0, ground_width, 260);
         sb.draw(ground, groundPos2.x, 0, ground_width, 260);
         sb.draw(mud.getMud(), mud.getPosMud().x, mud.getPosMud().y, 40, 30);
-        sb.draw(barrel.getBarrel(), barrel.getPosBarrel().x, barrel.getPosBarrel().y);
+        sb.draw(barrel.getBarrel(), barrel.getPosBarrel().x, barrel.getPosBarrel().y,50,40);
         if (appleIsTouched == false) {
             sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
         }
         if (mushroomIsTouched == false) {
             sb.draw(mushroom.getObsAnimation(), mushroom.getPosObs().x, mushroom.getPosObs().y);
         }
-        if (farmer.collides(sheep.getBounds1())) {
-            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
-            gameOver(2);
-        } else {
-            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+        if (a == 1){
+            if (farmer.collides(sheep.getBounds1())) {
+                sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            } else {
+                sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            }
+        }
+        if (a == 2){
+            if (farmer.collides(cow.getCowBounds())) {
+                sb.draw(cow.getCowDead(), cow.getPosition().x, cow.getPosition().y, 70, 45);
+            } else {
+                sb.draw(cow.getCow(), cow.getPosition().x, cow.getPosition().y, 70, 45);
+            }
+        }
+        if (a == 3){
+            if (farmer.collides(pig.getPigBounds())) {
+                sb.draw(pig.getPigDead(), pig.getPosition().x, pig.getPosition().y, 70, 45);
+            } else {
+                sb.draw(pig.getPig(), pig.getPosition().x, pig.getPosition().y, 70, 45);
+            }
+        }
+        if (a == 4){
+            if (farmer.collides(bunny.getBoundsBunny())) {
+                sb.draw(bunny.getBunnyDead(), bunny.getPosition().x, bunny.getPosition().y, 50, 50);
+            } else {
+                sb.draw(bunny.getBunny(), bunny.getPosition().x, bunny.getPosition().y, 50, 50);
+            }
+        }
+        if (a == 5){
+            if (farmer.collides(chick.getChickBounds())) {
+                sb.draw(chick.getChickDead(), chick.getPosition().x, chick.getPosition().y, 32, 32);
+            } else {
+                sb.draw(chick.getChick(), chick.getPosition().x, chick.getPosition().y, 32, 32);
+            }
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y, 120, 110);
         sb.end();
@@ -233,7 +457,17 @@ public class Level2 extends State {
         appleTexture.dispose();
         apple.dispose();
         barrel.dispose();
-        sheep.dispose();
+        if (a == 1){
+            sheep.dispose();
+        } else if (a == 2){
+            cow.dispose();
+        } else if (a == 3){
+            pig.dispose();
+        } else if (a == 4){
+            bunny.dispose();
+        } else if (a == 5){
+            chick.dispose();
+        }
         farmer.dispose();
         ground.dispose();
         background.dispose();
