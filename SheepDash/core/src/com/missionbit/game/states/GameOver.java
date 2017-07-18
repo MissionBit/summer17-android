@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.missionbit.game.GameTutorial;
 
+import java.lang.reflect.Constructor;
+
 /**
  * Created by missionbit on 7/12/17.
  */
@@ -61,6 +63,7 @@ public class GameOver extends State{
         back.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Exiting to Menu");
                 gsm.set(new MapState(gsm, character));
             }
         });
@@ -78,6 +81,7 @@ public class GameOver extends State{
         restart.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Level restarting");
                 restart();
             }
         });
@@ -91,6 +95,15 @@ public class GameOver extends State{
         Gdx.input.setInputProcessor(stage);
         Gtext.setBounds(200,270,400,90);
         Gtext.getImageCell().expand().fill();
+
+
+        restart.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Level restarting");
+            }
+        });
+
     }
 
     @Override
