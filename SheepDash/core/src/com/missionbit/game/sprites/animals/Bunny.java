@@ -102,6 +102,15 @@ public class Bunny extends Animals {
         bunnyDead.dispose();
     }
 
+    public void bunnyDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
+    public void goBackwards() {
+        movement = -250;
+    }
+
     public Rectangle getBoundsBunny() {
         return boundsBunny;
     }
@@ -115,7 +124,11 @@ public class Bunny extends Animals {
     }
 
     public TextureRegion getBunnyDead() {
-        return deathAnimation.getFrame();
+        return deathAnimation.getLastFrame();
+    }
+
+    public void setDead(boolean dead) {
+        deathAnimation.setDead(false);
     }
 
     public Vector3 getPosition() {
