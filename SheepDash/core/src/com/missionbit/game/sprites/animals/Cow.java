@@ -78,10 +78,7 @@ public class Cow extends Animals {
         movement = 110;
     }
 
-    public void resetSpd(){
-        movement = 200;
-
-    }
+    public void resetSpd(){movement = 200;}
 
     public void stopSpd(){
         movement = 0;
