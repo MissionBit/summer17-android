@@ -51,7 +51,7 @@ public class Pig extends Animals {
     }
 
     public void jump() {
-        if (position.y <= 150){
+        if (position.y == 60) {
             velocity.y = 500;
         }
 
@@ -79,10 +79,7 @@ public class Pig extends Animals {
         movement = 110;
     }
 
-    public void resetSpd(){
-        movement = 200;
-
-    }
+    public void resetSpd(){movement = 200;}
 
     public void stopSpd(){
         movement = 0;
