@@ -97,7 +97,7 @@ public class Level2 extends State {
     protected void handleInput() {
 
         if (Gdx.input.justTouched()) {
-            if ( a == 5){
+            if ( a == 1){
                 sheep.jump();
             }
             if (a == 2){

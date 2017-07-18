@@ -46,6 +46,7 @@ public class MenuState extends State {
 
     public MenuState(final GameStateManager gsm) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         background = new Texture("TITLE.png");
         playBtn = new Texture(Gdx.files.internal("PlayBtn.png"));
         playTextureRegion = new TextureRegion(playBtn);
@@ -68,7 +69,7 @@ public class MenuState extends State {
                 gsm.set(new CharacterState(gsm));
             }
         });
-        instBtn = new Texture(Gdx.files.internal("InstBtn.png"));
+        instBtn = new Texture(Gdx.files.internal("instBtn.png"));
         instTextureRegion = new TextureRegion((instBtn));
         instTextureRegionDrawable = new TextureRegionDrawable(instTextureRegion);
         buttonInst = new ImageButton((instTextureRegionDrawable));
@@ -121,12 +122,14 @@ public class MenuState extends State {
         if (bunny.getPosition().x > 750){
             bunny = new Bunny(20,60);
         }
+        cam.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
+        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,50);
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
         sb.draw(chick.getChick(),chick.getPosition().x,chick.getPosition().y,50,50);
