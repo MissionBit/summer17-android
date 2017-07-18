@@ -40,6 +40,8 @@ public class MenuState extends State {
 
     public MenuState(final GameStateManager gsm) {
         super(gsm);
+        //
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         background = new Texture("TITLE.png");
         playBtn = new Texture(Gdx.files.internal("PlayBtn.png"));
         playTextureRegion = new TextureRegion(playBtn);
@@ -56,7 +58,7 @@ public class MenuState extends State {
                 gsm.set(new CharacterState(gsm));
             }
         });
-        instBtn = new Texture(Gdx.files.internal("InstBtn.png"));
+        instBtn = new Texture(Gdx.files.internal("instBtn.png"));
         instTextureRegion = new TextureRegion((instBtn));
         instTextureRegionDrawable = new TextureRegionDrawable(instTextureRegion);
         buttonInst = new ImageButton((instTextureRegionDrawable));
@@ -90,7 +92,10 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        //
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
+        //
         sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();
         stage.act(Gdx.graphics.getDeltaTime());
