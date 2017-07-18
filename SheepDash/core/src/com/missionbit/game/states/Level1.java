@@ -172,12 +172,14 @@ public class Level1 extends State {
     }
 
     public void collisionCheck() {
+
         //for sheep
         if (a == 1) {
             if (farmer.collides(sheep.getBounds1())){
                 sheep.getSheepDead();
                 sheep.sheepDied();
                 farmer.killed();
+              gameOver(1);
             }
             if (poop.collides(sheep.getBounds1())||haybale.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
@@ -195,6 +197,7 @@ public class Level1 extends State {
                 cow.getCowDead();
                 cow.cowDied();
                 farmer.killed();
+              gameOver(1);
             }
             if (poop.collides(cow.getCowBounds())||haybale.collides(cow.getCowBounds())){
                 cow.reduceSpd();
@@ -212,6 +215,7 @@ public class Level1 extends State {
                 pig.getPigDead();
                 pig.pigDied();
                 farmer.killed();
+              gameOver(1);
             }
             if (poop.collides(pig.getPigBounds())||haybale.collides(pig.getPigBounds())){
                 pig.reduceSpd();
@@ -229,6 +233,7 @@ public class Level1 extends State {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
                 farmer.killed();
+              gameOver(1);
             }
             if (poop.collides(bunny.getBoundsBunny())||haybale.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
@@ -246,6 +251,7 @@ public class Level1 extends State {
                 chick.getChickDead();
                 chick.chickDied();
                 farmer.killed();
+              gameOver(1);
             }
             if (poop.collides(chick.getChickBounds())||haybale.collides(chick.getChickBounds())){
                 chick.reduceSpd();
@@ -344,9 +350,9 @@ public class Level1 extends State {
     }
 
     public void changeLevels() {
-        if (sheep.getPosition().x > 3000) {
-            gsm.set(new Level2(gsm, a));
-       }
+      //  if (sheep.getPosition().x > 3000) {
+        //    gsm.set(new Level2(gsm, a));
+      // }
     }
 
     public void updateTrees() {
@@ -380,6 +386,7 @@ public class Level1 extends State {
         }
         sb.draw(poop.getPoop(), poop.getPosPoop().x, poop.getPosPoop().y, 30, 30);
         sb.draw(haybale.getObstacle(), haybale.getPosObs().x, haybale.getPosObs().y);
+
         if (a == 1){
             if (farmer.collides(sheep.getBounds1())) {
                 sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);

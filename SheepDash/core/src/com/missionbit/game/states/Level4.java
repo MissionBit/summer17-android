@@ -236,12 +236,14 @@ public class Level4 extends State {
     }
 
     public void collisionCheck() {
+
         //for sheep
         if (a == 1) {
             if (farmer.collides(sheep.getBounds1())){
                 sheep.getSheepDead();
                 sheep.sheepDied();
                 farmer.killed();
+              gameOver(4);
             }
             if (poop.collides(sheep.getBounds1())||greenCar.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
@@ -259,6 +261,7 @@ public class Level4 extends State {
                 cow.getCowDead();
                 cow.cowDied();
                 farmer.killed();
+              gameOver(4);
             }
             if (poop.collides(cow.getCowBounds())||greenCar.collides(cow.getCowBounds())){
                 cow.reduceSpd();
@@ -276,6 +279,7 @@ public class Level4 extends State {
                 pig.getPigDead();
                 pig.pigDied();
                 farmer.killed();
+              gameOver(4);
             }
             if (poop.collides(pig.getPigBounds())||greenCar.collides(pig.getPigBounds())){
                 pig.reduceSpd();
@@ -293,6 +297,7 @@ public class Level4 extends State {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
                 farmer.killed();
+              gameOver(4);
             }
             if (poop.collides(bunny.getBoundsBunny())||greenCar.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
@@ -310,6 +315,7 @@ public class Level4 extends State {
                 chick.getChickDead();
                 chick.chickDied();
                 farmer.killed();
+              gameOver(4);
             }
             if (poop.collides(chick.getChickBounds()) || greenCar.collides(chick.getChickBounds())) {
                 chick.reduceSpd();
@@ -326,7 +332,10 @@ public class Level4 extends State {
     public void changeLevels(){
        // if (sheep.getPosition().x > 3000){
         //    gsm.set(new Level5(gsm));
-        //}
+
+        if (sheep.getPosition().x > 4500){
+            gsm.set(new Level5(gsm));
+        }
     }
 
     public void timerCheck(float timePassed) {
