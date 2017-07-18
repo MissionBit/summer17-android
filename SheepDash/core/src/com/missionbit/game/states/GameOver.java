@@ -17,8 +17,9 @@ import com.missionbit.game.GameTutorial;
  */
 
 public class GameOver extends State{
-    public int level;
-    public Texture black;
+    private int level;
+    private int character;
+    private Texture black;
     private Stage stage;
 
     private Texture myTexture1;
@@ -37,10 +38,11 @@ public class GameOver extends State{
     private ImageButton Gtext;
 
 
-    public GameOver(final GameStateManager gsm, int level) {
+    public GameOver(final GameStateManager gsm, int level, final int character) {
 
         super(gsm);
         this.level = level;
+        this.character = character;
         black = new Texture("blackness.jpg");
 
 
@@ -57,7 +59,7 @@ public class GameOver extends State{
         back.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, character));
             }
         });
 
@@ -96,17 +98,17 @@ public class GameOver extends State{
 
     public void restart() {
         if(level == 1) {
-            gsm.set(new Level1(gsm));
+            gsm.set(new Level1(gsm, character));
         } else if (level == 2) {
-            gsm.set(new Level2(gsm));
+            gsm.set(new Level2(gsm, character));
         } else if (level == 3) {
-            gsm.set(new Level3(gsm));
+            gsm.set(new Level3(gsm, character));
         } else if (level == 4) {
-            gsm.set(new Level4(gsm));
+            gsm.set(new Level4(gsm, character));
         } else if (level == 5) {
-            gsm.set(new Level5(gsm));
+            gsm.set(new Level5(gsm, character));
         } else {
-            gsm.set(new MapState(gsm));
+            gsm.set(new MapState(gsm, character));
         }
     }
 

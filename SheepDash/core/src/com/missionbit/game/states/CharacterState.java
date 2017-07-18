@@ -72,7 +72,7 @@ public class CharacterState extends State {
         sheepButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 1));
             }
         });
 
@@ -86,7 +86,7 @@ public class CharacterState extends State {
         cowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 2));
             }
         });
 
@@ -101,7 +101,7 @@ public class CharacterState extends State {
         pigButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 3));
             }
         });
 
@@ -115,7 +115,7 @@ public class CharacterState extends State {
         chickButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 5));
             }
         });
 
@@ -129,7 +129,7 @@ public class CharacterState extends State {
         bunnyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 4));
             }
         });
 

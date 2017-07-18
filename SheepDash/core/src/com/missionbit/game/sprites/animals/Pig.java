@@ -74,11 +74,11 @@ public class Pig extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
 
     }
 
@@ -87,7 +87,7 @@ public class Pig extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
 
@@ -97,12 +97,25 @@ public class Pig extends Animals {
 
     }
 
+    public void goBackwards() {
+        movement = -250;
+    }
+
+    public void pigDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
     public TextureRegion getPig() {
         return pigAnimation.getFrame();
     }
 
     public TextureRegion getPigDead() {
-        return pig1Animation.getFrame();
+        return pig1Animation.getLastFrame();
+    }
+
+    public void setDead(boolean dead) {
+        pig1Animation.setDead(false);
     }
 
     public Rectangle getPigBounds() {

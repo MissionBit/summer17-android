@@ -73,11 +73,11 @@ public class Cow extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
 
     }
 
@@ -86,7 +86,7 @@ public class Cow extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
 
@@ -96,6 +96,14 @@ public class Cow extends Animals {
 
     }
 
+    public void cowDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
+    public void goBackwards() {
+        movement = -250;
+    }
 
     public Vector3 getPosition() {
         return position;
@@ -106,7 +114,11 @@ public class Cow extends Animals {
     }
 
     public TextureRegion getCowDead() {
-        return cow1Animation.getFrame();
+        return cow1Animation.getLastFrame();
+    }
+
+    public void setDead(boolean dead) {
+        cow1Animation.setDead(false);
     }
 
     public Rectangle getCowBounds() {

@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
+import com.missionbit.game.sprites.animals.Bunny;
+import com.missionbit.game.sprites.animals.Chick;
+import com.missionbit.game.sprites.animals.Cow;
+import com.missionbit.game.sprites.animals.Pig;
 import com.missionbit.game.sprites.obstacles.Obstacle;
 import com.missionbit.game.sprites.animals.Sheep;
 
@@ -19,7 +23,13 @@ import java.util.Random;
  */
 
 public class Level3 extends State {
+    //CHARACTERS
     private Sheep sheep;
+    private Bunny bunny;
+    private Chick chick;
+    private Cow cow;
+    private Pig pig;
+    //otherz(yeah, with a z, cuz it's cool that way) I cringe at you Audrey :^)
     private Farmer farmer;
     private Texture ground;
     private Vector2 groundPos1, groundPos2, groundPos3;
@@ -42,10 +52,28 @@ public class Level3 extends State {
     SpriteBatch batch;
     BitmapFont font;
 
-    public Level3(GameStateManager gsm) {
+    private int a;
+
+    public Level3(GameStateManager gsm, int c) {
         super(gsm);
+        a = c;
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        sheep = new Sheep(150, 60);
+        // INITIALIZING ANIMALS
+        if (a == 1){
+            sheep = new Sheep(150, 60);
+        }
+        if (a == 2){
+            cow = new Cow(150, 60);
+        }
+        if (a == 3){
+            pig = new Pig(150, 60);
+        }
+        if (a == 4){
+            bunny = new Bunny(150, 60);
+        }
+        if (a == 5){
+            chick = new Chick(150, 60);
+        }
         farmer = new Farmer(-50, 60);
         ground = new Texture("plains-ground.png");
         groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
@@ -77,25 +105,80 @@ public class Level3 extends State {
 
     @Override
     protected void handleInput() {
-        if (sheep.getPosition().y == 60) {
-            if (Gdx.input.justTouched()) {
-                sheep.jump();
+        if (Gdx.input.justTouched()) {
+            if (a == 1) {
+                if (sheep.getPosition().y == 60) {
+                    sheep.jump();
+                }
+            }
+            if (a == 2) {
+                if (cow.getPosition().y == 60) {
+                    cow.jump();
+                }
+            }
+            if (a == 3) {
+                if (pig.getPosition().y == 60) {
+                    pig.jump();
+                }
+            }
+            if (a == 4) {
+                if (bunny.getPosition().y == 60) {
+                    bunny.jump();
+                }
+            }
+            if (a == 5) {
+                if (chick.getPosition().y == 60) {
+                    chick.jump();
+                }
             }
         }
     }
 
     @Override
     public void create() {
-
     }
 
     @Override
     public void update(float dt) {
         handleInput();
-        sheep.update(dt);
+        //the characters (this is getting tiring and repetitive but I guess that's what programmimg is yay
+        if (a == 1){
+            sheep.update(dt);
+            cam.position.x = sheep.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(sheep.getBounds1())) {
+                gsm.set(new Level4(gsm, a));
+            }
+        }
+        if (a == 2){
+            cow.update(dt);
+            cam.position.x = cow.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(cow.getCowBounds())) {
+                gsm.set(new Level4(gsm, a));
+            }
+        }
+        if (a == 3){
+            pig.update(dt);
+            cam.position.x = pig.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(pig.getPigBounds())) {
+                gsm.set(new Level4(gsm, a));
+            }
+        }
+        if (a == 4){
+            bunny.update(dt);
+            cam.position.x = bunny.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(bunny.getBoundsBunny())) {
+                gsm.set(new Level4(gsm, a));
+            }
+        }
+        if (a == 5){
+            chick.update(dt);
+            cam.position.x = chick.getPosition().x + 80;
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(chick.getChickBounds())) {
+                gsm.set(new Level4(gsm, a));
+            }
+        }
         carrot.update(dt);
         spikes.update(dt);
-        cam.position.x = sheep.getPosition().x + 80;
         farmer.update(dt);
         updateGround();
         updateSky();
@@ -106,9 +189,6 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
-            gsm.set(new Level4(gsm));
-        }
     }
 
     public void updateGround() {
@@ -181,31 +261,129 @@ public class Level3 extends State {
     }
 
     public void collisionCheck() {
-        if (farmer.collides(sheep.getBounds1())) {
-            sheep.getSheepDead();
-            sheep.sheepDied();
-            farmer.killedSheep();
-            gameOver(3);
+
+        //for sheep
+        if (a == 1) {
+            if (farmer.collides(sheep.getBounds1())){
+                sheep.getSheepDead();
+                sheep.sheepDied();
+                farmer.killedSheep();
+                gameOver(3, a);
+            }
+            if (spikes.collides(sheep.getBounds1())||mud.collides(sheep.getBounds1())) {
+                sheep.reduceSpd();
+                sheep.startTimer();
+            }
+            if (carrot.collides(sheep.getBounds1())) {
+                carrotIsTouched = true;
+                sheep.increaseSpd();
+                sheep.startTimer();
+            }
         }
-        if (mud.collides(sheep.getBounds1())) {
-            sheep.reduceSpd();
-            sheep.startTimer();
+//for cow
+        if (a == 2){
+            if (farmer.collides(cow.getCowBounds())){
+                cow.getCowDead();
+                cow.cowDied();
+                farmer.killedSheep();
+                gameOver(3, a);
+            }
+            if (spikes.collides(cow.getCowBounds())||mud.collides(cow.getCowBounds())){
+                cow.reduceSpd();
+                cow.startTimer();
+            }
+            if (carrot.collides(cow.getCowBounds())) {
+                carrotIsTouched = true;
+                cow.increaseSpd();
+                cow.startTimer();
+            }
         }
-        if (spikes.collides(sheep.getBounds1())) {
-            sheep.reduceSpd();
-            sheep.startTimer();
+//for pig
+        if(a == 3){
+            if (farmer.collides(pig.getPigBounds())){
+                pig.getPigDead();
+                pig.pigDied();
+                farmer.killedSheep();
+                gameOver(3, a);
+            }
+            if (spikes.collides(pig.getPigBounds())||mud.collides(pig.getPigBounds())){
+                pig.reduceSpd();
+                pig.startTimer();
+            }
+            if (carrot.collides(pig.getPigBounds())) {
+                carrotIsTouched = true;
+                pig.increaseSpd();
+                pig.startTimer();
+            }
         }
-        if (carrot.collides(sheep.getBounds1())) {
-            carrotIsTouched = true;
-            sheep.startTimer();
-            sheep.increaseSpd();
+//for bunny
+        if (a == 4){
+            if (farmer.collides(bunny.getBoundsBunny())){
+                bunny.getBunnyDead();
+                bunny.bunnyDied();
+                farmer.killedSheep();
+                gameOver(3, a);
+            }
+            if (spikes.collides(bunny.getBoundsBunny())||mud.collides(bunny.getBoundsBunny())) {
+                bunny.reduceSpd();
+                bunny.startTimer();
+            }
+            if (carrot.collides(bunny.getBoundsBunny())) {
+                carrotIsTouched = true;
+                bunny.increaseSpd();
+                bunny.startTimer();
+            }
+        }
+//for chick
+        if (a == 5) {
+            if (farmer.collides(chick.getChickBounds())) {
+                chick.getChickDead();
+                chick.chickDied();
+                farmer.killedSheep();
+                gameOver(3, a);
+            }
+            if (spikes.collides(chick.getChickBounds()) || mud.collides(chick.getChickBounds())) {
+                chick.reduceSpd();
+                chick.startTimer();
+            }
+            if (carrot.collides(chick.getChickBounds())) {
+                carrotIsTouched = true;
+                chick.increaseSpd();
+                chick.startTimer();
+            }
         }
     }
 
     public void timerCheck(float timePassed) {
-        sheep.updateTimer(timePassed);
-        if (sheep.isTimerDone()) {
-            sheep.resetSpd();
+        if (a == 1){
+            sheep.updateTimer(timePassed);
+            if (sheep.isTimerDone()) {
+                sheep.resetSpd();
+            }
+        }
+        if (a == 2){
+            cow.updateTimer(timePassed);
+            if (cow.isTimerDone()) {
+                cow.resetSpd();
+            }
+        }
+        if (a == 3){
+            pig.updateTimer(timePassed);
+            if (pig.isTimerDone()) {
+                pig.resetSpd();
+            }
+        }
+        if (a == 4){
+            bunny.updateTimer(timePassed);
+            if (bunny.isTimerDone()) {
+                bunny.resetSpd();
+            }
+        }
+        if (a == 5){
+            chick.updateTimer(timePassed);
+            if (chick.isTimerDone()) {
+                chick.resetSpd();
+            }
         }
     }
 
@@ -228,11 +406,41 @@ public class Level3 extends State {
             sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y,30,30);
         }
         sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
-        if (farmer.collides(sheep.getBounds1())) {
-            sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
-            gameOver(3);
-        } else {
-            sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+        //CHARACTERS
+        if (a == 1){
+            if (farmer.collides(sheep.getBounds1())) {
+                sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            } else {
+                sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
+            }
+        }
+        if (a == 2){
+            if (farmer.collides(cow.getCowBounds())) {
+                sb.draw(cow.getCowDead(), cow.getPosition().x, cow.getPosition().y, 70, 45);
+            } else {
+                sb.draw(cow.getCow(), cow.getPosition().x, cow.getPosition().y, 70, 45);
+            }
+        }
+        if (a == 3){
+            if (farmer.collides(pig.getPigBounds())) {
+                sb.draw(pig.getPigDead(), pig.getPosition().x, pig.getPosition().y, 70, 45);
+            } else {
+                sb.draw(pig.getPig(), pig.getPosition().x, pig.getPosition().y, 70, 45);
+            }
+        }
+        if (a == 4){
+            if (farmer.collides(bunny.getBoundsBunny())) {
+                sb.draw(bunny.getBunnyDead(), bunny.getPosition().x, bunny.getPosition().y, 50,50);
+            } else {
+                sb.draw(bunny.getBunny(), bunny.getPosition().x, bunny.getPosition().y, 50, 50);
+            }
+        }
+        if (a == 5){
+            if (farmer.collides(chick.getChickBounds())) {
+                sb.draw(chick.getChickDead(), chick.getPosition().x, chick.getPosition().y, 32, 32);
+            } else {
+                sb.draw(chick.getChick(), chick.getPosition().x, chick.getPosition().y, 32, 32);
+            }
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y,120,110);
         sb.end();
@@ -241,18 +449,27 @@ public class Level3 extends State {
         batch.begin();
         font.setColor(Color.WHITE);
         font.getData().setScale(2, 2);
-        font.draw(batch, ((30000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        font.draw(batch, ((41000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
         batch.end();
     }
 
     @Override
     public void dispose() {
-        sheep.dispose();
+        if (a == 1){
+            sheep.dispose();
+        } else if (a == 2){
+            cow.dispose();
+        } else if (a == 3){
+            pig.dispose();
+        } else if (a == 4){
+            bunny.dispose();
+        } else if (a == 5){
+            chick.dispose();
+        }
         farmer.dispose();
         sky.dispose();
         hills.dispose();
         ground.dispose();
-        sheep.dispose();
         farmer.dispose();
         mudTexture.dispose();
         mud.dispose();

@@ -78,11 +78,11 @@ public class Bunny extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
     }
 
     public void stopSpd(){
@@ -90,7 +90,7 @@ public class Bunny extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
     @Override
@@ -98,6 +98,15 @@ public class Bunny extends Animals {
         bunny.dispose();
         bunnyJump.dispose();
         bunnyDead.dispose();
+    }
+
+    public void bunnyDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
+    public void goBackwards() {
+        movement = -250;
     }
 
     public Rectangle getBoundsBunny() {
@@ -113,7 +122,11 @@ public class Bunny extends Animals {
     }
 
     public TextureRegion getBunnyDead() {
-        return deathAnimation.getFrame();
+        return deathAnimation.getLastFrame();
+    }
+
+    public void setDead(boolean dead) {
+        deathAnimation.setDead(false);
     }
 
     public Vector3 getPosition() {

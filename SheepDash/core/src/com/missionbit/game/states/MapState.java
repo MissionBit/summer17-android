@@ -59,7 +59,7 @@ public class MapState extends State {
     private TextureRegionDrawable myTexRegionDrawableBack;
     private ImageButton backButton;
 
-    public MapState(final GameStateManager gsm) {
+    public MapState(final GameStateManager gsm, final int c) {
         super(gsm);
         bg = new Texture("LevelBg.png");
         myTexture1 = new Texture(Gdx.files.internal("Lvl1.png"));
@@ -75,7 +75,7 @@ public class MapState extends State {
         button1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new Level1(gsm));
+                gsm.set(new Level1(gsm, c));
             }
         });
 
@@ -91,7 +91,7 @@ public class MapState extends State {
         button2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new Level2(gsm));
+                gsm.set(new Level2(gsm, c));
             }
         });
 
@@ -107,7 +107,7 @@ public class MapState extends State {
         button3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new Level3(gsm));
+                gsm.set(new Level3(gsm, c));
             }
         });
 
@@ -123,7 +123,7 @@ public class MapState extends State {
         button4.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new Level4(gsm));
+                gsm.set(new Level4(gsm, c));
             }
         });
 
@@ -140,7 +140,7 @@ public class MapState extends State {
         button5.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new Level5(gsm));
+                gsm.set(new Level5(gsm, c));
             }
         });
 

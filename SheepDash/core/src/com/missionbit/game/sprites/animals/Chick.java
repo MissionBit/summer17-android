@@ -73,11 +73,11 @@ public class Chick extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
 
     }
 
@@ -86,7 +86,7 @@ public class Chick extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
 
@@ -96,13 +96,24 @@ public class Chick extends Animals {
 
     }
 
+    public void chickDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
+    public void goBackwards() {
+        movement = -250;
+    }
+
     public TextureRegion getChick() {
         return chickAnimation.getFrame();
     }
 
     public TextureRegion getChickDead() {
-        return chick2Animation.getFrame();
+        return chick2Animation.getLastFrame();
     }
+
+    public void setDead(boolean dead) { chick2Animation.setDead(false);}
 
     public Rectangle getChickBounds() {
         return chickBounds;
