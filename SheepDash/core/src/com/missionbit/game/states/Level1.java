@@ -68,7 +68,7 @@ public class Level1 extends State {
         super(gsm);
         a = c;
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
-        bg = new Texture("FarmBg1.png");
+        bg = new Texture("FarmBG1.png");
         // INITIALIZING ANIMALS
         if (a == 1){
             sheep = new Sheep(150, 60);
