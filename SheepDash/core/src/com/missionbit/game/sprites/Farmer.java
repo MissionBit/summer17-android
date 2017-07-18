@@ -17,7 +17,7 @@ public class Farmer {
     private Vector3 velocity;
     private Rectangle boundsFarmer;
     private Vector2 posFarmer;
-    private int movement = 250;
+    private int movement = 200;
 
     public Farmer(int x, int y){
         farmer = new Texture("FarmerOnATractor.png");
@@ -25,7 +25,7 @@ public class Farmer {
         posFarmer = new Vector2(0,45);
         velocity = new Vector3(0,0,0);
         position = new Vector3(posFarmer.x,posFarmer.y,0);
-        boundsFarmer = new Rectangle(posFarmer.x,posFarmer.y,120,110);
+        boundsFarmer = new Rectangle(posFarmer.x,posFarmer.y,110,410);
 
     }
 
@@ -37,10 +37,9 @@ public class Farmer {
         boundsFarmer.setPosition(position.x,position.y);
     }
 
-    public void killedSheep() {
+    public void killed() {
         movement = 0;
     }
-
 
     public Vector3 getPosition() {
         return position;

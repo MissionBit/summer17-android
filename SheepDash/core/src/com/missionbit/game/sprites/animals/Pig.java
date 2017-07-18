@@ -111,6 +111,7 @@ public class Pig extends Animals {
     }
 
     public TextureRegion getPigDead() {
+        position.y = 60;
         return pig1Animation.getLastFrame();
     }
 

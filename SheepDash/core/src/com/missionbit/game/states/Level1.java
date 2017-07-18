@@ -70,19 +70,19 @@ public class Level1 extends State {
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
         bg = new Texture("FarmBG1.png");
         // INITIALIZING ANIMALS
-        if (a == 1){
+        if (a == 1) {
             sheep = new Sheep(150, 60);
         }
-        if (a == 2){
+        if (a == 2) {
             cow = new Cow(150, 60);
         }
-        if (a == 3){
+        if (a == 3) {
             pig = new Pig(150, 60);
         }
-        if (a == 4){
+        if (a == 4) {
             bunny = new Bunny(150, 60);
         }
-        if (a == 5){
+        if (a == 5) {
             chick = new Chick(150, 60);
         }
         farmer = new Farmer(-50, 60);
@@ -92,7 +92,7 @@ public class Level1 extends State {
         trees3 = new Texture("FarmBG5.png");
         barn = new Texture("FarmBG1.png");
         shed = new Texture("FarmBG2.png");
-        background = new Texture("FarmBG7.png");
+        background = new Texture("Sky1.png");
         groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
         groundPos2 = new Vector2(ground.getWidth() + groundPos1.x, GROUND_Y_OFFSET);
         treePos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
@@ -112,24 +112,26 @@ public class Level1 extends State {
         cherry = new Cherry(500, 150);
         cherryIsTouched = false;
         startTime = System.currentTimeMillis();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
 
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()) {
-            if ( a == 1){
+            if (a == 1) {
                 sheep.jump();
             }
-            if (a == 2){
+            if (a == 2) {
                 cow.jump();
             }
-            if (a == 3){
+            if (a == 3) {
                 pig.jump();
             }
-            if (a == 4){
+            if (a == 4) {
                 bunny.jump();
             }
-            if ( a == 5){
+            if (a == 5) {
                 chick.jump();
             }
         }
@@ -144,39 +146,39 @@ public class Level1 extends State {
         handleInput();
         updateHaybale();
         //the characters (this is getting tiring and repetitive but I guess that's what programmimg is yay
-        if (a == 1){
+        if (a == 1) {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 30000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level2(gsm, a));
+            if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(sheep.getBounds1())) {
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
-        if (a == 2){
+        if (a == 2) {
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 30000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level2(gsm, a));
+            if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(cow.getCowBounds())) {
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
-        if (a == 3){
+        if (a == 3) {
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 30000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level2(gsm, a));
+            if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(pig.getPigBounds())) {
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
-        if (a == 4){
+        if (a == 4) {
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 30000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level2(gsm, a));
+            if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(bunny.getBoundsBunny())) {
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
-        if (a == 5){
+        if (a == 5) {
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 30000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level2(gsm, a));
+            if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(chick.getChickBounds())) {
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
         cherry.update(dt);
@@ -196,13 +198,13 @@ public class Level1 extends State {
 
         //for sheep
         if (a == 1) {
-            if (farmer.collides(sheep.getBounds1())){
+            if (farmer.collides(sheep.getBounds1())) {
                 sheep.getSheepDead();
                 sheep.sheepDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(1, a);
             }
-            if (poop.collides(sheep.getBounds1())||haybale.collides(sheep.getBounds1())) {
+            if (poop.collides(sheep.getBounds1()) || haybale.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
                 sheep.startTimer();
             }
@@ -213,14 +215,14 @@ public class Level1 extends State {
             }
         }
         //for cow
-        if (a == 2){
-            if (farmer.collides(cow.getCowBounds())){
+        if (a == 2) {
+            if (farmer.collides(cow.getCowBounds())) {
                 cow.getCowDead();
                 cow.cowDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(1, a);
             }
-            if (poop.collides(cow.getCowBounds())||haybale.collides(cow.getCowBounds())){
+            if (poop.collides(cow.getCowBounds()) || haybale.collides(cow.getCowBounds())) {
                 cow.reduceSpd();
                 cow.startTimer();
             }
@@ -231,14 +233,14 @@ public class Level1 extends State {
             }
         }
         //for pig
-        if(a == 3){
-            if (farmer.collides(pig.getPigBounds())){
+        if (a == 3) {
+            if (farmer.collides(pig.getPigBounds())) {
                 pig.getPigDead();
                 pig.pigDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(1, a);
             }
-            if (poop.collides(pig.getPigBounds())||haybale.collides(pig.getPigBounds())){
+            if (poop.collides(pig.getPigBounds()) || haybale.collides(pig.getPigBounds())) {
                 pig.reduceSpd();
                 pig.startTimer();
             }
@@ -249,14 +251,14 @@ public class Level1 extends State {
             }
         }
         //for bunny
-        if (a == 4){
-            if (farmer.collides(bunny.getBoundsBunny())){
+        if (a == 4) {
+            if (farmer.collides(bunny.getBoundsBunny())) {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(1, a);
             }
-            if (poop.collides(bunny.getBoundsBunny())||haybale.collides(bunny.getBoundsBunny())) {
+            if (poop.collides(bunny.getBoundsBunny()) || haybale.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
                 bunny.startTimer();
             }
@@ -267,14 +269,14 @@ public class Level1 extends State {
             }
         }
         //for chick
-        if (a == 5){
-            if (farmer.collides(chick.getChickBounds())){
+        if (a == 5) {
+            if (farmer.collides(chick.getChickBounds())) {
                 chick.getChickDead();
                 chick.chickDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(1, a);
             }
-            if (poop.collides(chick.getChickBounds())||haybale.collides(chick.getChickBounds())){
+            if (poop.collides(chick.getChickBounds()) || haybale.collides(chick.getChickBounds())) {
                 chick.reduceSpd();
                 chick.startTimer();
             }
@@ -288,31 +290,31 @@ public class Level1 extends State {
 
 
     public void timerCheck(float timePassed) {
-        if (a == 1){
+        if (a == 1) {
             sheep.updateTimer(timePassed);
             if (sheep.isTimerDone()) {
                 sheep.resetSpd();
             }
         }
-        if (a == 2){
+        if (a == 2) {
             cow.updateTimer(timePassed);
             if (cow.isTimerDone()) {
                 cow.resetSpd();
             }
         }
-        if (a == 3){
+        if (a == 3) {
             pig.updateTimer(timePassed);
             if (pig.isTimerDone()) {
                 pig.resetSpd();
             }
         }
-        if (a == 4){
+        if (a == 4) {
             bunny.updateTimer(timePassed);
             if (bunny.isTimerDone()) {
                 bunny.resetSpd();
             }
         }
-        if (a == 5){
+        if (a == 5) {
             chick.updateTimer(timePassed);
             if (chick.isTimerDone()) {
                 chick.resetSpd();
@@ -322,11 +324,11 @@ public class Level1 extends State {
 
 
     public void updatePoops() {
-        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
+        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x - cam.viewportWidth / 2) {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 600) + GameTutorial.WIDTH;
-            poop.reposition(poop.getPosPoop().x+ distance, 58);
+            poop.reposition(poop.getPosPoop().x + distance, 58);
             poop.setCollided(false);
         }
     }
@@ -403,35 +405,35 @@ public class Level1 extends State {
         sb.draw(poop.getPoop(), poop.getPosPoop().x, poop.getPosPoop().y, 30, 30);
         sb.draw(haybale.getObstacle(), haybale.getPosObs().x, haybale.getPosObs().y);
 
-        if (a == 1){
+        if (a == 1) {
             if (farmer.collides(sheep.getBounds1())) {
                 sb.draw(sheep.getSheepDead(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
             } else {
                 sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
             }
         }
-        if (a == 2){
+        if (a == 2) {
             if (farmer.collides(cow.getCowBounds())) {
                 sb.draw(cow.getCowDead(), cow.getPosition().x, cow.getPosition().y, 70, 45);
             } else {
                 sb.draw(cow.getCow(), cow.getPosition().x, cow.getPosition().y, 70, 45);
             }
         }
-        if (a == 3){
+        if (a == 3) {
             if (farmer.collides(pig.getPigBounds())) {
                 sb.draw(pig.getPigDead(), pig.getPosition().x, pig.getPosition().y, 70, 45);
             } else {
                 sb.draw(pig.getPig(), pig.getPosition().x, pig.getPosition().y, 70, 45);
             }
         }
-        if (a == 4){
+        if (a == 4) {
             if (farmer.collides(bunny.getBoundsBunny())) {
                 sb.draw(bunny.getBunnyDead(), bunny.getPosition().x, bunny.getPosition().y, 50, 50);
             } else {
                 sb.draw(bunny.getBunny(), bunny.getPosition().x, bunny.getPosition().y, 50, 50);
             }
         }
-        if (a == 5){
+        if (a == 5) {
             if (farmer.collides(chick.getChickBounds())) {
                 sb.draw(chick.getChickDead(), chick.getPosition().x, chick.getPosition().y, 32, 32);
             } else {
@@ -453,15 +455,15 @@ public class Level1 extends State {
         bg.dispose();
         haybaleTexture.dispose();
         haybale.dispose();
-        if (a == 1){
+        if (a == 1) {
             sheep.dispose();
-        } else if (a == 2){
+        } else if (a == 2) {
             cow.dispose();
-        } else if (a == 3){
+        } else if (a == 3) {
             pig.dispose();
-        } else if (a == 4){
+        } else if (a == 4) {
             bunny.dispose();
-        } else if (a == 5){
+        } else if (a == 5) {
             chick.dispose();
         }
         barn.dispose();

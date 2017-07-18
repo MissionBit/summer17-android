@@ -56,7 +56,7 @@ public class Bunny extends Animals {
     }
 
     public void jump() {
-        if (position.y == 60){
+        if (position.y <= 60){
             velocity.y = 500;
         }
 
@@ -122,6 +122,7 @@ public class Bunny extends Animals {
     }
 
     public TextureRegion getBunnyDead() {
+        position.y = 55;
         return deathAnimation.getLastFrame();
     }
 

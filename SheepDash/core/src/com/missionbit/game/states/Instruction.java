@@ -37,6 +37,7 @@ public class Instruction extends State {
 
     public Instruction(GameStateManager gsm) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         background = new Texture("INST.png");
         sheep = new Sheep (50,280);
         theOneThatDies = new Sheep(650, 280);
@@ -94,6 +95,7 @@ public class Instruction extends State {
         if (farmer.getPosition().x > 650){
             farmer.getPosition().x = 400;
         }
+        cam.update();
     }
 
     public void collisionCheck() {
@@ -106,8 +108,9 @@ public class Instruction extends State {
 
     @Override
     public void render(final SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y, 100, 100);
         sb.draw(cherry.getObsAnimation(), cherry.getPosObs().x, cherry.getPosObs().y, 250, 160);
         sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y, 150, 91);

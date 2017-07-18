@@ -52,7 +52,6 @@ public class Level4 extends State {
     private static final int GROUND_WIDTH = 790;
     SpriteBatch batch;
     BitmapFont font;
-
     private int a;
 
     public Level4(GameStateManager gsm, int c) {
@@ -147,35 +146,35 @@ public class Level4 extends State {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
 
@@ -191,33 +190,6 @@ public class Level4 extends State {
         collisionCheck();
         cam.update();
         }
-
-    @Override
-    public void dispose() {
-        sky.dispose();
-        if (a == 1){
-            sheep.dispose();
-        } else if (a == 2){
-            cow.dispose();
-        } else if (a == 3){
-            pig.dispose();
-        } else if (a == 4){
-            bunny.dispose();
-        } else if (a == 5){
-            chick.dispose();
-        }
-        farmer.dispose();
-        cars.dispose();
-        ground.dispose();
-        poop.dispose();
-        greenCarTexture.dispose();
-        greenCar.dispose();
-        appleTexture.dispose();
-        apple.dispose();
-        batch.dispose();
-        font.dispose();
-
-    }
 
     public void updateGreen() {
         if (cam.position.x - cam.viewportWidth / 2 > greenCar.getPosObs().x + greenCar.getWidth()) {
@@ -290,7 +262,7 @@ public class Level4 extends State {
             if (farmer.collides(sheep.getBounds1())){
                 sheep.getSheepDead();
                 sheep.sheepDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(4, a);
             }
             if (poop.collides(sheep.getBounds1())||greenCar.collides(sheep.getBounds1())) {
@@ -309,7 +281,7 @@ public class Level4 extends State {
             if (farmer.collides(cow.getCowBounds())){
                 cow.getCowDead();
                 cow.cowDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(4, a);
             }
             if (poop.collides(cow.getCowBounds())||greenCar.collides(cow.getCowBounds())){
@@ -328,7 +300,7 @@ public class Level4 extends State {
             if (farmer.collides(pig.getPigBounds())){
                 pig.getPigDead();
                 pig.pigDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(4, a);
             }
             if (poop.collides(pig.getPigBounds())||greenCar.collides(pig.getPigBounds())){
@@ -347,7 +319,7 @@ public class Level4 extends State {
             if (farmer.collides(bunny.getBoundsBunny())){
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(4, a);
             }
             if (poop.collides(bunny.getBoundsBunny())||greenCar.collides(bunny.getBoundsBunny())) {
@@ -366,7 +338,7 @@ public class Level4 extends State {
             if (farmer.collides(chick.getChickBounds())) {
                 chick.getChickDead();
                 chick.chickDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(4, a);
             }
             if (poop.collides(chick.getChickBounds()) || greenCar.collides(chick.getChickBounds())) {
@@ -472,12 +444,37 @@ public class Level4 extends State {
 
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,120,110);
         sb.end();
-
         //Text to display countdown timer!1!1!
         batch.begin();
         font.setColor(Color.WHITE);
         font.getData().setScale(2, 2);
         font.draw(batch, ((46000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
         batch.end();
+    }
+
+    @Override
+    public void dispose() {
+        sky.dispose();
+        if (a == 1){
+            sheep.dispose();
+        } else if (a == 2){
+            cow.dispose();
+        } else if (a == 3){
+            pig.dispose();
+        } else if (a == 4){
+            bunny.dispose();
+        } else if (a == 5){
+            chick.dispose();
+        }
+        farmer.dispose();
+        cars.dispose();
+        ground.dispose();
+        poop.dispose();
+        greenCarTexture.dispose();
+        greenCar.dispose();
+        appleTexture.dispose();
+        apple.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }

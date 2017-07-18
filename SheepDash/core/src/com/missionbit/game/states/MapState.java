@@ -61,6 +61,7 @@ public class MapState extends State {
 
     public MapState(final GameStateManager gsm, final int c) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         bg = new Texture("LevelBg.png");
         myTexture1 = new Texture(Gdx.files.internal("Lvl1.png"));
         myTextureRegion1 = new TextureRegion(myTexture1);
@@ -175,13 +176,15 @@ public class MapState extends State {
     @Override
     public void update(float dt) {
         handleInput();
+        cam.update();
     }
 
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime());

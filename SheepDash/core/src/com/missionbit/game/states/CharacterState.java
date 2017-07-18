@@ -58,6 +58,7 @@ public class CharacterState extends State {
 
     public CharacterState(final GameStateManager gsm) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         bg = new Texture("CharScreen.png");
 
         sheep = new Texture(Gdx.files.internal("SheepButton.png"));
@@ -162,13 +163,14 @@ public class CharacterState extends State {
 
     @Override
     public void update(float dt) {
-
+        cam.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime());

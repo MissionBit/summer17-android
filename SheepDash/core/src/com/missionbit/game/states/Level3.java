@@ -14,7 +14,6 @@ import com.missionbit.game.sprites.animals.Cow;
 import com.missionbit.game.sprites.animals.Pig;
 import com.missionbit.game.sprites.obstacles.Obstacle;
 import com.missionbit.game.sprites.animals.Sheep;
-
 import java.util.Random;
 
 
@@ -51,7 +50,6 @@ public class Level3 extends State {
     long startTime;
     SpriteBatch batch;
     BitmapFont font;
-
     private int a;
 
     public Level3(GameStateManager gsm, int c) {
@@ -189,6 +187,11 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
+
+        if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new YouWon(gsm,3,a));
+        }
+
     }
 
     public void updateGround() {
@@ -267,7 +270,7 @@ public class Level3 extends State {
             if (farmer.collides(sheep.getBounds1())){
                 sheep.getSheepDead();
                 sheep.sheepDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(3, a);
             }
             if (spikes.collides(sheep.getBounds1())||mud.collides(sheep.getBounds1())) {
@@ -285,7 +288,7 @@ public class Level3 extends State {
             if (farmer.collides(cow.getCowBounds())){
                 cow.getCowDead();
                 cow.cowDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(3, a);
             }
             if (spikes.collides(cow.getCowBounds())||mud.collides(cow.getCowBounds())){
@@ -303,7 +306,7 @@ public class Level3 extends State {
             if (farmer.collides(pig.getPigBounds())){
                 pig.getPigDead();
                 pig.pigDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(3, a);
             }
             if (spikes.collides(pig.getPigBounds())||mud.collides(pig.getPigBounds())){
@@ -321,7 +324,7 @@ public class Level3 extends State {
             if (farmer.collides(bunny.getBoundsBunny())){
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(3, a);
             }
             if (spikes.collides(bunny.getBoundsBunny())||mud.collides(bunny.getBoundsBunny())) {
@@ -339,7 +342,7 @@ public class Level3 extends State {
             if (farmer.collides(chick.getChickBounds())) {
                 chick.getChickDead();
                 chick.chickDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(3, a);
             }
             if (spikes.collides(chick.getChickBounds()) || mud.collides(chick.getChickBounds())) {

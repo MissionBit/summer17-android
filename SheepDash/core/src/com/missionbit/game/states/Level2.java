@@ -134,35 +134,35 @@ public class Level2 extends State {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         mushroom.update(dt);
@@ -185,7 +185,7 @@ public class Level2 extends State {
             if (farmer.collides(sheep.getBounds1())){
                 sheep.getSheepDead();
                 sheep.sheepDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(2, a);
             }
             if (mud.collides(sheep.getBounds1())||barrel.collides(sheep.getBounds1())) {
@@ -208,7 +208,7 @@ public class Level2 extends State {
             if (farmer.collides(cow.getCowBounds())){
                 cow.getCowDead();
                 cow.cowDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(2, a);
             }
             if (mud.collides(cow.getCowBounds())||barrel.collides(cow.getCowBounds())){
@@ -231,7 +231,7 @@ public class Level2 extends State {
             if (farmer.collides(pig.getPigBounds())){
                 pig.getPigDead();
                 pig.pigDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(2, a);
             }
             if (mud.collides(pig.getPigBounds())||barrel.collides(pig.getPigBounds())){
@@ -254,7 +254,7 @@ public class Level2 extends State {
             if (farmer.collides(bunny.getBoundsBunny())){
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(2, a);
             }
             if (mud.collides(bunny.getBoundsBunny())||barrel.collides(bunny.getBoundsBunny())) {
@@ -277,7 +277,7 @@ public class Level2 extends State {
             if (farmer.collides(chick.getChickBounds())) {
                 chick.getChickDead();
                 chick.chickDied();
-                farmer.killedSheep();
+                farmer.killed();
                 gameOver(2, a);
             }
             if (mud.collides(chick.getChickBounds()) || barrel.collides(chick.getChickBounds())) {

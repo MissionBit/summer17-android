@@ -42,13 +42,12 @@ public class Chick extends Animals {
         if(position.y < 60){
             position.y = 60;
         }
-
         chickBounds.setPosition(position.x,position.y);
 
     }
 
     public void jump() {
-        if (position.y == 60){
+        if (position.y <= 60){
             velocity.y = 500;
         }
 
@@ -110,6 +109,7 @@ public class Chick extends Animals {
     }
 
     public TextureRegion getChickDead() {
+        position.y = 55;
         return chick2Animation.getLastFrame();
     }
 
