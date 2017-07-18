@@ -53,9 +53,13 @@ public class Sheep extends Animals {
     }
 
     public void jump() {
-        if (position.y == 60) {
+        if (position.y <= 60) {
             velocity.y = 500;
         }
+    }
+
+    public void jump2() {
+        velocity.y = 500;
     }
 
     public void updateTimer(float elapsedTime) {
