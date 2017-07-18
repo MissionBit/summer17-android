@@ -45,7 +45,7 @@ public class Animation {
     }
 
     public TextureRegion getLastFrame(){
-        if (dead || frame >= frameCount-1) {
+        if (dead || frame == frameCount-1) {
             dead = true;
             return frames.get(frameCount - 1);
         } else {

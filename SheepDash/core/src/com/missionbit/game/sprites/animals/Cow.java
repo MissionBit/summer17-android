@@ -25,7 +25,7 @@ public class Cow extends Animals {
         cow = new Texture("RunningCow1.png");
         cowDead = new Texture("cowsquish.png");
         cowAnimation = new Animation(new TextureRegion(cow),4,0.5f);
-        cow1Animation = new Animation(new TextureRegion(cowDead),24,0.5f);
+        cow1Animation = new Animation(new TextureRegion(cowDead),23,0.5f);
         cowBounds = new Rectangle(x,y,70,45);
     }
 
@@ -116,6 +116,7 @@ public class Cow extends Animals {
     }
 
     public TextureRegion getCowDead() {
+        position.y = 60;
         return cow1Animation.getLastFrame();
     }
 

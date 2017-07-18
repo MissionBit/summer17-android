@@ -80,7 +80,7 @@ public class Sheep extends Animals {
     }
 
     public void resetSpd() {
-        movement = 250;
+        movement = 200;
     }
 
     public void noSpd() {

@@ -124,6 +124,7 @@ public class Bunny extends Animals {
     }
 
     public TextureRegion getBunnyDead() {
+        position.y = 55;
         return deathAnimation.getLastFrame();
     }
 
