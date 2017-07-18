@@ -48,6 +48,7 @@ public class Level1 extends State {
     private static final int CHERRY_SPACING = 300;
     private static final int POOP_SPACING = 250;
     private static final int POOP_WIDTH = 30;
+    long startTime;
 
     public Level1(GameStateManager gsm) {
         super(gsm);
@@ -73,10 +74,11 @@ public class Level1 extends State {
         bgPos2 = new Vector2(background.getWidth() + bgPos1.x, 0);
         //OBSTACLES
         haybaleTexture = new Texture("haybale3.png");
-        haybale = new Obstacle(haybaleTexture, 1300, 40, 1, 0.5f);
+        haybale = new Obstacle(haybaleTexture, 1300, 50, 1, 0.5f);
         poop = new Poop(260, 60);
-        cherry = new Cherry(500, 50);
+        cherry = new Cherry(500, 150);
         cherryIsTouched = false;
+        startTime = System.currentTimeMillis();
     }
 
     @Override
@@ -105,9 +107,9 @@ public class Level1 extends State {
         updateTrees();
         updateCherries();
         updatePoops();
-        collisionCheck();
         timerCheck(dt);
         changeLevels();
+        collisionCheck();
         cam.update();
 
     }
@@ -143,11 +145,12 @@ public class Level1 extends State {
 
 
     public void updatePoops() {
-        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x - cam.viewportWidth / 2) {
+        if (poop.getPosPoop().x + POOP_WIDTH <= cam.position.x-cam.viewportWidth/2){
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
-            float distance = (fluctuation * 50) + GameTutorial.WIDTH;
+            float distance = (fluctuation * 600) + GameTutorial.WIDTH;
             poop.reposition(poop.getPosPoop().x+ distance, 58);
+            poop.setCollided(false);
         }
     }
 
@@ -156,7 +159,7 @@ public class Level1 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * CHERRY_SPACING) + GameTutorial.WIDTH;
-            cherry.reposition(cherry.getPosCherry().x + distance, 50);
+            cherry.reposition(cherry.getPosCherry().x + distance, 150);
             cherry.setCollided(false);
             cherryIsTouched = false;
         }
@@ -167,7 +170,7 @@ public class Level1 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 600) + GameTutorial.WIDTH;
-            haybale.reposition(haybale.getPosObs().x + distance, 40);
+            haybale.reposition(haybale.getPosObs().x + distance, 50);
         }
     }
 
@@ -192,7 +195,7 @@ public class Level1 extends State {
     }
 
     public void changeLevels() {
-        if (sheep.getPosition().x > 4500) {
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level2(gsm));
         }
     }

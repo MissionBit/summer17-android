@@ -39,6 +39,7 @@ public class Level2 extends State {
     private static final int MUD_SPACING = 250;
     private static final int MUD_WIDTH = 30;
     private static final int BARREL_WIDTH = 30;
+    long startTime;
 
 
     public Level2(GameStateManager gsm) {
@@ -55,13 +56,14 @@ public class Level2 extends State {
         bgPos3 = new Vector2(background.getWidth() + bgPos2.x, 0);
         //OBSTACLES
         mushroomTexture = new Texture("Mushroom.png");
-        mushroom = new Obstacle(mushroomTexture, 700, 50, 2, 0.3f);
+        mushroom = new Obstacle(mushroomTexture, 700, 70, 2, 0.3f);
         mushroomIsTouched = false;
         mud = new Mud(260, 37);
         appleTexture = new Texture("Apple.png");
-        apple = new Obstacle(appleTexture, 1000, 50, 2, 0.5f);
+        apple = new Obstacle(appleTexture, 1000, 150, 2, 0.5f);
         appleIsTouched = false;
         barrel = new Barrel(300, 60);
+        startTime = System.currentTimeMillis();
     }
 
     @Override
@@ -91,9 +93,9 @@ public class Level2 extends State {
         farmer.update(dt);
         updateBg();
         updateGround();
-        collisionCheck();
         timerCheck(dt);
         changeLevels();
+        collisionCheck();
         cam.update();
     }
 
@@ -154,7 +156,7 @@ public class Level2 extends State {
     }
 
     public void changeLevels() {
-        if (sheep.getPosition().x > 4500) {
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level3(gsm));
         }
     }
@@ -164,7 +166,7 @@ public class Level2 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 2500) + GameTutorial.WIDTH;
-            mushroom.reposition(mushroom.getPosObs().x + distance, 58);
+            mushroom.reposition(mushroom.getPosObs().x + distance, 70);
             mushroomIsTouched = false;
         }
     }
@@ -174,7 +176,7 @@ public class Level2 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 800) + GameTutorial.WIDTH;
-            apple.reposition(apple.getPosObs().x + distance, 58);
+            apple.reposition(apple.getPosObs().x + distance, 70);
             appleIsTouched = false;
         }
     }
@@ -209,7 +211,7 @@ public class Level2 extends State {
         sb.draw(ground, groundPos1.x, 0, ground_width, 260);
         sb.draw(ground, groundPos2.x, 0, ground_width, 260);
         sb.draw(mud.getMud(), mud.getPosMud().x, mud.getPosMud().y, 40, 30);
-        sb.draw(barrel.getBarrel(), barrel.getPosBarrel().x, barrel.getPosBarrel().y);
+        sb.draw(barrel.getBarrel(), barrel.getPosBarrel().x, barrel.getPosBarrel().y,50,40);
         if (appleIsTouched == false) {
             sb.draw(apple.getObsAnimation(), apple.getPosObs().x, apple.getPosObs().y);
         }

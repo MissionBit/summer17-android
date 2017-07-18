@@ -62,7 +62,7 @@ public class Level3 extends State {
         mudTexture = new Texture("mud.png");
         mud = new Obstacle(mudTexture, 700, 58, 1, 0.5f);
         carrotTexture = new Texture("Carrott.png");
-        carrot = new Obstacle(carrotTexture, 500, 40, 2, 0.3f);
+        carrot = new Obstacle(carrotTexture, 500, 150, 2, 0.3f);
         spikesTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
         carrotIsTouched = false;
@@ -159,7 +159,7 @@ public class Level3 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 500) + GameTutorial.WIDTH;
-            carrot.reposition(carrot.getPosObs().x + distance, 30);
+            carrot.reposition(carrot.getPosObs().x + distance, 150);
             carrotIsTouched = false;
         }
     }
@@ -218,7 +218,7 @@ public class Level3 extends State {
         sb.draw(ground, groundPos3.x, 0, ground_width, 1100);
         sb.draw(mud.getObstacle(), mud.getPosObs().x, mud.getPosObs().y);
         if (carrotIsTouched == false) {
-            sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y);
+            sb.draw(carrot.getObsAnimation(), carrot.getPosObs().x, carrot.getPosObs().y,30,30);
         }
         sb.draw(spikes.getObsAnimation(), spikes.getPosObs().x, spikes.getPosObs().y);
         if (farmer.collides(sheep.getBounds1())) {
@@ -227,7 +227,7 @@ public class Level3 extends State {
         } else {
             sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 70, 45);
         }
-        sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y);
+        sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y,120,110);
         sb.end();
     }
 
