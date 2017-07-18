@@ -367,7 +367,7 @@ public class Level2 extends State {
             Random rand = new Random();
             float fluctuation = rand.nextFloat();
             float distance = (fluctuation * 800) + GameTutorial.WIDTH;
-            apple.reposition(apple.getPosObs().x + distance, 70);
+            apple.reposition(apple.getPosObs().x + distance, 150);
             appleIsTouched = false;
         }
     }
