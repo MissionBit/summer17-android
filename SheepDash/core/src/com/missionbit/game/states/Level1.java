@@ -449,11 +449,21 @@ public class Level1 extends State {
         bg.dispose();
         haybaleTexture.dispose();
         haybale.dispose();
-        sheep.dispose();
-        bunny.dispose();
-        chick.dispose();
-        cow.dispose();
-        pig.dispose();
+        if (a == 1){
+            sheep.dispose();
+        }
+        if (a == 2){
+            cow.dispose();
+        }
+        if (a == 3){
+            pig.dispose();
+        }
+        if (a == 4){
+            bunny.dispose();
+        }
+        if (a == 5){
+            chick.dispose();
+        }
         barn.dispose();
         shed.dispose();
         farmer.dispose();
