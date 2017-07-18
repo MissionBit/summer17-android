@@ -17,8 +17,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.missionbit.game.Controller;
@@ -27,6 +30,8 @@ import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.tools.B2WorldCreator;
 import com.missionbit.game.tools.WorldContactListener;
+
+
 
 /**
  * Created by missionbit on 7/10/17.
@@ -55,6 +60,8 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    //mushroom key
+    private boolean gameWin = false;
 
     //timer
     SpriteBatch batch;
@@ -95,19 +102,15 @@ public class PlayScreen implements Screen {
 
         //timer
         sb = new SpriteBatch();
-
         viewport = new FitViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
-
         table = new Table();
         table.top();
         table.setFillParent(true);
-
         countDownLabel = new Label(Float.toString(playTime), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
         table.add(countDownLabel).expandX();
-
         stage.addActor(table);
+
 
     }
 
@@ -129,6 +132,9 @@ public class PlayScreen implements Screen {
         }
 
         isObjectHit = worldContactListener.getIsObjectTouched();
+        if(isObjectHit == NoObjectionGame.MUSHROOM){
+            gameWin = true;
+        }
 
         //temp climbing
         if (((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isObjectHit == 1000)) {
@@ -198,12 +204,11 @@ public class PlayScreen implements Screen {
             dispose();
         }
 
-        if (hero.currentState == Hero.State.WIN) {
+        if (hero.currentState == Hero.State.WIN && gameWin) {
             game.setScreen(new WinScreen(game));
             dispose();
         }
 
-        //timer
         stage.draw();
     }
 
@@ -241,7 +246,5 @@ public class PlayScreen implements Screen {
     public int isObjectHit() {
         return isObjectHit;
     }
-
-
 
 }

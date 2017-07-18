@@ -32,8 +32,6 @@ public class MenuScreen implements Screen {
         bg = new Texture("coolbg3.png");
         viewport = new StretchViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((NoObjectionGame) game).batch);
-
-
     }
 
 

@@ -14,6 +14,7 @@ import com.missionbit.game.sprites.Door;
 import com.missionbit.game.sprites.Floor;
 import com.missionbit.game.sprites.Hero;
 import com.missionbit.game.sprites.Ladder;
+import com.missionbit.game.sprites.Mushroom;
 import com.missionbit.game.sprites.Plank;
 import com.missionbit.game.sprites.Portal;
 
@@ -61,6 +62,13 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             new Portal(world, map, rect);
+        }
+
+        //mushroom
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new Mushroom(world, map, rect);
         }
     }
 }
