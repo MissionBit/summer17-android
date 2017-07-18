@@ -2,7 +2,10 @@ package com.missionbit.game.states;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
@@ -51,6 +54,8 @@ public class Level4 extends State {
     private static final int GROUND_WIDTH = 790;
     //
     private int a;
+    SpriteBatch batch;
+    BitmapFont font;
 
     public Level4(GameStateManager gsm, int c) {
         super(gsm);
@@ -94,6 +99,8 @@ public class Level4 extends State {
         poop = new Obstacle(poopTexture, 800, 60, 1, 0.5f);
         poopIsTouched = false;
         startTime = System.currentTimeMillis();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
 
     }
 
@@ -448,6 +455,12 @@ public class Level4 extends State {
         //--//
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,120,110);
         sb.end();
+
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((46000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override

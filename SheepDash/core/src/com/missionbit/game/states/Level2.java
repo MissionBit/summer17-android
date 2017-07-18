@@ -1,7 +1,9 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
@@ -52,6 +54,8 @@ public class Level2 extends State {
     private static final int BARREL_WIDTH = 30;
     private int a;
     long startTime;
+    SpriteBatch batch;
+    BitmapFont font;
 
     public Level2(GameStateManager gsm, int c) {
         super(gsm);
@@ -91,6 +95,8 @@ public class Level2 extends State {
         appleIsTouched = false;
         barrel = new Barrel(300, 60);
         startTime = System.currentTimeMillis();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
 
     @Override
@@ -126,35 +132,35 @@ public class Level2 extends State {
         if (a == 1){
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
+            if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(sheep.getBounds1())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
+            if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(cow.getCowBounds())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
+            if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(pig.getPigBounds())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
+            if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(bunny.getBoundsBunny())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
+            if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(chick.getChickBounds())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
@@ -168,7 +174,6 @@ public class Level2 extends State {
         updateBg();
         updateGround();
         timerCheck(dt);
-        changeLevels();
         collisionCheck();
         cam.update();
     }
@@ -346,12 +351,6 @@ public class Level2 extends State {
 
     }
 
-    public void changeLevels() {
-        if((System.currentTimeMillis() - startTime) > 30000) {
-            gsm.set(new Level3(gsm, a));
-        }
-    }
-
     public void updateMushroom() {
         if (cam.position.x - cam.viewportWidth / 2 > mushroom.getPosObs().x + mushroom.getWidth()) {
             Random rand = new Random();
@@ -446,6 +445,12 @@ public class Level2 extends State {
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y, 120, 110);
         sb.end();
+
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((36000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override
