@@ -50,7 +50,7 @@ public class Chick extends Animals {
     }
 
     public void jump() {
-        if (position.y <= 150){
+        if (position.y == 60) {
             velocity.y = 500;
         }
 
