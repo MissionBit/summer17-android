@@ -33,7 +33,8 @@ public class Controller {
         Table table = new Table();
         table.left().bottom();
 
-        float arrows = 50;
+        float arrows = 75;
+
 
         Image upImg = new Image(new Texture("upArrow.png"));
         upImg.setSize(arrows, arrows);
