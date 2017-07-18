@@ -54,11 +54,7 @@ public class PlayScreen implements Screen {
 
     private Hero hero;
 
-<<<<<<< HEAD
-    private com.missionbit.game.Controller controller;
-=======
     private int isObjectHit = 0;
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 
     //box2d
     private World world;
@@ -118,11 +114,6 @@ public class PlayScreen implements Screen {
 
     }
 
-<<<<<<< HEAD
-        controller = new com.missionbit.game.Controller(hero);
-        }
-=======
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 
     public TextureAtlas getAtlas() {
         return atlas;
@@ -135,15 +126,9 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
-<<<<<<< HEAD
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.upPressed && hero.isLanded() ){
-            hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
-                    true );
-=======
         if (((Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed()) && hero.b2body.getLinearVelocity().y == 0)) {
             hero.b2body.applyLinearImpulse(new Vector2(0, 3f), hero.b2body.getWorldCenter(),
                     true);
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
         }
 
         isObjectHit = worldContactListener.getIsObjectTouched();

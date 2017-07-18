@@ -50,12 +50,6 @@ public class NoObjectionGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-<<<<<<< HEAD
-		setScreen(new PlayScreen(this));
-
-	gsm = new GameStateManager();
-		gsm.push(new MenuState(gsm));
-=======
 		setScreen(new MenuScreen(this));
         music = Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
         music.setLooping(true);
@@ -63,7 +57,6 @@ public class NoObjectionGame extends Game {
         music.play();
         viewport = new FitViewport(V_WIDTH, V_HEIGHT);
         world = new World(new Vector2(0, -10), true);
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 
 	}

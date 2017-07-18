@@ -31,15 +31,10 @@ public class Hero extends Sprite {
     private Animation heroClimb;
     private float stateTimer;
     private boolean runningRight;
-<<<<<<< HEAD
-    private boolean landed;
-    private static final float y_deathposition=-100;
-=======
     public boolean isLanded;
     private static final float y_deathposition = -100;
     private static final double PIT_DEATH = 0.6;
     private PlayScreen playScreen;
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 
     public Hero(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("dudeRun4"));
@@ -48,12 +43,8 @@ public class Hero extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-<<<<<<< HEAD
-        landed = true;
-=======
         isLanded = true;
         this.playScreen = screen;
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         //running animation
@@ -78,21 +69,8 @@ public class Hero extends Sprite {
         setRegion(heroStand);
     }
 
-<<<<<<< HEAD
-    public boolean isLanded() {
-        return landed;
-    }
-
-    public void setLanded(boolean landed) {
-        this.landed = landed;
-    }
-
-    public void update(float dt){
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
-=======
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
         setRegion(getFrame(dt));
         // System.out.println(b2body.getPosition().x + ","+ b2body.getPosition().y);
 
