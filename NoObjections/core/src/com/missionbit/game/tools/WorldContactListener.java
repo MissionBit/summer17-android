@@ -32,7 +32,6 @@ public class WorldContactListener implements ContactListener {
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
                 isObjectTouched = (((InteractiveTileObject) object.getUserData()).onCollisionDetected());
-                Gdx.app.log("WorldContactListener", "right side touched");
             }
         }
 
@@ -44,7 +43,6 @@ public class WorldContactListener implements ContactListener {
             if (object.getUserData() != null &&
                     InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())) {
                 isObjectTouched = ((InteractiveTileObject) object.getUserData()).onCollisionDetected();
-                Gdx.app.log("WorldContactListener", "right side touched");
 
             }
         }
@@ -52,7 +50,6 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("End Contact", "");
 
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();

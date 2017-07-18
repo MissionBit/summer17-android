@@ -25,7 +25,10 @@ public class NoObjectionGame extends Game {
 	public static final short LADDER_BIT = 4;
 	public static final short DOOR_BIT = 8;
 	public static final short FLOOR_BIT = 16;
+	public static final short MUSHROOM_BIT = 32;
 	public static final short DEFAULT_BIT = 1;
+	public static final short DESTROYED_BIT = 0;
+
 
 	//Codes for object collision detection
 	public static final int LADDER = 1000;
@@ -33,6 +36,7 @@ public class NoObjectionGame extends Game {
 	public static final int PORTAL = 1002;
 	public static final int FLOOR = 1003;
 	public static final int DOOR = 1004;
+	public static final int MUSHROOM = 1005;
 	public static final int DEFAULT = 0;
 
 

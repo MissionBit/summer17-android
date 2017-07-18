@@ -21,11 +21,7 @@ public class Controller {
     private SpriteBatch batch;
     Viewport viewport;
     Stage stage;
-<<<<<<< HEAD
     public boolean upPressed, downPressed, leftPressed, rightPressed;
-=======
-    boolean upPressed, downPressed, leftPressed, rightPressed;
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
     OrthographicCamera cam;
 
     public Controller() {
@@ -37,11 +33,8 @@ public class Controller {
         Table table = new Table();
         table.left().bottom();
 
-<<<<<<< HEAD
-        float arrows = 40;
-=======
-        float arrows = 60;
->>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
+        float arrows = 75;
+
 
         Image upImg = new Image(new Texture("upArrow.png"));
         upImg.setSize(arrows, arrows);
