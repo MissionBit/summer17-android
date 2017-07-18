@@ -318,7 +318,7 @@ public class Level5 extends State {
                 sheep.getSheepDead();
                 sheep.sheepDied();
                 farmer.killed();
-              gameOver(5);
+                gameOver(5, a);
             }
             if (spikes.collides(sheep.getBounds1())||greyCar.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
@@ -341,7 +341,7 @@ public class Level5 extends State {
                 cow.getCowDead();
                 cow.cowDied();
                 farmer.killed();
-              gameOver(5);
+                gameOver(5, a);
             }
             if (spikes.collides(cow.getCowBounds())||greyCar.collides(cow.getCowBounds())){
                 cow.reduceSpd();
@@ -364,7 +364,7 @@ public class Level5 extends State {
                 pig.getPigDead();
                 pig.pigDied();
                 farmer.killed();
-              gameOver(5);
+                gameOver(5, a);
             }
             if (spikes.collides(pig.getPigBounds())||greyCar.collides(pig.getPigBounds())){
                 pig.reduceSpd();
@@ -387,7 +387,7 @@ public class Level5 extends State {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
                 farmer.killed();
-              gameOver(5);
+                gameOver(5, a);
             }
             if (spikes.collides(bunny.getBoundsBunny())||greyCar.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
@@ -410,7 +410,7 @@ public class Level5 extends State {
                 chick.getChickDead();
                 chick.chickDied();
                 farmer.killed();
-              gameOver(5);
+                gameOver(5, a);
             }
             if (spikes.collides(chick.getChickBounds()) || greyCar.collides(chick.getChickBounds())) {
                 chick.reduceSpd();

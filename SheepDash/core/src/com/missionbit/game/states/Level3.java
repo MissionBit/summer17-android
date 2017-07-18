@@ -188,7 +188,7 @@ public class Level3 extends State {
     //    }
 
         if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
-            gsm.set(new Level4(gsm));
+            gsm.set(new Level4(gsm, a));
         }
     }
 
@@ -269,7 +269,7 @@ public class Level3 extends State {
                 sheep.getSheepDead();
                 sheep.sheepDied();
                 farmer.killed();
-               gameOver(3);
+                gameOver(3, a);
             }
             if (spikes.collides(sheep.getBounds1())||mud.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
@@ -287,7 +287,7 @@ public class Level3 extends State {
                 cow.getCowDead();
                 cow.cowDied();
                 farmer.killed();
-               gameOver(3);
+                gameOver(3, a);
             }
             if (spikes.collides(cow.getCowBounds())||mud.collides(cow.getCowBounds())){
                 cow.reduceSpd();
@@ -305,7 +305,7 @@ public class Level3 extends State {
                 pig.getPigDead();
                 pig.pigDied();
                 farmer.killed();
-               gameOver(3);
+                gameOver(3, a);
             }
             if (spikes.collides(pig.getPigBounds())||mud.collides(pig.getPigBounds())){
                 pig.reduceSpd();
@@ -323,7 +323,7 @@ public class Level3 extends State {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
                 farmer.killed();
-               gameOver(3);
+                gameOver(3, a);
             }
             if (spikes.collides(bunny.getBoundsBunny())||mud.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
@@ -341,7 +341,7 @@ public class Level3 extends State {
                 chick.getChickDead();
                 chick.chickDied();
                 farmer.killed();
-               gameOver(3);
+                gameOver(3, a);
             }
             if (spikes.collides(chick.getChickBounds()) || mud.collides(chick.getChickBounds())) {
                 chick.reduceSpd();

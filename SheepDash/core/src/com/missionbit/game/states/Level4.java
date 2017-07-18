@@ -55,7 +55,6 @@ public class Level4 extends State {
     public Level4(GameStateManager gsm, int c) {
         super(gsm);
         a = c;
-        poop = new Poop(100, 60);
         // INITIALIZING ANIMALS
         if (a == 1){
             sheep = new Sheep(150, 60);
@@ -263,7 +262,7 @@ public class Level4 extends State {
                 sheep.getSheepDead();
                 sheep.sheepDied();
                 farmer.killed();
-              gameOver(4);
+                gameOver(4, a);
             }
             if (poop.collides(sheep.getBounds1())||greenCar.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
@@ -282,7 +281,7 @@ public class Level4 extends State {
                 cow.getCowDead();
                 cow.cowDied();
                 farmer.killed();
-              gameOver(4);
+                gameOver(4, a);
             }
             if (poop.collides(cow.getCowBounds())||greenCar.collides(cow.getCowBounds())){
                 cow.reduceSpd();
@@ -301,7 +300,7 @@ public class Level4 extends State {
                 pig.getPigDead();
                 pig.pigDied();
                 farmer.killed();
-              gameOver(4);
+                gameOver(4, a);
             }
             if (poop.collides(pig.getPigBounds())||greenCar.collides(pig.getPigBounds())){
                 pig.reduceSpd();
@@ -320,7 +319,7 @@ public class Level4 extends State {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
                 farmer.killed();
-              gameOver(4);
+                gameOver(4, a);
             }
             if (poop.collides(bunny.getBoundsBunny())||greenCar.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
@@ -339,7 +338,7 @@ public class Level4 extends State {
                 chick.getChickDead();
                 chick.chickDied();
                 farmer.killed();
-              gameOver(4);
+                gameOver(4, a);
             }
             if (poop.collides(chick.getChickBounds()) || greenCar.collides(chick.getChickBounds())) {
                 chick.reduceSpd();
@@ -359,7 +358,7 @@ public class Level4 extends State {
         //    gsm.set(new Level5(gsm));
 
         if (sheep.getPosition().x > 4500){
-            gsm.set(new Level5(gsm));
+            gsm.set(new Level5(gsm, a));
         }
     }
 

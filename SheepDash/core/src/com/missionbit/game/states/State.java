@@ -20,13 +20,13 @@ public abstract class State {
         this.gsm = gsm;
     }
 
-    protected void gameOver(final int level) {
+    protected void gameOver(final int level, final int character) {
         System.out.println("Game Over");
         float delay = 0.9f; // seconds
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                GameOver gameOver = new GameOver(gsm, level);
+                GameOver gameOver = new GameOver(gsm, level, character);
                 gsm.set(gameOver);
             }
         }, delay);

@@ -195,7 +195,7 @@ public class Level1 extends State {
                 sheep.getSheepDead();
                 sheep.sheepDied();
                 farmer.killed();
-              gameOver(1);
+                gameOver(1, a);
             }
             if (poop.collides(sheep.getBounds1())||haybale.collides(sheep.getBounds1())) {
                 sheep.reduceSpd();
@@ -213,7 +213,7 @@ public class Level1 extends State {
                 cow.getCowDead();
                 cow.cowDied();
                 farmer.killed();
-              gameOver(1);
+                gameOver(1, a);
             }
             if (poop.collides(cow.getCowBounds())||haybale.collides(cow.getCowBounds())){
                 cow.reduceSpd();
@@ -231,7 +231,7 @@ public class Level1 extends State {
                 pig.getPigDead();
                 pig.pigDied();
                 farmer.killed();
-              gameOver(1);
+                gameOver(1, a);
             }
             if (poop.collides(pig.getPigBounds())||haybale.collides(pig.getPigBounds())){
                 pig.reduceSpd();
@@ -249,7 +249,7 @@ public class Level1 extends State {
                 bunny.getBunnyDead();
                 bunny.bunnyDied();
                 farmer.killed();
-              gameOver(1);
+                gameOver(1, a);
             }
             if (poop.collides(bunny.getBoundsBunny())||haybale.collides(bunny.getBoundsBunny())) {
                 bunny.reduceSpd();
@@ -267,7 +267,7 @@ public class Level1 extends State {
                 chick.getChickDead();
                 chick.chickDied();
                 farmer.killed();
-              gameOver(1);
+                gameOver(1, a);
             }
             if (poop.collides(chick.getChickBounds())||haybale.collides(chick.getChickBounds())){
                 chick.reduceSpd();
@@ -367,8 +367,8 @@ public class Level1 extends State {
     }
 
     public void changeLevels() {
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
-            gsm.set(new Level2(gsm));
+        if((System.currentTimeMillis() - startTime) > 30000) {
+            gsm.set(new Level2(gsm, a));
         }
     }
 
