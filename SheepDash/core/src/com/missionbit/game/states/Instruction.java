@@ -77,6 +77,9 @@ public class Instruction extends State {
     @Override
     public void update(float dt) {
         handleInput();
+        if (sheep.getPosition().y  <=  220 ) {
+            sheep.jump2();
+        }
         sheep.update(dt);
         theOneThatDies.update(dt);
         farmer.update(dt);
@@ -85,9 +88,7 @@ public class Instruction extends State {
         carrot.update(dt);
         collisionCheck();
         //ifs and butts
-        if (sheep.getPosition().y  ==  280) {
-            sheep.jump();
-        }
+
         if (sheep.getPosition().x > 250) {
             sheep.getPosition().x = 50;
         }
@@ -116,7 +117,7 @@ public class Instruction extends State {
         sb.draw(barrel, 580, 60, 80, 80);
         sb.draw(car, 400, 60, 150, 80);
         sb.draw(hayBale, 660, 45, 100, 100);
-        sb.draw(sheep.getSheep(), sheep.getPosition().x, 220, 140, 90);
+        sb.draw(sheep.getSheep(), sheep.getPosition().x, sheep.getPosition().y, 140, 90);
         if (farmer.collides(theOneThatDies.getBounds1())) {
             sb.draw(theOneThatDies.getSheepDead(), theOneThatDies.getPosition().x, 220, 140, 90);
             theOneThatDies.noSpd();
