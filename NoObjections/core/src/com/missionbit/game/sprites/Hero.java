@@ -21,7 +21,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Hero extends Sprite {
 
-    public enum State {FALLING, CLIMBING, STANDING, RUNNING, DEAD, WIN};
+    public enum State {FALLING, CLIMBING, STANDING, RUNNING, DEAD, WIN, ALERT};
     public State currentState;
     public State previousState;
     public World world;
@@ -103,6 +103,7 @@ public class Hero extends Sprite {
                 region = (TextureRegion) heroRun.getKeyFrame(stateTimer, true);
                 break;
             case FALLING:
+            case ALERT:
             case STANDING:
             default:
                 region = heroStand;
@@ -132,7 +133,7 @@ public class Hero extends Sprite {
         } else if (b2body.getPosition().y < y_deathposition) {
             System.out.println("hero is dead");
             return State.DEAD;
-        }else if(playScreen.isObjectHit() == NoObjectionGame.DOOR){
+        }else if(playScreen.isObjectHit() == NoObjectionGame.DOOR) {
             return State.WIN;
         } else {
             return State.STANDING;
@@ -151,7 +152,8 @@ public class Hero extends Sprite {
         shape.setAsBox(5 / NoObjectionGame.PPM, 18 / NoObjectionGame.PPM);
 
         fdef1.filter.categoryBits = NoObjectionGame.HERO_BIT;
-        fdef1.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT| NoObjectionGame.FLOOR_BIT;
+        fdef1.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT|
+                NoObjectionGame.FLOOR_BIT | NoObjectionGame.MUSHROOM;
 
         fdef1.shape = shape;
         b2body.createFixture(fdef1);
@@ -167,7 +169,8 @@ public class Hero extends Sprite {
         FixtureDef fdef2 = new FixtureDef();
 
         fdef2.filter.categoryBits = NoObjectionGame.HERO_BIT;
-        fdef2.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT| NoObjectionGame.FLOOR_BIT;
+        fdef2.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT |
+                NoObjectionGame.LADDER_BIT| NoObjectionGame.FLOOR_BIT | NoObjectionGame.MUSHROOM;
 
 
         fdef2.shape = shape;
@@ -183,7 +186,8 @@ public class Hero extends Sprite {
         FixtureDef fdef3 = new FixtureDef();
 
         fdef3.filter.categoryBits = NoObjectionGame.HERO_BIT;
-        fdef3.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT | NoObjectionGame.LADDER_BIT | NoObjectionGame.FLOOR_BIT;
+        fdef3.filter.maskBits = NoObjectionGame.DEFAULT_BIT | NoObjectionGame.DOOR_BIT |
+                NoObjectionGame.LADDER_BIT | NoObjectionGame.FLOOR_BIT | NoObjectionGame.MUSHROOM;
 
 
         fdef3.shape = shape;
