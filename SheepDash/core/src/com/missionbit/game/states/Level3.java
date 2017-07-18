@@ -1,7 +1,9 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
@@ -25,7 +27,8 @@ public class Level3 extends State {
     private Vector2 skyPos, skyPos2;
     private Texture hills;
     private Vector2 hillsPos, hillsPos2, hillsPos3, hillsPos4, hillsPos5;
-    //OBSTACLES
+
+    //Obstacles
     private Texture mudTexture;
     private Obstacle mud;
     private Texture carrotTexture;
@@ -36,6 +39,8 @@ public class Level3 extends State {
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
     long startTime;
+    SpriteBatch batch;
+    BitmapFont font;
 
     public Level3(GameStateManager gsm) {
         super(gsm);
@@ -66,6 +71,8 @@ public class Level3 extends State {
         spikesTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
         carrotIsTouched = false;
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
 
     @Override
@@ -99,7 +106,7 @@ public class Level3 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
-        if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level4(gsm));
         }
     }
@@ -229,6 +236,13 @@ public class Level3 extends State {
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y,120,110);
         sb.end();
+
+        //Text to display countdown timer!1!1!
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((30000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override
@@ -246,6 +260,8 @@ public class Level3 extends State {
         carrot.dispose();
         spikesTexture.dispose();
         spikes.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
 

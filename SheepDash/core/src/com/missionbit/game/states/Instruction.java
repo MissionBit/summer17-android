@@ -21,11 +21,13 @@ public class Instruction extends State {
     private Sheep theOneThatDies;
     private Farmer farmer;
     private Texture background;
-    //Texture for thingies
+
+    //Texture for obstacles
     private Texture cherryTxt;
     private Texture appleTxt;
     private Texture carrotTxt;
-    //things
+
+    //Obstacles
     private Obstacle cherry;
     private Texture barrel;
     private Obstacle apple;
@@ -41,20 +43,19 @@ public class Instruction extends State {
         farmer = new Farmer (400, 280);
         farmer.getPosition().x = 400;
         farmer.setBoundsFarmer(180, 180);
-        //thingies
-        //remember textures first guys
+
         cherryTxt = new Texture("Cherry2_0.35.png");
         appleTxt = new Texture("Apple.png");
         carrotTxt = new Texture("Carrott.png");
-        //now make the obstacles
+
         cherry = new Obstacle(cherryTxt, 30, 15, 2, 0.5f);
         apple = new Obstacle(appleTxt, 200, 100, 2, 0.5f);
         carrot = new Obstacle(carrotTxt, 300, 100, 2, 0.5f);
-        //smthn wrong im gonna try and reposition the things
+
         cherry.reposition(-40, 15);
         apple.reposition(150, 50);
         carrot.reposition(250, 65);
-        //these are just Textures but oh well;
+
         hayBale = new Texture("haybale.png");
         barrel = new Texture("Barrel.png");
         car = new Texture("CarRed.png");
@@ -83,7 +84,7 @@ public class Instruction extends State {
         cherry.update(dt);
         carrot.update(dt);
         collisionCheck();
-        //ifs and butts
+
         if (sheep.getPosition().y  ==  280) {
             sheep.jump();
         }

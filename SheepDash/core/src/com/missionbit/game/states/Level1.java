@@ -1,13 +1,14 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
 import com.missionbit.game.sprites.Farmer;
 import com.missionbit.game.sprites.animals.Sheep;
-import com.missionbit.game.sprites.obstacles.Barrel;
 import com.missionbit.game.sprites.obstacles.Cherry;
 import com.missionbit.game.sprites.obstacles.Poop;
 import com.missionbit.game.sprites.obstacles.Obstacle;
@@ -35,6 +36,9 @@ public class Level1 extends State {
     private Vector2 shedPos;
     private Vector2 bgPos1;
     private Vector2 bgPos2;
+    SpriteBatch batch;
+    BitmapFont font;
+
     //OBSTACLES
     private Texture haybaleTexture;
     private Obstacle haybale;
@@ -46,7 +50,6 @@ public class Level1 extends State {
     private static final int ground_width = 800;
     private static final int CHERRY_WIDTH = 30;
     private static final int CHERRY_SPACING = 300;
-    private static final int POOP_SPACING = 250;
     private static final int POOP_WIDTH = 30;
     long startTime;
 
@@ -72,6 +75,9 @@ public class Level1 extends State {
         shedPos = new Vector2(350, 0);
         bgPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         bgPos2 = new Vector2(background.getWidth() + bgPos1.x, 0);
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+
         //OBSTACLES
         haybaleTexture = new Texture("haybale3.png");
         haybale = new Obstacle(haybaleTexture, 1300, 50, 1, 0.5f);
@@ -195,7 +201,7 @@ public class Level1 extends State {
     }
 
     public void changeLevels() {
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if(((System.currentTimeMillis() - startTime) > 20000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level2(gsm));
         }
     }
@@ -240,6 +246,11 @@ public class Level1 extends State {
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y, 120, 110);
         sb.end();
 
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((20000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override
@@ -256,5 +267,7 @@ public class Level1 extends State {
         background.dispose();
         cherry.dispose();
         poop.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -76,7 +75,6 @@ public class MapState extends State {
         button1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Selected Level 1");
                 gsm.set(new Level1(gsm));
             }
         });
@@ -93,7 +91,6 @@ public class MapState extends State {
         button2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Selected Level 2");
                 gsm.set(new Level2(gsm));
             }
         });
@@ -110,7 +107,6 @@ public class MapState extends State {
         button3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Selected Level 3");
                 gsm.set(new Level3(gsm));
             }
         });
@@ -127,7 +123,6 @@ public class MapState extends State {
         button4.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Selected Level 4");
                 gsm.set(new Level4(gsm));
             }
         });
@@ -145,7 +140,6 @@ public class MapState extends State {
         button5.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Selected Level 5");
                 gsm.set(new Level5(gsm));
             }
         });
@@ -162,7 +156,6 @@ public class MapState extends State {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Go back");
                 gsm.set(new CharacterState(gsm));
             }
         });
@@ -189,10 +182,9 @@ public class MapState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        //sb.draw(bg, 0, 0, 256,180);
         sb.end();
 
-        stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
 
     }
@@ -202,7 +194,6 @@ public class MapState extends State {
     public void dispose() {
         bg.dispose();
         stage.dispose();
-        System.out.println("Disposing of Menu State");
     }
 }
 

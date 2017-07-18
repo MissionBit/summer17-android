@@ -1,7 +1,9 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
@@ -24,7 +26,8 @@ public class Level2 extends State {
     private Texture ground;
     private Vector2 bgPos1, bgPos2, bgPos3;
     private Vector2 groundPos1, groundPos2;
-    //OBSTACLES
+
+    //Obstacles
     private Texture mushroomTexture;
     private Obstacle mushroom;
     private boolean mushroomIsTouched;
@@ -36,10 +39,11 @@ public class Level2 extends State {
     private static final int GROUND_Y_OFFSET = -80;
     private static final int bg_width = 1300;
     private static final int ground_width = 800;
-    private static final int MUD_SPACING = 250;
     private static final int MUD_WIDTH = 30;
     private static final int BARREL_WIDTH = 30;
     long startTime;
+    SpriteBatch batch;
+    BitmapFont font;
 
 
     public Level2(GameStateManager gsm) {
@@ -54,7 +58,8 @@ public class Level2 extends State {
         bgPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2 - bg_width, 0);
         bgPos2 = new Vector2(background.getWidth() + bgPos1.x, 0);
         bgPos3 = new Vector2(background.getWidth() + bgPos2.x, 0);
-        //OBSTACLES
+
+        //Obstacles
         mushroomTexture = new Texture("Mushroom.png");
         mushroom = new Obstacle(mushroomTexture, 700, 70, 2, 0.3f);
         mushroomIsTouched = false;
@@ -64,6 +69,8 @@ public class Level2 extends State {
         appleIsTouched = false;
         barrel = new Barrel(300, 60);
         startTime = System.currentTimeMillis();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
 
     @Override
@@ -156,7 +163,7 @@ public class Level2 extends State {
     }
 
     public void changeLevels() {
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if(((System.currentTimeMillis() - startTime) > 25000 & farmer.collides(sheep.getBounds1()) == false)) {
             gsm.set(new Level3(gsm));
         }
     }
@@ -226,6 +233,13 @@ public class Level2 extends State {
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y, 120, 110);
         sb.end();
+
+        //Text to display countdown timer!1!1!
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((25000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override
@@ -240,5 +254,7 @@ public class Level2 extends State {
         ground.dispose();
         background.dispose();
         mud.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }

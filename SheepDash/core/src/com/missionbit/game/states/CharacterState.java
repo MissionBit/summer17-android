@@ -16,18 +16,6 @@ import com.missionbit.game.GameTutorial;
  * Created by missionbit on 6/26/17.
  */
 
-/*
-OKAY SO GUYS I KNOW HOW TO MAKE THE DIFFERENT CHARACTERS WORK (not really) BUT I GOT THE BASIC IDEA
-YOU GOTTA PASS AN INTEGER FOR EACH PLAY STATE, WHICH CORESPONDS TO A CHARACTER
-SO FOR NOW THIS IS GONNA BE USED FOR REFERENCE
-IF NONE OF MY BABBLING MAKES SENSE I'LL TRY TO EXPLAIN IT AFTER
-1 -- SHEEP
-2 -- COW
-3 -- PIG
-4 -- BUNNY
-5 -- DUCK (hen?)
- */
-
 public class CharacterState extends State {
     private Stage stage;
     private Texture bg;
@@ -198,5 +186,4 @@ public class CharacterState extends State {
         bunny.dispose();
         stage.dispose();
     }
-
 }

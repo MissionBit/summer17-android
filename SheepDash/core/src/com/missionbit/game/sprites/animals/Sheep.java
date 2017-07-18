@@ -49,7 +49,7 @@ public class Sheep extends Animals {
             position.y = 60;
         }
         bounds1.setPosition(position.x, position.y);
-        //System.out.println("Sheep's speed:" + movement);
+
     }
 
     public void jump() {
