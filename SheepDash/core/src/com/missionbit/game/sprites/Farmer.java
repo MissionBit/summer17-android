@@ -38,7 +38,7 @@ public class Farmer {
         //System.out.println("Farmer's speed:" + movement);
     }
 
-    public void killedSheep() {
+    public void killed() {
         movement = 0;
     }
 
