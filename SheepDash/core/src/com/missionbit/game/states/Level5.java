@@ -75,7 +75,7 @@ public class Level5 extends State {
         }
         //--//
         sky = new Texture("CitySky.png");
-        farmer = new Farmer(-50,60);
+        farmer = new Farmer(-60,60);
         buildings = new Texture("UpdatedCityBuildings.png");
         ground = new Texture("CityGround.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
@@ -194,6 +194,11 @@ public class Level5 extends State {
         timerCheck(dt);
         collisionCheck();
         cam.update();
+
+
+        if(((System.currentTimeMillis() - startTime) > 40000 & farmer.collides(sheep.getBounds1()) == false)) {
+            gsm.set(new YouWon(gsm,5,a));
+        }
     }
 
     public void timerCheck(float timePassed){

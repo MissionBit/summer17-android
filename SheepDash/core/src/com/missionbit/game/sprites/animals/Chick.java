@@ -112,6 +112,7 @@ public class Chick extends Animals {
     }
 
     public TextureRegion getChickDead() {
+        position.y = 55;
         return chick2Animation.getLastFrame();
     }
 
