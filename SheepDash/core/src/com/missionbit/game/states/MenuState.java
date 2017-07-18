@@ -11,12 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.missionbit.game.GameTutorial;
-import com.missionbit.game.sprites.animals.Bunny;
-import com.missionbit.game.sprites.animals.Chick;
-import com.missionbit.game.sprites.animals.Cow;
-import com.missionbit.game.sprites.Farmer;
-import com.missionbit.game.sprites.animals.Pig;
-import com.missionbit.game.sprites.animals.Sheep;
 
 /**
  * Created by MissionBit on 6/22/17.
@@ -25,11 +19,13 @@ import com.missionbit.game.sprites.animals.Sheep;
 public class MenuState extends State {
 
     private Texture background;
+
     //instructions button
     private Texture instBtn;
     private TextureRegion instTextureRegion;
     private TextureRegionDrawable instTextureRegionDrawable;
     private ImageButton buttonInst;
+
     //play button
     private Texture playBtn;
     private TextureRegion playTextureRegion;
@@ -40,7 +36,6 @@ public class MenuState extends State {
 
     public MenuState(final GameStateManager gsm) {
         super(gsm);
-        //
         cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         background = new Texture("TITLE.png");
         playBtn = new Texture(Gdx.files.internal("PlayBtn.png"));
@@ -87,15 +82,13 @@ public class MenuState extends State {
     @Override
     public void update(float dt) {
         handleInput();
-
+        cam.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
-        //
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        //
         sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();
         stage.act(Gdx.graphics.getDeltaTime());

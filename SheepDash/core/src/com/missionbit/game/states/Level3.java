@@ -1,7 +1,9 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
@@ -12,7 +14,6 @@ import com.missionbit.game.sprites.animals.Cow;
 import com.missionbit.game.sprites.animals.Pig;
 import com.missionbit.game.sprites.obstacles.Obstacle;
 import com.missionbit.game.sprites.animals.Sheep;
-
 import java.util.Random;
 
 
@@ -27,7 +28,7 @@ public class Level3 extends State {
     private Chick chick;
     private Cow cow;
     private Pig pig;
-    //otherz(yeah, with a z, cuz it's cool that way)
+    //otherz(yeah, with a z, cuz it's cool that way) I cringe at you Audrey :^)
     private Farmer farmer;
     private Texture ground;
     private Vector2 groundPos1, groundPos2, groundPos3;
@@ -35,7 +36,8 @@ public class Level3 extends State {
     private Vector2 skyPos, skyPos2;
     private Texture hills;
     private Vector2 hillsPos, hillsPos2, hillsPos3, hillsPos4, hillsPos5;
-    //OBSTACLES
+
+    //Obstacles
     private Texture mudTexture;
     private Obstacle mud;
     private Texture carrotTexture;
@@ -46,7 +48,8 @@ public class Level3 extends State {
     private static final int hills_width = 1024;
     private static final int ground_width = 1024;
     long startTime;
-    //
+    SpriteBatch batch;
+    BitmapFont font;
     private int a;
 
     public Level3(GameStateManager gsm, int c) {
@@ -94,6 +97,8 @@ public class Level3 extends State {
         spikesTexture = new Texture("SPIKES2.0.18.png");
         spikes = new Obstacle(spikesTexture, 1700, 50, 2, 0.5f);
         carrotIsTouched = false;
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
 
     @Override
@@ -129,7 +134,6 @@ public class Level3 extends State {
 
     @Override
     public void create() {
-
     }
 
     @Override
@@ -139,35 +143,35 @@ public class Level3 extends State {
         if (a == 1){
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(sheep.getBounds1())) {
                 gsm.set(new Level4(gsm, a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(cow.getCowBounds())) {
                 gsm.set(new Level4(gsm, a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(pig.getPigBounds())) {
                 gsm.set(new Level4(gsm, a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(bunny.getBoundsBunny())) {
                 gsm.set(new Level4(gsm, a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
+            if(System.currentTimeMillis() - startTime > 40000 && !farmer.collides(chick.getChickBounds())) {
                 gsm.set(new Level4(gsm, a));
             }
         }
@@ -443,6 +447,13 @@ public class Level3 extends State {
         }
         sb.draw(farmer.getFarmer(), farmer.getPosition().x, farmer.getPosition().y,120,110);
         sb.end();
+
+        //Text to display countdown timer!1!1!
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((41000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override
@@ -469,6 +480,8 @@ public class Level3 extends State {
         carrot.dispose();
         spikesTexture.dispose();
         spikes.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
 

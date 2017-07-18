@@ -42,15 +42,13 @@ public class Cow extends Animals {
         if(position.y < 60){
             position.y = 60;
         }
-        if(position.y>300){
-            position.y=60;
-        }
+
         cowBounds.setPosition(position.x,position.y);
 
     }
 
     public void jump() {
-        if (position.y <= 150){
+        if (position.y == 60){
             velocity.y = 500;
         }
 
@@ -75,11 +73,11 @@ public class Cow extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
 
     }
 
@@ -88,7 +86,7 @@ public class Cow extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
 

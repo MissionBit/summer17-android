@@ -35,13 +35,11 @@ public class Farmer {
         position.add(movement * dt, 0,0);
         velocity.scl(1/dt);
         boundsFarmer.setPosition(position.x,position.y);
-        //System.out.println("Farmer's speed:" + movement);
     }
 
     public void killed() {
         movement = 0;
     }
-
 
     public Vector3 getPosition() {
         return position;

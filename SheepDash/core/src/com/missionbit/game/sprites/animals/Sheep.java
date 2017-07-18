@@ -49,11 +49,12 @@ public class Sheep extends Animals {
             position.y = 60;
         }
         bounds1.setPosition(position.x, position.y);
+
     }
 
     public void jump() {
         if (position.y == 60) {
-            velocity.y = 450;
+            velocity.y = 500;
         }
     }
 
@@ -80,7 +81,7 @@ public class Sheep extends Animals {
     }
 
     public void resetSpd() {
-        movement = 200;
+        movement = 250;
     }
 
     public void noSpd() {
@@ -88,7 +89,7 @@ public class Sheep extends Animals {
     }
 
     public void increaseSpd() {
-        movement = 270;
+        movement = 260;
     }
 
     public void goBackwards() {

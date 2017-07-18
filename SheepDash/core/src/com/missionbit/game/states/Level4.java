@@ -1,8 +1,9 @@
 package com.missionbit.game.states;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.missionbit.game.GameTutorial;
@@ -11,7 +12,6 @@ import com.missionbit.game.sprites.Farmer;
 import com.missionbit.game.sprites.animals.Chick;
 import com.missionbit.game.sprites.animals.Cow;
 import com.missionbit.game.sprites.animals.Pig;
-import com.missionbit.game.sprites.obstacles.Poop;
 import com.missionbit.game.sprites.animals.Sheep;
 import com.missionbit.game.sprites.obstacles.Obstacle;
 
@@ -29,13 +29,14 @@ public class Level4 extends State {
     private Vector2 groundPos1, groundPos2;
     private Vector2 skyPos, skyPos2;
     private Vector2 carsPos, carsPos2, carsPos3;
-    private static final int POOP_WIDTH = 30;
+
     //CHARACTERS
     private Sheep sheep;
     private Bunny bunny;
     private Chick chick;
     private Cow cow;
     private Pig pig;
+
     //OBSTACLES
     private Texture greenCarTexture;
     private Obstacle greenCar;
@@ -49,11 +50,13 @@ public class Level4 extends State {
     private static final int CAR_WIDTH = 270;
     private static final int SKY_WIDTH = 800;
     private static final int GROUND_WIDTH = 790;
-    //
+    SpriteBatch batch;
+    BitmapFont font;
     private int a;
 
     public Level4(GameStateManager gsm, int c) {
         super(gsm);
+        sheep = new Sheep(150, 60);
         a = c;
         // INITIALIZING ANIMALS
         if (a == 1){
@@ -71,7 +74,7 @@ public class Level4 extends State {
         if (a == 5){
             chick = new Chick(150, 60);
         }
-        //--//
+
         sky = new Texture("sunCloudsForHighway.png");
         farmer = new Farmer(-50, 60);
         cars = new Texture("carsForHighway.png");
@@ -84,7 +87,8 @@ public class Level4 extends State {
         carsPos = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
         carsPos2 = new Vector2(cars.getWidth() + carsPos.x, 0);
         carsPos3 = new Vector2(cars.getWidth() + carsPos2.x, 0);
-        //OBSTACLES
+
+        //Obstacles
         greenCarTexture = new Texture("CarGreen.png");
         greenCar = new Obstacle(greenCarTexture, 1000, 35, 1, 0.5f);
         appleTexture = new Texture("Apple2.png");
@@ -94,6 +98,8 @@ public class Level4 extends State {
         poop = new Obstacle(poopTexture, 800, 60, 1, 0.5f);
         poopIsTouched = false;
         startTime = System.currentTimeMillis();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
 
     }
 
@@ -140,38 +146,38 @@ public class Level4 extends State {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
-        //--//
+
         farmer.update(dt);
         updateGround();
         updateSky();
@@ -183,8 +189,7 @@ public class Level4 extends State {
         updateGreen();
         collisionCheck();
         cam.update();
-    }
-
+        }
 
     public void updateGreen() {
         if (cam.position.x - cam.viewportWidth / 2 > greenCar.getPosObs().x + greenCar.getWidth()) {
@@ -349,17 +354,6 @@ public class Level4 extends State {
         }
     }
 
-    public void changeLevels(){
-       // if (sheep.getPosition().x > 3000){
-        //    gsm.set(new Level5(gsm));
-
-        if (sheep.getPosition().x > 4500) {
-
-            gsm.set(new YouWon(gsm, 4,a));
-
-        }
-    }
-
     public void timerCheck(float timePassed) {
         if (a == 1){
             sheep.updateTimer(timePassed);
@@ -447,9 +441,15 @@ public class Level4 extends State {
                 sb.draw(chick.getChick(), chick.getPosition().x, chick.getPosition().y, 32, 32);
             }
         }
-        //--//
+
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,120,110);
         sb.end();
+        //Text to display countdown timer!1!1!
+        batch.begin();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2, 2);
+        font.draw(batch, ((46000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", GameTutorial.WIDTH / 2, GameTutorial.HEIGHT);
+        batch.end();
     }
 
     @Override
@@ -474,5 +474,7 @@ public class Level4 extends State {
         greenCar.dispose();
         appleTexture.dispose();
         apple.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
