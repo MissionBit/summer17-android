@@ -141,35 +141,35 @@ public class Level1 extends State {
         if (a == 1){
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
                 gsm.set(new Level2(gsm, a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(cow.getCowBounds()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
                 gsm.set(new Level2(gsm, a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(pig.getPigBounds()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
                 gsm.set(new Level2(gsm, a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(bunny.getBoundsBunny()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
                 gsm.set(new Level2(gsm, a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(chick.getChickBounds()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
                 gsm.set(new Level2(gsm, a));
             }
         }
@@ -451,17 +451,13 @@ public class Level1 extends State {
         haybale.dispose();
         if (a == 1){
             sheep.dispose();
-        }
-        if (a == 2){
+        } else if (a == 2){
             cow.dispose();
-        }
-        if (a == 3){
+        } else if (a == 3){
             pig.dispose();
-        }
-        if (a == 4){
+        } else if (a == 4){
             bunny.dispose();
-        }
-        if (a == 5){
+        } else if (a == 5){
             chick.dispose();
         }
         barn.dispose();

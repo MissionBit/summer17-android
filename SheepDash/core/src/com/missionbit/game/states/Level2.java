@@ -126,35 +126,35 @@ public class Level2 extends State {
         if (a == 1){
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(cow.getCowBounds()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(pig.getPigBounds()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(bunny.getBoundsBunny()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
-            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(chick.getChickBounds()) == false)) {
+            if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
                 gsm.set(new Level3(gsm, a));
             }
         }
@@ -347,10 +347,9 @@ public class Level2 extends State {
     }
 
     public void changeLevels() {
-        if(((System.currentTimeMillis() - startTime) > 30000 & farmer.collides(sheep.getBounds1()) == false)) {
+        if((System.currentTimeMillis() - startTime) > 30000) {
             gsm.set(new Level3(gsm, a));
         }
-
     }
 
     public void updateMushroom() {
@@ -456,11 +455,17 @@ public class Level2 extends State {
         appleTexture.dispose();
         apple.dispose();
         barrel.dispose();
-        sheep.dispose();
-        bunny.dispose();
-        chick.dispose();
-        cow.dispose();
-        pig.dispose();
+        if (a == 1){
+            sheep.dispose();
+        } else if (a == 2){
+            cow.dispose();
+        } else if (a == 3){
+            pig.dispose();
+        } else if (a == 4){
+            bunny.dispose();
+        } else if (a == 5){
+            chick.dispose();
+        }
         farmer.dispose();
         ground.dispose();
         background.dispose();
