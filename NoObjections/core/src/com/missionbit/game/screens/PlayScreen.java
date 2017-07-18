@@ -3,9 +3,12 @@ package com.missionbit.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,15 +16,15 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-//import com.badlogic.gdx.utils.viewport.ScreenViewport;
-//import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.missionbit.game.Controller;
 import com.missionbit.game.NoObjectionGame;
 import com.missionbit.game.scenes.Hud;
 import com.missionbit.game.sprites.Hero;
-import com.missionbit.game.states.EndState;
-import com.missionbit.game.states.MenuState;
 import com.missionbit.game.tools.B2WorldCreator;
 import com.missionbit.game.tools.WorldContactListener;
 
@@ -30,10 +33,12 @@ import com.missionbit.game.tools.WorldContactListener;
  */
 
 public class PlayScreen implements Screen {
+
+    private WorldContactListener worldContactListener;
     private NoObjectionGame game;
     private TextureAtlas atlas;
     private Texture bg;
-
+    public Controller controller;
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -44,38 +49,79 @@ public class PlayScreen implements Screen {
 
     private Hero hero;
 
+<<<<<<< HEAD
     private com.missionbit.game.Controller controller;
+=======
+    private int isObjectHit = 0;
+>>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 
     //box2d
     private World world;
     private Box2DDebugRenderer b2dr;
 
+
+    //timer
+    SpriteBatch batch;
+    private BitmapFont font;
+    private float deltaTime = 30; //not off anymore
+    Label countDownLabel;
+    float playTime = 10;
+
+    public Stage stage;
+    private Viewport viewport;
+    private SpriteBatch sb;
+    private Table table;
+    private int seconds = 10;
+
+
     public PlayScreen(NoObjectionGame game) {
-        atlas = new TextureAtlas("dudeRun4.pack");
+        atlas = new TextureAtlas("dudestuff3.pack");
 
         this.game = game;
         bg = new Texture("main_background.png");
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(NoObjectionGame.V_WIDTH/ NoObjectionGame.PPM, NoObjectionGame.V_HEIGHT/ NoObjectionGame.PPM, gameCam);
+        gamePort = new FitViewport(NoObjectionGame.V_WIDTH / NoObjectionGame.PPM, NoObjectionGame.V_HEIGHT / NoObjectionGame.PPM, gameCam);
         hud = new Hud(game.batch);
 
         maploader = new TmxMapLoader();
         map = maploader.load("map1.tmx");
-        renderer = new OrthoCachedTiledMapRenderer(map, 1/ NoObjectionGame.PPM);
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
+        renderer = new OrthoCachedTiledMapRenderer(map, 1 / NoObjectionGame.PPM);
+        gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
 
-        new B2WorldCreator(world,map);
+        new B2WorldCreator(world, map);
         hero = new Hero(world, this);
+        controller = new Controller();
+        worldContactListener = new WorldContactListener();
+        world.setContactListener(worldContactListener);
 
-        world.setContactListener(new WorldContactListener(hero));
+        //timer
+        sb = new SpriteBatch();
 
+        viewport = new FitViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, sb);
+
+        table = new Table();
+        table.top();
+        table.setFillParent(true);
+
+        countDownLabel = new Label(Float.toString(playTime), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        table.add(countDownLabel).expandX();
+
+        stage.addActor(table);
+
+    }
+
+<<<<<<< HEAD
         controller = new com.missionbit.game.Controller(hero);
         }
+=======
+>>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
 
-    public TextureAtlas getAtlas(){
+    public TextureAtlas getAtlas() {
         return atlas;
     }
 
@@ -86,21 +132,37 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //if our user is holding down mouse move our camer
+<<<<<<< HEAD
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.upPressed && hero.isLanded() ){
             hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(),
                     true );
+=======
+        if (((Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed()) && hero.b2body.getLinearVelocity().y == 0)) {
+            hero.b2body.applyLinearImpulse(new Vector2(0, 3f), hero.b2body.getWorldCenter(),
+                    true);
+>>>>>>> 8b4ffc19de6fe30abcd34ae9c8ed311ecbc1454c
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && hero.b2body.getLinearVelocity().x <= 2){
+
+        isObjectHit = worldContactListener.getIsObjectTouched();
+
+        //temp climbing
+        if (((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || controller.isDownPressed() && hero.b2body.getLinearVelocity().y < 1) && isObjectHit == 1000)) {
+            hero.b2body.applyLinearImpulse(new Vector2(0, 2f), hero.b2body.getWorldCenter(),
+                    true);
+        }
+        if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || controller.isRightPressed())
+                && hero.b2body.getLinearVelocity().x <= 2) {
             hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && hero.b2body.getLinearVelocity().x >= -2){
+        if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || controller.isLeftPressed())
+                && hero.b2body.getLinearVelocity().x >= -2) {
             hero.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), hero.b2body.getWorldCenter(), true);
         }
     }
 
     public void update(float dt) {
         handleInput(dt);
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
 
         hero.update(dt);
 
@@ -109,6 +171,17 @@ public class PlayScreen implements Screen {
         gameCam.update();
         renderer.setView(gameCam);
 
+        deltaTime -= Gdx.graphics.getDeltaTime();
+        playTime = Math.round((deltaTime +1) * 100) / 100.0f;
+
+        seconds = ((int) playTime) % 60;
+
+        //If game reaches 0, set the current state to dead, meaning GAME OVER.
+        if(seconds == 0){
+            hero.setCurrentState(Hero.State.DEAD);
+        }else{
+            countDownLabel.setText(Integer.toString(seconds));
+        }
 
     }
 
@@ -123,7 +196,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //renderer our box2ddebuglines
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
@@ -133,16 +206,26 @@ public class PlayScreen implements Screen {
         //Set our batch to now draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        controller.draw();
 
-        if(hero.currentState == Hero.State.DEAD){
+        if (hero.currentState == Hero.State.DEAD) {
             game.setScreen(new EndScreen(game));
             dispose();
         }
+
+        if (hero.currentState == Hero.State.WIN) {
+            game.setScreen(new WinScreen(game));
+            dispose();
+        }
+
+        //timer
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        controller.resize(width, height);
     }
 
     @Override
@@ -166,6 +249,14 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        //hud.dispose();
+        hud.dispose();
+        stage.dispose();
     }
+
+    public int isObjectHit() {
+        return isObjectHit;
+    }
+
+
+
 }

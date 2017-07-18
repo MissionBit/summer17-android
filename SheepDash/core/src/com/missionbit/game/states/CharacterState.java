@@ -16,6 +16,18 @@ import com.missionbit.game.GameTutorial;
  * Created by missionbit on 6/26/17.
  */
 
+/*
+OKAY SO GUYS I KNOW HOW TO MAKE THE DIFFERENT CHARACTERS WORK (not really) BUT I GOT THE BASIC IDEA
+YOU GOTTA PASS AN INTEGER FOR EACH PLAY STATE, WHICH CORESPONDS TO A CHARACTER
+SO FOR NOW THIS IS GONNA BE USED FOR REFERENCE
+IF NONE OF MY BABBLING MAKES SENSE I'LL TRY TO EXPLAIN IT AFTER
+1 -- SHEEP
+2 -- COW
+3 -- PIG
+4 -- BUNNY
+5 -- DUCK (hen?)
+ */
+
 public class CharacterState extends State {
     private Stage stage;
     private Texture bg;
@@ -58,6 +70,7 @@ public class CharacterState extends State {
 
     public CharacterState(final GameStateManager gsm) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         bg = new Texture("CharScreen.png");
 
         sheep = new Texture(Gdx.files.internal("SheepButton.png"));
@@ -72,7 +85,7 @@ public class CharacterState extends State {
         sheepButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 1));
             }
         });
 
@@ -86,7 +99,7 @@ public class CharacterState extends State {
         cowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 2));
             }
         });
 
@@ -101,7 +114,7 @@ public class CharacterState extends State {
         pigButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 3));
             }
         });
 
@@ -115,7 +128,7 @@ public class CharacterState extends State {
         chickButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 5));
             }
         });
 
@@ -129,7 +142,7 @@ public class CharacterState extends State {
         bunnyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.set(new MapState(gsm));
+                gsm.set(new MapState(gsm, 4));
             }
         });
 
@@ -162,11 +175,12 @@ public class CharacterState extends State {
 
     @Override
     public void update(float dt) {
-
+        cam.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();

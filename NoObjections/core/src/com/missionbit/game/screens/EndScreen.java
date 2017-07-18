@@ -1,9 +1,20 @@
 package com.missionbit.game.screens;
 
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.missionbit.game.NoObjectionGame;
 
 /**
@@ -11,40 +22,40 @@ import com.missionbit.game.NoObjectionGame;
  */
 
 public class EndScreen implements Screen {
+    private Viewport viewport;
+    private Stage stage;
     private NoObjectionGame game;
-    private Texture background;
+    private Texture bg;
 
     public EndScreen(NoObjectionGame game) {
-        background = new Texture("pixil-layer-Background.png");
+        this.game = game;
+        bg = new Texture("pixil-layer-Background2.png");
+        viewport = new StretchViewport(NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, ((NoObjectionGame) game).batch);
 
     }
+
 
     @Override
     public void show() {
 
     }
 
-    public void handleInput(float dt) {
 
-    }
-
-    public void update(float dt) {
-        handleInput(dt);
-
-    }
 
     @Override
     public void render(float delta) {
-        update(delta);
-
+        if(Gdx.input.justTouched()) {
+            game.setScreen(new MenuScreen((NoObjectionGame) game));
+            dispose();
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        game.batch.end();
 
-
+        stage.getBatch().begin();
+        stage.getBatch().draw(bg, viewport.getScreenX(), viewport.getScreenY(), NoObjectionGame.V_WIDTH, NoObjectionGame.V_HEIGHT);
+        stage.getBatch().end();
+        stage.draw();
     }
 
     @Override
@@ -69,5 +80,9 @@ public class EndScreen implements Screen {
 
     @Override
     public void dispose() {
+       // background.dispose(); 
+        //stage.dispose(); 
+        //myTexture1.dispose();
+
     }
 }
