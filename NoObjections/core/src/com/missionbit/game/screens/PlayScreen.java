@@ -59,7 +59,7 @@ public class PlayScreen implements Screen {
     //timer
     SpriteBatch batch;
     private BitmapFont font;
-    private float deltaTime = 30; //not off anymore
+    private float deltaTime = 20; //not off anymore
     Label countDownLabel;
     float playTime = 10;
 
@@ -181,7 +181,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //renderer our box2ddebuglines
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
