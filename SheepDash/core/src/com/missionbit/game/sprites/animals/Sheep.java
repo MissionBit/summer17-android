@@ -49,11 +49,10 @@ public class Sheep extends Animals {
             position.y = 60;
         }
         bounds1.setPosition(position.x, position.y);
-        //System.out.println("Sheep's speed:" + movement);
     }
 
     public void jump() {
-        if (position.y <= 150) {
+        if (position.y == 60) {
             velocity.y = 450;
         }
     }
@@ -77,11 +76,11 @@ public class Sheep extends Animals {
     }
 
     public void reduceSpd() {
-        movement = 230;
+        movement = 240;
     }
 
     public void resetSpd() {
-        movement = 250;
+        movement = 200;
     }
 
     public void noSpd() {

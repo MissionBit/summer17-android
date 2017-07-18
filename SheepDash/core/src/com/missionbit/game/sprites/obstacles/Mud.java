@@ -23,7 +23,7 @@ public class Mud {
         mud = new Texture("mud.png");
         rand = new Random();
         posMud = new Vector2(rand.nextInt(FLUCTUATION)+MUD_MIN_X, y);
-        boundsMud = new Rectangle(posMud.x,posMud.y,30,30);
+        boundsMud = new Rectangle(posMud.x + 10,posMud.y -10,10,10);
         collided = false;
 
     }
@@ -46,7 +46,7 @@ public class Mud {
     }
 
     public boolean collides(Rectangle player){
-        if ((player.overlaps(boundsMud))) {
+        if ((player.overlaps(boundsMud ) && !collided)) {
             collided = true;
             return true;
         }

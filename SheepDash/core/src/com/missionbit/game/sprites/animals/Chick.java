@@ -98,13 +98,25 @@ public class Chick extends Animals {
 
     }
 
+    public void chickDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
+    public void goBackwards() {
+        movement = -250;
+    }
+
     public TextureRegion getChick() {
         return chickAnimation.getFrame();
     }
 
     public TextureRegion getChickDead() {
-        return chick2Animation.getFrame();
+        position.y = 55;
+        return chick2Animation.getLastFrame();
     }
+
+    public void setDead(boolean dead) { chick2Animation.setDead(false);}
 
     public Rectangle getChickBounds() {
         return chickBounds;

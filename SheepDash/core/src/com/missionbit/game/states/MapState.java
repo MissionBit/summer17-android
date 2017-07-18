@@ -60,8 +60,9 @@ public class MapState extends State {
     private TextureRegionDrawable myTexRegionDrawableBack;
     private ImageButton backButton;
 
-    public MapState(final GameStateManager gsm) {
+    public MapState(final GameStateManager gsm, final int c) {
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         bg = new Texture("LevelBg.png");
         myTexture1 = new Texture(Gdx.files.internal("Lvl1.png"));
         myTextureRegion1 = new TextureRegion(myTexture1);
@@ -77,7 +78,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 1");
-                gsm.set(new Level1(gsm));
+                gsm.set(new Level1(gsm, c));
             }
         });
 
@@ -94,7 +95,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 2");
-                gsm.set(new Level2(gsm));
+                gsm.set(new Level2(gsm, c));
             }
         });
 
@@ -111,7 +112,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 3");
-                gsm.set(new Level3(gsm));
+                gsm.set(new Level3(gsm, c));
             }
         });
 
@@ -128,7 +129,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 4");
-                gsm.set(new Level4(gsm));
+                gsm.set(new Level4(gsm, c));
             }
         });
 
@@ -146,7 +147,7 @@ public class MapState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Selected Level 5");
-                gsm.set(new Level5(gsm));
+                gsm.set(new Level5(gsm, c));
             }
         });
 
@@ -182,11 +183,13 @@ public class MapState extends State {
     @Override
     public void update(float dt) {
         handleInput();
+        cam.update();
     }
 
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         //sb.draw(bg, 0, 0, 256,180);

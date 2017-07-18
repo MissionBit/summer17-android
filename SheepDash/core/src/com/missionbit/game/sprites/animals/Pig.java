@@ -99,12 +99,26 @@ public class Pig extends Animals {
 
     }
 
+    public void goBackwards() {
+        movement = -250;
+    }
+
+    public void pigDied() {
+        movement = 0;
+        velocity.y = 0;
+    }
+
     public TextureRegion getPig() {
         return pigAnimation.getFrame();
     }
 
     public TextureRegion getPigDead() {
-        return pig1Animation.getFrame();
+        position.y = 60;
+        return pig1Animation.getLastFrame();
+    }
+
+    public void setDead(boolean dead) {
+        pig1Animation.setDead(false);
     }
 
     public Rectangle getPigBounds() {

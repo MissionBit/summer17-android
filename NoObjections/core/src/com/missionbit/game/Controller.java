@@ -35,6 +35,7 @@ public class Controller {
 
         float arrows = 75;
 
+
         Image upImg = new Image(new Texture("upArrow.png"));
         upImg.setSize(arrows, arrows);
 
