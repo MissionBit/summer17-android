@@ -1,5 +1,6 @@
 package com.missionbit.game.states;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -43,6 +44,7 @@ public class GameOver extends State{
     public GameOver(final GameStateManager gsm, int level, final int character) {
 
         super(gsm);
+        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         this.level = level;
         this.character = character;
         black = new Texture("blackness.jpg");
@@ -131,12 +133,16 @@ public class GameOver extends State{
     }
 
     @Override
-    public void update(float dt) {handleInput();}
+    public void update(float dt) {
+        handleInput();
+        cam.update();
+    }
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(black, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(black, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
