@@ -78,11 +78,11 @@ public class Bunny extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
     }
 
     public void stopSpd(){
@@ -90,7 +90,7 @@ public class Bunny extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
     @Override
@@ -122,6 +122,7 @@ public class Bunny extends Animals {
     }
 
     public TextureRegion getBunnyDead() {
+        position.y = 55;
         return deathAnimation.getLastFrame();
     }
 

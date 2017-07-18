@@ -36,16 +36,11 @@ public class MenuState extends State {
     private TextureRegionDrawable playTextureRegionDrawable;
     private ImageButton buttonPlay;
     //everything else
-    private Sheep sheep;
-    private Chick chick;
-    private Pig pig;
-    private Bunny bunny;
-    private Cow cow;
-    private Farmer farmer;
     private Stage stage;
 
     public MenuState(final GameStateManager gsm) {
         super(gsm);
+        //
         cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         background = new Texture("TITLE.png");
         playBtn = new Texture(Gdx.files.internal("PlayBtn.png"));
@@ -54,12 +49,6 @@ public class MenuState extends State {
         buttonPlay = new ImageButton((playTextureRegionDrawable));
         stage = new Stage(new ScreenViewport());
         instBtn = new Texture("instBtn.png");
-        sheep = new Sheep(100,60);
-        chick = new Chick(200,50);
-        cow = new Cow(250,50);
-        pig = new Pig(300,50);
-        bunny = new Bunny(350,50);
-        farmer = new Farmer(20,60);
         stage = new Stage();
         buttonPlay.setSize(playBtn.getWidth(), playBtn.getHeight());
         buttonPlay.setPosition((float)(GameTutorial.WIDTH - playBtn.getWidth())*1/5, (GameTutorial.HEIGHT - (playBtn.getHeight()))*1/5);
@@ -103,9 +92,10 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        //
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();

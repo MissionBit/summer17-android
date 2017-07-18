@@ -76,11 +76,11 @@ public class Pig extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 110;
+        movement = 240;
     }
 
     public void resetSpd(){
-        movement = 200;
+        movement = 250;
 
     }
 
@@ -89,7 +89,7 @@ public class Pig extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 250;
+        movement = 260;
     }
 
 
@@ -113,6 +113,7 @@ public class Pig extends Animals {
     }
 
     public TextureRegion getPigDead() {
+        position.y = 60;
         return pig1Animation.getLastFrame();
     }
 

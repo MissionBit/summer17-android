@@ -133,35 +133,35 @@ public class Level2 extends State {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 35000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level3(gsm, a));
+                gsm.set(new YouWon(gsm,2,a));
             }
         }
         mushroom.update(dt);
@@ -475,5 +475,7 @@ public class Level2 extends State {
         ground.dispose();
         background.dispose();
         mud.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }

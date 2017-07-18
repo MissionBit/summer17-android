@@ -1,6 +1,5 @@
 package com.missionbit.game.states;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,10 +18,10 @@ import java.lang.reflect.Constructor;
  * Created by missionbit on 7/12/17.
  */
 
-public class GameOver extends State{
-    private int level;
-    private int character;
-    private Texture black;
+public class YouWon extends State{
+
+    public int nextlevel;
+    public Texture black;
     private Stage stage;
 
     private Texture myTexture1;
@@ -33,20 +32,21 @@ public class GameOver extends State{
     private Texture myTexture2;
     private TextureRegion myTextureRegion2;
     private TextureRegionDrawable myTexRegionDrawable2;
-    private ImageButton restart;
+    private ImageButton next;
 
     private Texture myTexture3;
     private TextureRegion myTextureRegion3;
     private TextureRegionDrawable myTexRegionDrawable3;
     private ImageButton Gtext;
+    //
+    private int a;
 
 
-    public GameOver(final GameStateManager gsm, int level, final int character) {
+    public YouWon(final GameStateManager gsm, int level, int c ) {
 
         super(gsm);
-        cam.setToOrtho(false, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-        this.level = level;
-        this.character = character;
+        a = c;
+        this.nextlevel = level;
         black = new Texture("blackness.jpg");
 
 
@@ -57,37 +57,37 @@ public class GameOver extends State{
         stage = new Stage(new StretchViewport(GameTutorial.WIDTH, GameTutorial.HEIGHT));
         stage.addActor(back);
         Gdx.input.setInputProcessor(stage);
-        back.setBounds(GameTutorial.WIDTH/2 - 130,200,80,80);
+        back.setBounds(GameTutorial.WIDTH/2 - 120,200,80,80);
         back.getImageCell().expand().fill();
 
         back.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Exiting to Menu");
-                gsm.set(new MapState(gsm, character));
+                gsm.set(new MapState(gsm, a));
             }
         });
 
 
-        myTexture2 = new Texture(Gdx.files.internal("restart.png"));
+        myTexture2 = new Texture(Gdx.files.internal("play.png"));
         myTextureRegion2 = new TextureRegion(myTexture2);
         myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
-        restart = new ImageButton(myTexRegionDrawable2);
-        stage.addActor(restart);
+        next = new ImageButton(myTexRegionDrawable2);
+        stage.addActor(next);
         Gdx.input.setInputProcessor(stage);
-        restart.setBounds(GameTutorial.WIDTH/2 + 41,200,80,80);
-        restart.getImageCell().expand().fill();
+        next.setBounds(GameTutorial.WIDTH/2 + 50,200,80,80);
+        next.getImageCell().expand().fill();
 
-        restart.addListener(new ClickListener(){
+        next.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level restarting");
-                restart();
+                restart();//goes to next level
             }
         });
 
 
-        myTexture3 = new Texture(Gdx.files.internal("GameOver.png"));
+        myTexture3 = new Texture(Gdx.files.internal("YouWon.png"));
         myTextureRegion3 = new TextureRegion(myTexture3);
         myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
         Gtext = new ImageButton(myTexRegionDrawable3);
@@ -97,33 +97,41 @@ public class GameOver extends State{
         Gtext.getImageCell().expand().fill();
 
 
-        restart.addListener(new ClickListener(){
+        next.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Level restarting");
+                System.out.println("Going to next level");
             }
         });
 
     }
+
 
     @Override
     public void handleInput() {
 
     }
 
+
+    //recognizes next level
     public void restart() {
-        if(level == 1) {
-            gsm.set(new Level1(gsm, character));
-        } else if (level == 2) {
-            gsm.set(new Level2(gsm, character));
-        } else if (level == 3) {
-            gsm.set(new Level3(gsm, character));
-        } else if (level == 4) {
-            gsm.set(new Level4(gsm, character));
-        } else if (level == 5) {
-            gsm.set(new Level5(gsm, character));
+        if(nextlevel == 1) {
+            gsm.set(new Level2(gsm , a ));
+
+        } else if (nextlevel == 2) {
+            gsm.set(new Level3(gsm, a));
+
+        } else if (nextlevel == 3) {
+            gsm.set(new Level4(gsm, a));
+
+        } else if (nextlevel == 4) {
+            gsm.set(new Level5(gsm , a));
+
+        } else if (nextlevel == 5) {
+            gsm.set(new MapState(gsm , a));
+
         } else {
-            gsm.set(new MapState(gsm, character));
+            gsm.set(new MapState(gsm , a));
         }
     }
 
@@ -133,14 +141,10 @@ public class GameOver extends State{
     }
 
     @Override
-    public void update(float dt) {
-        handleInput();
-        cam.update();
-    }
+    public void update(float dt) {handleInput();}
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(black, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
         sb.end();

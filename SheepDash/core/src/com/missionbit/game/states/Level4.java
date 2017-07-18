@@ -147,35 +147,35 @@ public class Level4 extends State {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
             if(System.currentTimeMillis() - startTime > 45000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level5(gsm, a));
+                gsm.set(new YouWon(gsm, 4,a));
             }
         }
         //--//
@@ -356,15 +356,6 @@ public class Level4 extends State {
         }
     }
 
-    public void changeLevels(){
-       // if (sheep.getPosition().x > 3000){
-        //    gsm.set(new Level5(gsm));
-
-        if (sheep.getPosition().x > 4500){
-            gsm.set(new Level5(gsm, a));
-        }
-    }
-
     public void timerCheck(float timePassed) {
         if (a == 1){
             sheep.updateTimer(timePassed);
@@ -485,5 +476,7 @@ public class Level4 extends State {
         greenCar.dispose();
         appleTexture.dispose();
         apple.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }

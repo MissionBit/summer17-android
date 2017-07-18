@@ -93,7 +93,7 @@ public class Level1 extends State {
         trees3 = new Texture("FarmBG5.png");
         barn = new Texture("FarmBG1.png");
         shed = new Texture("FarmBG2.png");
-        background = new Texture("FarmBG7.png");
+        background = new Texture("Sky1.png");
         groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
         groundPos2 = new Vector2(ground.getWidth() + groundPos1.x, GROUND_Y_OFFSET);
         treePos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, 0);
@@ -148,35 +148,35 @@ public class Level1 extends State {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
             if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(sheep.getBounds1())) {
-                gsm.set(new Level2(gsm, a));
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
         if (a == 2) {
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
             if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(cow.getCowBounds())) {
-                gsm.set(new Level2(gsm, a));
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
         if (a == 3) {
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
             if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(pig.getPigBounds())) {
-                gsm.set(new Level2(gsm, a));
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
         if (a == 4) {
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
             if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(bunny.getBoundsBunny())) {
-                gsm.set(new Level2(gsm, a));
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
         if (a == 5) {
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
             if (System.currentTimeMillis() - startTime > 30000 && !farmer.collides(chick.getChickBounds())) {
-                gsm.set(new Level2(gsm, a));
+                gsm.set(new YouWon(gsm,  1, a));
             }
         }
         cherry.update(dt);

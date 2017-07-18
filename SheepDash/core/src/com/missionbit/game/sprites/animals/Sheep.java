@@ -88,7 +88,7 @@ public class Sheep extends Animals {
     }
 
     public void increaseSpd() {
-        movement = 270;
+        movement = 260;
     }
 
     public void goBackwards() {

@@ -79,7 +79,7 @@ public class Level5 extends State {
         }
         //--//
         sky = new Texture("CitySky.png");
-        farmer = new Farmer(-50,60);
+        farmer = new Farmer(-60,60);
         buildings = new Texture("UpdatedCityBuildings.png");
         ground = new Texture("CityGround.png");
         cam.setToOrtho(false, GameTutorial.WIDTH / 2, GameTutorial.HEIGHT / 2);
@@ -149,39 +149,39 @@ public class Level5 extends State {
     public void update(float dt) {
         handleInput();
         //AGGGH
-        if (a == 1){
+        if (a == 1) {
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 50000 && !farmer.collides(sheep.getBounds1())) {
-                //congrats gsm.set(new Level5(gsm, a));
+            if (System.currentTimeMillis() - startTime > 50000 && !farmer.collides(sheep.getBounds1())) {
+                gsm.set(new YouWon(gsm,5,a));
             }
         }
-        if (a == 2){
+        if (a == 2) {
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 50000 && !farmer.collides(cow.getCowBounds())) {
-                //congrats gsm.set(new Level5(gsm, a));
+            if (System.currentTimeMillis() - startTime > 50000 && !farmer.collides(cow.getCowBounds())) {
+                gsm.set(new YouWon(gsm,5,a));
             }
         }
-        if (a == 3){
+        if (a == 3) {
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 50000 && !farmer.collides(pig.getPigBounds())) {
-                //congrats gsm.set(new Level5(gsm, a));
+            if (System.currentTimeMillis() - startTime > 50000 && !farmer.collides(pig.getPigBounds())) {
+                gsm.set(new YouWon(gsm,5,a));
             }
         }
-        if (a == 4){
+        if (a == 4) {
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 50000 && !farmer.collides(bunny.getBoundsBunny())) {
-                //congrats gsm.set(new Level5(gsm, a));
+            if (System.currentTimeMillis() - startTime > 50000 && !farmer.collides(bunny.getBoundsBunny())) {
+                gsm.set(new YouWon(gsm,5,a));
             }
         }
-        if (a == 5){
+        if (a == 5) {
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
-            if(System.currentTimeMillis() - startTime > 50000 && !farmer.collides(chick.getChickBounds())) {
-                //congrats gsm.set(new Level5(gsm, a));
+            if (System.currentTimeMillis() - startTime > 50000 && !farmer.collides(chick.getChickBounds())) {
+                gsm.set(new YouWon(gsm,5,a));
             }
         }
         //--//
@@ -526,5 +526,7 @@ public class Level5 extends State {
         cherry.dispose();
         spikeTexture.dispose();
         spikes.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
