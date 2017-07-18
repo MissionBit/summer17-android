@@ -85,17 +85,7 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-<<<<<<< HEAD
-        sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-=======
         sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,50);
-        sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
-        sb.draw(chick.getChick(),chick.getPosition().x,chick.getPosition().y,50,50);
-        sb.draw(bunny.getBunny(),bunny.getPosition().x,bunny.getPosition().y,70,50);
-        sb.draw(pig.getPig(),pig.getPosition().x,pig.getPosition().y,70,50);
-        sb.draw(cow.getCow(),cow.getPosition().x,cow.getPosition().y,70,50);
->>>>>>> 5e17401a771fd752585a58cf6df6ac4ea0b70893
         sb.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();

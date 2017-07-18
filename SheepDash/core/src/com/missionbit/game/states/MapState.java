@@ -181,12 +181,7 @@ public class MapState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-<<<<<<< HEAD
-        sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
-=======
         sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //sb.draw(bg, 0, 0, 256,180);
->>>>>>> 5e17401a771fd752585a58cf6df6ac4ea0b70893
         sb.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
