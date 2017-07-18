@@ -146,22 +146,37 @@ public class Level5 extends State {
         if (a == 1){
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
+                //congrats gsm.set(new Level5(gsm, a));
+            }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(cow.getCowBounds()) == false)) {
+                //congrats gsm.set(new Level5(gsm, a));
+            }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(pig.getPigBounds()) == false)) {
+                //congrats gsm.set(new Level5(gsm, a));
+            }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(bunny.getBoundsBunny()) == false)) {
+                //congrats gsm.set(new Level5(gsm, a));
+            }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(chick.getChickBounds()) == false)) {
+                //congrats gsm.set(new Level5(gsm, a));
+            }
         }
         //--//
         farmer.update(dt);
