@@ -112,8 +112,6 @@ public class Level1 extends State {
         cherry = new Cherry(500, 150);
         cherryIsTouched = false;
         startTime = System.currentTimeMillis();
-        batch = new SpriteBatch();
-        font = new BitmapFont();
     }
 
     @Override

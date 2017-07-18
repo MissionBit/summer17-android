@@ -57,9 +57,6 @@ public class Level5 extends State {
 
     public Level5(GameStateManager gsm, int c) {
         super(gsm);
-
-        sheep = new Sheep(150, 60);
-
         a = c;
         // INITIALIZING ANIMALS
         if (a == 1) {
@@ -112,11 +109,6 @@ public class Level5 extends State {
 
     @Override
     protected void handleInput() {
-        if (sheep.getPosition().y == 60) {
-            if (Gdx.input.justTouched()) {
-                sheep.jump();
-            }
-        }
         if (Gdx.input.justTouched()) {
             if (a == 1) {
                 if (sheep.getPosition().y == 60) {
