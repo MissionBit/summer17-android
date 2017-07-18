@@ -353,8 +353,10 @@ public class Level4 extends State {
        // if (sheep.getPosition().x > 3000){
         //    gsm.set(new Level5(gsm));
 
-        if (sheep.getPosition().x > 4500){
-            gsm.set(new Level5(gsm, a));
+        if (sheep.getPosition().x > 4500) {
+
+            gsm.set(new YouWon(gsm, 4,a));
+
         }
     }
 

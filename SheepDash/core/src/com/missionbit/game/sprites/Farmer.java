@@ -25,7 +25,7 @@ public class Farmer {
         posFarmer = new Vector2(0,45);
         velocity = new Vector3(0,0,0);
         position = new Vector3(posFarmer.x,posFarmer.y,0);
-        boundsFarmer = new Rectangle(posFarmer.x,posFarmer.y,120,110);
+        boundsFarmer = new Rectangle(posFarmer.x,posFarmer.y,110,410);
 
     }
 

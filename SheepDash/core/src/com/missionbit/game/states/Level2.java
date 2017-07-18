@@ -347,8 +347,10 @@ public class Level2 extends State {
     }
 
     public void changeLevels() {
+
         if((System.currentTimeMillis() - startTime) > 30000) {
-            gsm.set(new Level3(gsm, a));
+            gsm.set(new YouWon(gsm,2,a));
+
         }
     }
 
