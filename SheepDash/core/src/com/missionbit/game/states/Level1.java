@@ -140,22 +140,37 @@ public class Level1 extends State {
         if (a == 1){
             sheep.update(dt);
             cam.position.x = sheep.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(sheep.getBounds1()) == false)) {
+                gsm.set(new Level2(gsm, a));
+            }
         }
         if (a == 2){
             cow.update(dt);
             cam.position.x = cow.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(cow.getCowBounds()) == false)) {
+                gsm.set(new Level2(gsm, a));
+            }
         }
         if (a == 3){
             pig.update(dt);
             cam.position.x = pig.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(pig.getPigBounds()) == false)) {
+                gsm.set(new Level2(gsm, a));
+            }
         }
         if (a == 4){
             bunny.update(dt);
             cam.position.x = bunny.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(bunny.getBoundsBunny()) == false)) {
+                gsm.set(new Level2(gsm, a));
+            }
         }
         if (a == 5){
             chick.update(dt);
             cam.position.x = chick.getPosition().x + 80;
+            if(((System.currentTimeMillis() - startTime) > 45000 & farmer.collides(chick.getChickBounds()) == false)) {
+                gsm.set(new Level2(gsm, a));
+            }
         }
         cherry.update(dt);
         farmer.update(dt);
