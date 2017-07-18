@@ -188,7 +188,7 @@ public class MapState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(bg, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
+        sb.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //sb.draw(bg, 0, 0, 256,180);
         sb.end();
 

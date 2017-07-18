@@ -68,7 +68,7 @@ public class MenuState extends State {
                 gsm.set(new CharacterState(gsm));
             }
         });
-        instBtn = new Texture(Gdx.files.internal("InstBtn.png"));
+        instBtn = new Texture(Gdx.files.internal("instBtn.png"));
         instTextureRegion = new TextureRegion((instBtn));
         instTextureRegionDrawable = new TextureRegionDrawable(instTextureRegion);
         buttonInst = new ImageButton((instTextureRegionDrawable));
@@ -126,7 +126,7 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(background, 0, 0, GameTutorial.WIDTH, GameTutorial.HEIGHT);
+        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.draw(sheep.getSheep(),sheep.getPosition().x,sheep.getPosition().y,70,50);
         sb.draw(farmer.getFarmer(),farmer.getPosition().x,farmer.getPosition().y,90,100);
         sb.draw(chick.getChick(),chick.getPosition().x,chick.getPosition().y,50,50);
