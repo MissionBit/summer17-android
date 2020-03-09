@@ -73,7 +73,7 @@ public class Cow extends Animals {
     }
 
     public void reduceSpd(){
-        movement = 240;
+        movement = 230;
     }
 
     public void resetSpd(){
@@ -86,7 +86,7 @@ public class Cow extends Animals {
     }
 
     public void increaseSpd(){
-        movement = 260;
+        movement = 270;
     }
 
 
